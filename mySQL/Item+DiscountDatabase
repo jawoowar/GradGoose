@@ -1,0 +1,93 @@
+
+-- Generic Student Discounts
+CREATE TABLE StudentDiscount(  
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    Store VARCHAR(50) NOT NULL,
+    Discount DOUBLE NOT NULL,
+    Criteria VARCHAR(255)
+);
+
+CREATE TABLE StudentBeanDiscount (
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    Store VARCHAR(50) NOT NULL,
+    Discount DOUBLE NOT NULL,
+    Criteria VARCHAR(255)
+);
+
+-- store spesific discounts
+CREATE TABLE TescoStoreDiscount (
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    Discount DOUBLE NOT NULL,
+    Criteria VARCHAR(255)
+);
+
+CREATE TABLE LidlStoreDiscount (
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    Discount DOUBLE NOT NULL,
+    Criteria VARCHAR(255)
+);
+
+-- store items
+CREATE TABLE TescoItems (
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemName VARCHAR(100) NOT NULL,
+    Price DOUBLE NOT NULL,
+    ImageURL Text,
+    Catagory VARCHAR(50),
+    Vegan Binary(1),
+    Vegatarian Binary(1),
+    Ingrediants Text,
+    Quantity INT,
+    Rating DOUBLE,
+    numOfRatings INT,
+    relevanceScore DOUBLE,
+    StudentBeanDiscountID INT,
+    StudentDiscountID INT,
+    StoreDiscountID INT,
+    FOREIGN KEY (StudentBeanDiscountID) REFERENCES StudentBeanDiscount(DiscountID),
+    FOREIGN KEY (StudentDiscountID) REFERENCES StudentDiscount(DiscountID),
+    FOREIGN KEY (StoreDiscountID) REFERENCES TescoStoreDiscount(DiscountID)
+);
+
+CREATE TABLE LidlItems (
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemName VARCHAR(100) NOT NULL,
+    Price DOUBLE NOT NULL,
+    ImageURL Text,
+    Catagory VARCHAR(50),
+    Vegan Binary(1),
+    Vegatarian Binary(1),
+    Ingrediants Text,
+    Quantity INT,
+    Rating DOUBLE,
+    numOfRatings INT,
+    relevanceScore DOUBLE,
+    StudentBeanDiscountID INT,
+    StudentDiscountID INT,
+    StoreDiscountID INT,
+    FOREIGN KEY (StudentBeanDiscountID) REFERENCES StudentBeanDiscount(DiscountID),
+    FOREIGN KEY (StudentDiscountID) REFERENCES StudentDiscount(DiscountID),
+    FOREIGN KEY (StoreDiscountID) REFERENCES LidlStoreDiscount(DiscountID)
+);
+
+-- cross store items
+CREATE TABLE JointItems (
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemName VARCHAR(100) NOT NULL,
+    TescoItemID INT,
+    LidlItemID INT,
+    FOREIGN KEY (TescoItemID) REFERENCES TescoItems(ItemID),
+    FOREIGN KEY (LidlItemID) REFERENCES LidlItems(ItemID)
+
+);
+
+-- sorting information
+CREATE TABLE sort (
+    SortID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemID int NOT NULL,
+    PriceScore Double,
+    NumRatingScore Double,
+    RatingScore Double,
+    RelevenceScore Double,
+    FOREIGN KEY (ItemID) REFERENCES JointItems(ItemID)
+);
