@@ -12,18 +12,33 @@ Development
 - scripts
     - webscriper
     - sorting algorithms - done
+    - comparing string/ auto correct
 
 - front end
-    - basic layout
-    - colour addition
+    - wireframe
+        - home
+        - search
+        - product
+        - favs
+        - lists
+        - log in
+    - complete layout / javascript
+        - home
+        - search
+        - product
+        - favs
+        - lists
+        - log in
+    - php intergration
+        - home
+        - search
+        - product
+        - favs
+        - lists
+        - log in
 
 - backend 
     - database design - done
     - mySQL scripting - done
     - Deployment
     - PHP intergration
-
-Azure
-- get it working
-- get everyone on/ join
-
