@@ -1,0 +1,14 @@
+.mainFavs {
+    border: black 1px;
+    display: inline-flex;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.item {
+    width: 300px;
+    height: 400px;
+    border: black 1px;
+    background-color: aqua;
+    margin: 15px;
+}
