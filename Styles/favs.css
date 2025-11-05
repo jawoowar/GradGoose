@@ -38,40 +38,68 @@
 }
 
 .item .store .tesco{
-    width: max-content;
+    width: 45%;
     height: 100%;
     background-color: rgb(68, 0, 255);
 }
 .item .store .lidl{
-    width: fit-content;
+    width: 45%;
     height: 100%;
     background-color: rgb(255, 204, 0);
+}
+.item .store .additional{
+    width: 10%;
+    height: 100%;
+    background-color: rgb(128, 128, 128);
+}
+
+.item .store a p {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 5px;
+    color: white;
 }
 
 .item .lower {
     display: flex;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top: 15px;
 }
 
 .item .name {
     text-align: center;
     font-size: 20px;
     margin-top: 10px;
+    margin-bottom: 0px;;
 }
 
 .item .lower .price {
-    font-size: 18px;
-    margin-right: 100px;
     width: 125px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
+
+.item .lower .price h1 {
+    font-size: 2em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.item .lower .price p {
+    font-size: 1em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 
 .item .Buttons {
     width: 125px;
+    margin-top: 15px;
 }
 
 .item .itemButton {
     height: 30px;
+    width: 50px;
+    margin-left: 10px;
     cursor: pointer;
 }
