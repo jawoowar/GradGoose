@@ -38,12 +38,12 @@
 }
 
 .item .store .tesco{
-    width: auto;
+    width: max-content;
     height: 100%;
     background-color: rgb(68, 0, 255);
 }
 .item .store .lidl{
-    width: auto;
+    width: fit-content;
     height: 100%;
     background-color: rgb(255, 204, 0);
 }
