@@ -22,6 +22,9 @@ Development
         - favs - done
         - lists - done
         - log in
+        - profile / settings
+            - profile - done
+            - settings
     - complete layout / javascript
         - home
         - search
@@ -29,6 +32,9 @@ Development
         - favs
         - lists
         - log in
+        - profile / settings
+            - profile
+            - settings
     - php intergration
         - home
         - search
@@ -36,6 +42,9 @@ Development
         - favs
         - lists
         - log in
+        - profile / settings
+            - profile
+            - settings
 
 - backend 
     - database design - done
