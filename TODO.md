@@ -6,7 +6,7 @@ Design
 
 Database
 - mySQL - done
-- find ideal database service
+- find ideal database service - done
 
 Development
 - scripts
@@ -19,8 +19,8 @@ Development
         - home
         - search
         - product
-        - favs
-        - lists
+        - favs - done
+        - lists - done
         - log in
     - complete layout / javascript
         - home
