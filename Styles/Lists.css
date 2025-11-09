@@ -1,19 +1,3 @@
-.mainLists {
-    border: black 1px solid;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-.list {
-    border: black 1px solid;
-    width: 30%;
-}
-
-.items {
-    overflow-y: scroll;
-    height: 400px;
-}
 /* header */
 
 .listsHeader {
@@ -27,7 +11,8 @@
 }
 
 .favsTitle {
-    margin-left: 40%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
     /* filter */
@@ -43,17 +28,92 @@
     margin-top: 2-px;
 }
 
-.headerPrice {
-    background-color: lightgreen;
-    border-left: 1px black solid;
-    margin-left: auto;
-    height: 30px;
-    font-size: 1.25em;
-    height: 100%;
+/*List header*/
+
+.listHeader {
+    width: 100%;
+    height: 40px;
+    Display: inline-flex;
+    margin-bottom: 10px;
 }
 
-.headerPrice h1 {
+.headerPrice {
+    margin-left: auto;
+    font-size: 1.25em;
+}
+
+.pastHeaderPrice {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1.25em;
+}
+
+.pastHeaderDate {
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 1.5em;
+}
+
+.listHeader h1 {
+    margin-top: 0px;
+}
+
+.listCount {
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: 10px;
+    font-size: 1.5em;
+}
+
+.HeaderButtons {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-left: auto;
+}
+
+/* main lists section */
+
+.mainLists {
+    border: black 1px solid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 40px;
+}
+
+.list {
+    border: black 1px solid;
+    width: 45%;
+}
+
+.items {
+    overflow-y: scroll;
+    overflow-x: NONE;
+    height: 450px;
+}
+
+.tesco {
+    background-color: blue;
+    height:20px;
+    color: white;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.lidl {
+    background-color: rgb(255, 230, 0);
+    height:20px;
+    color: #2b2b2b;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.prices {
     margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: right;
 }
 
 
@@ -65,7 +125,7 @@
     height: 120px;
     border: black 1px;
     background-color: aqua;
-    border: black 1px solid;
+    border-bottom: black 1px solid;
     display: flex;
     flex-wrap: wrap;
 }
@@ -80,34 +140,41 @@
 
 .itemAlt aside {   
     flex-wrap: wrap;
+    width: calc(100% - 130px);
+    display: flex;
 }
 
 .itemAlt .name {
-    text-align: center;
+    text-align: left;
+    width: 60%;
     font-size: 20px;
     margin-top: 10px;
-    margin-bottom: 0px;;
-}
-
-.itemAlt .price {
-    margin-top: 0px;
     margin-bottom: 0px;
 }
 
+.itemAlt .price {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: auto;
+}
+
 .itemAlt .price h1 {
-    font-size: 1em;
+    font-size: 2em;
     margin-top: 0px;
     margin-bottom: 0px;
 }
 
 .itemAlt .Buttons {
-    width: 125px;
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
     margin-top: 15px;
+    margin-left: auto;
 }
 
 .itemAlt .itemButton {
     height: 30px;
-    width: 50px;
+    width: fit-content;
     margin-left: 10px;
     cursor: pointer;
 }
