@@ -1,14 +1,14 @@
 
 -- Generic Student Discounts
 CREATE TABLE StudentDiscount(  
-    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Store VARCHAR(50) NOT NULL,
     Discount DOUBLE NOT NULL,
     Criteria VARCHAR(255)
 );
 
 CREATE TABLE StudentBeanDiscount (
-    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Store VARCHAR(50) NOT NULL,
     Discount DOUBLE NOT NULL,
     Criteria VARCHAR(255)
@@ -16,20 +16,20 @@ CREATE TABLE StudentBeanDiscount (
 
 -- store spesific discounts
 CREATE TABLE TescoStoreDiscount (
-    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Discount DOUBLE NOT NULL,
     Criteria VARCHAR(255)
 );
 
 CREATE TABLE LidlStoreDiscount (
-    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Discount DOUBLE NOT NULL,
     Criteria VARCHAR(255)
 );
 
 -- store items
 CREATE TABLE TescoItems (
-    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ItemName VARCHAR(100) NOT NULL,
     Price DOUBLE NOT NULL,
     ImageURL Text,
@@ -50,7 +50,7 @@ CREATE TABLE TescoItems (
 );
 
 CREATE TABLE LidlItems (
-    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ItemName VARCHAR(100) NOT NULL,
     Price DOUBLE NOT NULL,
     ImageURL Text,
@@ -72,7 +72,7 @@ CREATE TABLE LidlItems (
 
 -- cross store items
 CREATE TABLE JointItems (
-    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ItemName VARCHAR(100) NOT NULL,
     TescoItemID INT,
     LidlItemID INT,
@@ -82,8 +82,8 @@ CREATE TABLE JointItems (
 );
 
 -- sorting information
-CREATE TABLE sort (
-    SortID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Sort (
+    SortID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ItemID int NOT NULL,
     PriceScore Double,
     NumRatingScore Double,
@@ -91,3 +91,17 @@ CREATE TABLE sort (
     RelevenceScore Double,
     FOREIGN KEY (ItemID) REFERENCES JointItems(ItemID)
 );
+
+-- tags
+
+CREATE TABLE Tag (
+    TagID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    TagName VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE tags (
+    ItemID int NOT NULL,
+    TagID VARCHAR(50) NOT NULL,
+    FOREIGN KEY (ItemID) REFERENCES JointItems(ItemID),
+    FOREIGN KEY (TagID) REFERENCES Tag(TagID)
+)
