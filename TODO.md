@@ -16,11 +16,11 @@ Development
 
 - front end
     - wireframe
-        - home
+        - home  - done
         - search
         - product
-        - favs
-        - lists
+        - favs - done
+        - lists - done
         - log in
     - complete layout / javascript
         - home
