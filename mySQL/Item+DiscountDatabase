@@ -29,7 +29,7 @@ CREATE TABLE LidlStoreDiscount (
 
 -- store items
 CREATE TABLE TescoItems (
-    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemID INT NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
     ItemName VARCHAR(100) NOT NULL,
     Price DOUBLE NOT NULL,
     ImageURL Text,
@@ -90,4 +90,17 @@ CREATE TABLE sort (
     RatingScore Double,
     RelevenceScore Double,
     FOREIGN KEY (ItemID) REFERENCES JointItems(ItemID)
+);
+
+-- tags
+CREATE TABLE Tag (
+    TagID int NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    TagName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Tags (
+    ItemID int NOT NULL,
+    TagID int NOT NULL,
+    FOREIGN KEY (ItemID) REFERENCES JointItems(ItemID),
+    FOREIGN KEY (TagID) REFERENCES Tag(TagID)
 );
