@@ -6,7 +6,7 @@
 
     
     <link rel="stylesheet" href="../Styles/Main.css">
-    <link rel="stylesheet" href="../Styles/FavsLists.css">
+    <link rel="stylesheet" href="../Styles/Lists.css">
     
 
 <body class="Website">`
@@ -17,61 +17,385 @@
         <input type="text" id="Search" name="Search" placeholder="Search">
         </form>
             
-        <a href=""><button class="button"> Lists </button></a>
-        <a href=""><button class="button active"> Favs* </button></a>
-        <a href=""><button class="button"> Profile </button></a>
+        <a href="Lists.html"><button class="button"> Lists </button></a>
+        <a href="Favs.html"><button class="button active"> Favs* </button></a>
+        <a href="Profile.html"><button class="button"> Profile </button></a>
     </div>
 
-    <header class="favsHeader">
-        <div class="headerFilter">
-            <h1>Current Lists</h1>
+    <header class="listsHeader">
+        <div class="favsTitle">
+            <h1> Lists </h1>
         </div>
-        <div style="margin-left: 36%;">
-            <h1> Favourites </h1>
+    </header>
+
+
+    <main>
+        <div class="listHeader">
+            <h1>Current List</h1>
+
+            <div class="headerPrice">
+                    <h1> Total: £20.00 </h1>
+            </div>
         </div>
-        <div class="headerPrice">
-            <h1> £20.00 </h1>
+        
+        <div class="mainLists">
+            <div class="list">
+                <div class="tesco">
+                    Tesco
+                </div>
+                <div class="items">
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+        
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+        
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+                
+                </div>
+
+                <div class="prices">
+                    <h2>Current Total: £00.00</h2>
+                    <h2>Total: £00.00</h2>
+                </div>
+
+            </div>
+
+            <div class="list">
+                <div class="lidl">
+                    Lidl
+                </div>
+                <div class="items">
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+                </div> 
+                <div class="prices">
+                    <h2>Current Total: £00.00</h2>
+                    <h2>Total: £00.00</h2>
+                </div>
+            </div>
+
         </div>
 
-    </header>
-    
-    <main class="mainFavs">
+
+        <div class="listHeader">
+            <h1>Past Lists</h1>
+            <h1 class="listCount">2/3</h1>
+        </div>
         
-        <div class="item"> <!--item placeholder/ base design-->
-            <div class="store">
-                <a class="tesco"><p>Tesco</p></a>
-                <a class="lidl"><p>Lidl</p></a>
-                <a class="additional"><p>⋮</p></a>
+        <div class="mainLists">
+
+            <div class="listHeader">
+                <h1 class="pastHeaderDate">Creation Date: 10/11/25</h1>
+                <div class="HeaderButtons">
+                    <button class="headerButton">ReUse</button>
+                    <button class="headerButton">Delete</button>
+                </div>
+                <div class="pastHeaderPrice">
+                    <h1> Total: £20.00 </h1>
+                </div>
             </div>
-            <img src="../Media/PlaceHolder.png" alt="placeholder">
-            <p class="name">Item Name</p>
-            <div class="lower">
-                <div class="price">
-                    <h1>£00.00</h1>
-                    <p>£1.00 - £2.00</p>
+            
+            <div class="list">
+                <div class="tesco">
+                    Tesco
                 </div>
-                <div class="Buttons">
-                    <button class="itemButton">list</button>
-                    <button class="itemButton">fav</button>
-                </div>
+                <div class="items">
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+        
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+        
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
                 
+                </div>
+
+                <div class="prices">
+                    <h2>Current Total: £00.00</h2>
+                    <h2>Total: £00.00</h2>
+                </div>
+
+            </div>
+
+            <div class="list">
+                <div class="lidl">
+                    Lidl
+                </div>
+                <div class="items">
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+                </div> 
+                <div class="prices">
+                    <h2>Current Total: £00.00</h2>
+                    <h2>Total: £00.00</h2>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="mainLists">
+
+            <div class="listHeader">
+                <h1 class="pastHeaderDate">Creation Date: 10/11/25</h1>
+                <div class="HeaderButtons">
+                    <button class="headerButton">ReUse</button>
+                    <button class="headerButton">Delete</button>
+                </div>
+                <div class="pastHeaderPrice">
+                    <h1> Total: £20.00 </h1>
+                </div>
+            </div>
+            
+            <div class="list">
+                <div class="tesco">
+                    Tesco
+                </div>
+                <div class="items">
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+        
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+        
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+                
+                </div>
+
+                <div class="prices">
+                    <h2>Current Total: £00.00</h2>
+                    <h2>Total: £00.00</h2>
+                </div>
+
+            </div>
+
+            <div class="list">
+                <div class="lidl">
+                    Lidl
+                </div>
+                <div class="items">
+                    <div class="itemAlt"> <!--item placeholder/ base design-->
+                        <img src="../Media/PlaceHolder.png" alt="placeholder">
+                        <aside>
+                            <p class="name">
+                                Item Name Item Name
+                            </p>
+                            <div class="price">
+                                <h1>£00.00</h1>
+                            </div>
+                            <div class="Buttons">
+                                <button class="itemButton">collected</button>
+                                <button class="itemButton">remove</button>
+                            </div>
+                        </aside>
+                    </div>
+                </div> 
+                <div class="prices">
+                    <h2>Current Total: £00.00</h2>
+                    <h2>Total: £00.00</h2>
+                </div>
             </div>
         </div>
-        <div class="item">
-            a
+
+        <div class="mainLists">
+            <h1>No list found</h1>
         </div>
-        <div class="item">
-            a
-        </div>
-        <div class="item">
-            a
-        </div>
-        <div class="item">
-            a
-        </div>
-        <div class="item">
-            a
-        </div>
+
     </main>
 </body>
 

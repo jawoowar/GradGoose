@@ -99,17 +99,17 @@ input[type=text], select {
 }
 
     /* what store is the item in */
-.item .store .tesco{
+.store .tesco{
     width: 45%;
     height: 100%;
     background-color: rgb(68, 0, 255);
 }
-.item .store .lidl{
+.store .lidl{
     width: 45%;
     height: 100%;
     background-color: rgb(255, 204, 0);
 }
-.item .store .additional{
+.store .additional{
     width: 10%;
     height: 100%;
     background-color: rgb(128, 128, 128);

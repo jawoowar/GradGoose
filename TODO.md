@@ -16,7 +16,7 @@ Development
 
 - front end
     - wireframe
-        - home
+        - home  - done
         - search
         - product
         - favs - done
