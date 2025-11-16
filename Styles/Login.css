@@ -13,6 +13,17 @@ main {
 .TextFields {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 40px;
+    margin-top: 10px;
     width: 50%;
+}
+
+.TextField {
+    padding-left: auto;
+    padding-right: auto;
+    width: 100%;
+}
+
+.LoginButton {
+    margin-top: 30px;
+    text-align: center;
 }
