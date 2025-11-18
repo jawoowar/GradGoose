@@ -5,8 +5,8 @@ main {
 
 .LoginMain {
     margin-top: 50px;
-    width: 400px;
-    height: 600px;
+    width: 600px;
+    height: 350px;
     background-color: rgb(184, 130, 235);
 }
 
@@ -14,16 +14,53 @@ main {
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
-    width: 50%;
+    width: 85%;
 }
 
 .TextField {
+    margin-top: 20px;
     padding-left: auto;
     padding-right: auto;
     width: 100%;
 }
 
-.LoginButton {
+.TextField input[type="text"] {
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    padding-left: 10px;
+}
+
+label {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Buttons {
     margin-top: 30px;
     text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+button {
+    width: 25%;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+}
+
+hr {
+    width: 50%;
+    margin-top: 20px;
+}
+
+.LogInOptions {
+    margin-top: 20px;
+    text-align: center;
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
 }
