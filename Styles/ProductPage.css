@@ -78,13 +78,25 @@
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    background-color: rgb(255, 0, 0);
+    background-color: white;
 }
 .Links{
     width: 100%;
     height: 100px;
-    background-color: rgb(7, 7, 128);
+    background-color: rgb(159, 159, 252);
     margin-bottom: 20px;
+}
+
+.RedirectProductButton{
+    width: auto;
+    height: auto;
+}
+
+.SimilarProducts{
+    width: 100%;
+    height: 150px;
+    margin-top: 20px;
+    background-color: lightsalmon;
 }
 
 
