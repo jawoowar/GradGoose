@@ -3,27 +3,27 @@
 CREATE TABLE StudentDiscount(  
     DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Store VARCHAR(50) NOT NULL,
-    Discount DOUBLE NOT NULL,
+    Discount Float NOT NULL,
     Criteria VARCHAR(255)
 );
 
 CREATE TABLE StudentBeanDiscount (
     DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Store VARCHAR(50) NOT NULL,
-    Discount DOUBLE NOT NULL,
+    Discount Float NOT NULL,
     Criteria VARCHAR(255)
 );
 
 -- store spesific discounts
 CREATE TABLE TescoStoreDiscount (
     DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    Discount DOUBLE NOT NULL,
+    Discount Float NOT NULL,
     Criteria VARCHAR(255)
 );
 
 CREATE TABLE LidlStoreDiscount (
     DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    Discount DOUBLE NOT NULL,
+    Discount Float NOT NULL,
     Criteria VARCHAR(255)
 );
 
@@ -31,16 +31,17 @@ CREATE TABLE LidlStoreDiscount (
 CREATE TABLE TescoItems (
     ItemID INT NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
     ItemName VARCHAR(100) NOT NULL,
-    Price DOUBLE NOT NULL,
+    Price Float NOT NULL,
     ImageURL Text,
     Catagory VARCHAR(50),
     Vegan Binary(1),
     Vegatarian Binary(1),
     Ingrediants Text,
     Quantity INT,
-    Rating DOUBLE,
+    Poundage INT,
+    Rating Float,
     numOfRatings INT,
-    relevanceScore DOUBLE,
+    relevanceScore DOUBLE(1, 6),
     StudentBeanDiscountID INT,
     StudentDiscountID INT,
     StoreDiscountID INT,
@@ -52,16 +53,17 @@ CREATE TABLE TescoItems (
 CREATE TABLE LidlItems (
     ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ItemName VARCHAR(100) NOT NULL,
-    Price DOUBLE NOT NULL,
+    Price Float NOT NULL,
     ImageURL Text,
     Catagory VARCHAR(50),
     Vegan Binary(1),
     Vegatarian Binary(1),
     Ingrediants Text,
     Quantity INT,
-    Rating DOUBLE,
+    Poundage INT,
+    Rating Float,
     numOfRatings INT,
-    relevanceScore DOUBLE,
+    relevanceScore DOUBLE(1, 6),
     StudentBeanDiscountID INT,
     StudentDiscountID INT,
     StoreDiscountID INT,
@@ -85,10 +87,10 @@ CREATE TABLE JointItems (
 CREATE TABLE Sort (
     SortID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ItemID int NOT NULL,
-    PriceScore Double,
-    NumRatingScore Double,
-    RatingScore Double,
-    RelevenceScore Double,
+    PriceScore Float,
+    NumRatingScore Float,
+    RatingScore Float,
+    RelevenceScore Float,
     FOREIGN KEY (ItemID) REFERENCES JointItems(ItemID)
 );
 
