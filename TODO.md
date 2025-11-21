@@ -21,7 +21,8 @@ Development
         - product
         - favs - done
         - lists - done
-        - log in
+        - log in - done
+        - Sign up - done
         - profile / settings
             - profile - done
             - settings
@@ -32,6 +33,7 @@ Development
         - favs
         - lists
         - log in
+        - Sign up
         - profile / settings
             - profile
             - settings
@@ -42,6 +44,7 @@ Development
         - favs
         - lists
         - log in
+        - Sign up
         - profile / settings
             - profile
             - settings
