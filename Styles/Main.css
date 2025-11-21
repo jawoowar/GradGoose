@@ -68,10 +68,15 @@ input[type=text], select {
 
 
 /* item style */
+.Products{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
 .item {
     width: 270px;
-    height: 400px;
+    height: 470px;
     border: black 1px;
     background-color: aqua;
     margin: 15px;
@@ -124,7 +129,8 @@ input[type=text], select {
 
     /* lower section of the item display (name price buttons etc) */
 .item .lower {
-    display: flex;
+    justify-content: center;
+    display: grid;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -137,6 +143,7 @@ input[type=text], select {
 }
 
 .item .lower .price {
+    text-align: center;
     width: 125px;
     margin-top: 0px;
     margin-bottom: 0px;
