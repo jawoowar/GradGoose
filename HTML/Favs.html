@@ -4,35 +4,48 @@
         <title>GradGoose</title>
     </head>
 
-    
-    <link rel="stylesheet" href="../Styles/Main.css">
+    <link rel="stylesheet" href="../Styles/Root.css">
+    <link rel="stylesheet" href="../Styles/Items.css">
     <link rel="stylesheet" href="../Styles/Favs.css">
     
 
-<body class="Website">
+<body class="Website">`
     <div class="Header">
-        <img src="../Media/Goose.png" alt="" width="10%" height="100%">
+        <a href="Index.html" style="width: 10%;"><img src="../Media/Goose.png" alt="" width="100%" height="100%"></a>
         
         <form action=""><!--add the database in to the action-->
         <input type="text" id="Search" name="Search" placeholder="Search">
         </form>
             
-        <a href=""><button> Lists </button></a>
-        <a href=""><button> Favs* </button></a>
-        <a href=""><button> Profile </button></a>
+        <a href="Lists.html"><button class="button"> Lists </button></a>
+        <a href="Favs.html"><button class="button active"> Favs* </button></a>
+        <a href="Profile.html"><button class="button"> Profile </button></a>
     </div>
+
+    <header class="favsHeader">
+        <div class="headerFilter">
+            <h1>Filter</h1>
+        </div>
+        <div class="favsTitle">
+            <h1> Favourites </h1>
+        </div>
+
+    </header>
     
     <main class="mainFavs">
-        <div class="item">
+
+        <div class="item"> <!--item placeholder/ base design-->
             <div class="store">
                 <a class="tesco"><p>Tesco</p></a>
                 <a class="lidl"><p>Lidl</p></a>
+                <a class="additional"><p>⋮</p></a>
             </div>
             <img src="../Media/PlaceHolder.png" alt="placeholder">
             <p class="name">Item Name</p>
             <div class="lower">
                 <div class="price">
-                    <p>£00.00</p>
+                    <h1>£00.00</h1>
+                    <p>£1.00 - £2.00</p>
                 </div>
                 <div class="Buttons">
                     <button class="itemButton">list</button>
@@ -41,6 +54,7 @@
                 
             </div>
         </div>
+
         <div class="item">
             a
         </div>

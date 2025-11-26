@@ -6,7 +6,7 @@ Design
 
 Database
 - mySQL - done
-- find ideal database service
+- find ideal database service - done
 
 Development
 - scripts
@@ -16,12 +16,16 @@ Development
 
 - front end
     - wireframe
-        - home
+        - home  - done
         - search
         - product
-        - favs
-        - lists
-        - log in
+        - favs - done
+        - lists - done
+        - log in - done
+        - Sign up - done
+        - profile / settings
+            - profile - done
+            - settings
     - complete layout / javascript
         - home
         - search
@@ -29,6 +33,10 @@ Development
         - favs
         - lists
         - log in
+        - Sign up
+        - profile / settings
+            - profile
+            - settings
     - php intergration
         - home
         - search
@@ -36,6 +44,10 @@ Development
         - favs
         - lists
         - log in
+        - Sign up
+        - profile / settings
+            - profile
+            - settings
 
 - backend 
     - database design - done

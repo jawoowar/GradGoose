@@ -41,3 +41,47 @@
     justify-items: center;
     margin-top: 25px;
 }
+
+.Settings{
+    margin-left: 5px;
+    width: 100%;
+    height: 500px;
+    background-color: aqua;
+    display: flex;
+}
+
+.SettingsSections{
+    width: 22%;
+    height: 100%;
+    margin-left: 14px;
+    background-color: aqua;
+}
+
+.SettingsSections button{
+    width: 95%;
+    height: 60px;
+    background-color: rgb(89, 238, 44);
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+.LineSettings{
+    width: 5px;
+    height: 90%;
+    background-color: blueviolet;
+    margin-left: 17px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+    width: 100%;
+    height: 100%;
+    background-color: aqua;
+}

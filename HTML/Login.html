@@ -1,0 +1,46 @@
+<html>
+    <header>
+        <link rel="stylesheet" href="../Styles/Login.css">
+    </header>
+
+
+    <body>
+        <main>
+            <div class="LoginMain">
+                <div class="TextFields">
+                    <div class="TextField">
+                        <label form="uname">Username/Email:</label><br>
+                        <input type="text" id="uname" class="TextFields" name="uname" placeholder="Username/Email"><br>
+                    </div>
+                    <div class="TextField">
+                        <label for="pass">Password:</label><br>
+                        <input type="text" id="pass" class="TextFields" name="pass" placeholder="Password">
+                    </div>
+                </div>
+                <div class="Buttons">
+                    <a href="SignUp.html"><button type="submit">Sign-up</button></a>
+                    <a><button type="submit" id="loginbtn">Login</button></a>
+                </div>
+                <hr>
+                <div class = "LogInOptions">
+                    <script src="https://accounts.google.com/gsi/client" async></script>
+                    <div id="g_id_onload"
+                        data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                        data-login_uri="https://your.domain/your_login_endpoint"
+                        data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                        data-type="standard"
+                        data-size="large"
+                        data-theme="outline"
+                        data-text="sign_in_with"
+                        data-shape="rectangular"
+                        data-logo_alignment="left">
+                    </div>
+                </div>
+
+            </div>
+            
+        </main>
+    </body>
+</html>

@@ -4,8 +4,7 @@
         <title>GradGoose</title>
     </head>
 
-    
-    <link rel="stylesheet" href="../Styles/Main.css">
+    <link rel="stylesheet" href="../Styles/Root.css">
     <link rel="stylesheet" href="../Styles/Profile.css">
 
 <body class="Website"> <!--Moves the whole website to the centre-->
@@ -18,29 +17,54 @@
         </form>
         
         <!--Buttons to move to a different page-->
-        <a href=""><button> Lists </button></a>
-        <a href=""><button> Favs* </button></a>
-        <a href="Profile.html"><button> Profile </button></a>
+        <a href="Lists.html"><button class="button"> Lists </button></a>
+        <a href="Favs.html"><button class="button"> Favs* </button></a>
+        <a href="Profile.html"><button class="button  active"> Profile </button></a>
     </div>
 
-    <div class="Info">
+    <div class="Info"><!-- The top section with image and changing profile buttons-->
         <div>
             <a href=""><img src="../Media/CowProfilePic.png" alt="" class="ProfileIMG"></a>
         </div>
 
         <div class="Line"></div>
 
-        <div class="InfoText">
+        <div class="InfoText"> <!--User info displayed here-->
             <p>Name: Cow Cow</p>
             <p>Email: CowCow@Cow.com</p>
             <p>Password: *****</p>
         </div>
 
-        <div class="ChangeProfileButtons">
+        <div class="ChangeProfileButtons"> <!--Buttons to change user info-->
             <button>Change Name</button>
             <button>Change Email</button> 
             <button>Change Password</button> 
+
         </div>
-        
     </div>
+
+    <div class="Settings"> <!--The settings section-->
+        <div class="SettingsSections">
+            <button class="tablinks" onclick="openSettings(event, 'Filters')" id="defaultOpen">Filters</button>
+            <button class="tablinks" onclick="openSettings(event, 'Accessibility')">Accessibility</button>
+            <button class="tablinks" onclick="openSettings(event, 'Connections')">Connections</button>
+        </div>
+
+        <div class="LineSettings"></div>
+
+        <div id="Filters" class="tabcontent" > <!--Filter detail will go here-->
+            <h1>Filters</h1>
+        </div>
+
+        <div id="Accessibility" class="tabcontent" > <!--Accessibility detail will go here-->
+            <h1>Accessibility</h1>
+        </div>
+
+        <div id="Connections" class="tabcontent" > <!--Connections detail will go here-->
+            <h1>Connections</h1>
+        </div>
+
+    </div>
+    <script src="../Scripts/Profile.js"></script>
+
 </body>
