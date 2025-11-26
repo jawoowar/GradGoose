@@ -1,12 +1,17 @@
 <?php
 
-    //get data
-    function getValues($data){
-        rsort($data);
-        $high = array_first($data);
-        $data = array_map(fn($val) => $val/$high, $data);
-        return $data;
+    $conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_commentTest');
+
+    if (!$conn) {
+        die("Connection failed: ".mysqli_connect_error());
     }
+
+    $data = (array)$conn->query("SELECT ItemID, RatingScore, FROM WHERE");
+
+    foreach(array_diff(array_keys($data), ["ItemID"]) as $sort){
+        $data = array_combine($data["ItemID"], $data[$sort]);
+    }
+
 
     function customSort($values, $data, $goal=30, $previous=[]){
         foreach ($values as $key => $val){
@@ -20,20 +25,19 @@
         $check = false;
         
         while(!$check){
-            $startFrom = count($previous);
+            $startFrom = count(array_first($previous));
             $previous = array_map(
                 fn($val, $key) => $previous[$key]+array_slice($val, $startFrom, $startFrom+30),
             $data, array_keys($data));
             $intersections = array_intersect_key(...$previous);
-            if(count($intersections) >= $goal){
+            if(count($intersections) >= $goal || count(array_first($previous)) == count(array_first($data))){
                 $sortArr = [];
                 foreach(array_keys($values) as $sort){
-                    $sortArrTemp = [];
+                    $sortArr[$sort] = [];
                     for($i=0; $i<$goal; $i++){
                         $cur = $intersections[$i];
-                        $sortArrTemp[$cur] = $data[$sort][$cur];
+                        $sortArr[$sort][$cur] = $data[$sort][$cur];
                     }
-                    $sortArr[$sort] = $sortArrTemp;
                 }
                 $check = true;
             }
