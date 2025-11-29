@@ -1,0 +1,99 @@
+
+-- create
+
+-- Generic Student Discounts
+CREATE TABLE StudentDiscount(  
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Store VARCHAR(50) NOT NULL,
+    Discount Float,
+    Criteria VARCHAR(255)
+);
+
+CREATE TABLE StudentBeanDiscount (
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Store VARCHAR(50) NOT NULL,
+    Discount Float,
+    Criteria VARCHAR(255)
+);
+
+-- store spesific discounts
+CREATE TABLE TescoStoreDiscount (
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Discount Float,
+    Criteria VARCHAR(255)
+);
+
+CREATE TABLE LidlStoreDiscount (
+    DiscountID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Discount Float,
+    Criteria VARCHAR(255)
+);
+
+-- store items
+CREATE TABLE TescoItems (
+    ItemID INT NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+    ItemName VARCHAR(100) NOT NULL,
+    Price Float NOT NULL,
+    ImageURL Text,
+    Catagory VARCHAR(50),
+    Vegan Binary(1),
+    Vegatarian Binary(1),
+    Ingrediants Text,
+    Quantity INT,
+    Poundage INT,
+    Rating Float,
+    numOfRatings INT,
+    relevanceScore DOUBLE(6, 6),
+    StudentBeanDiscountID INT,
+    StudentDiscountID INT,
+    StoreDiscountID INT,
+    FOREIGN KEY (StudentBeanDiscountID) REFERENCES StudentBeanDiscount(DiscountID),
+    FOREIGN KEY (StudentDiscountID) REFERENCES StudentDiscount(DiscountID),
+    FOREIGN KEY (StoreDiscountID) REFERENCES TescoStoreDiscount(DiscountID)
+);
+
+CREATE TABLE LidlItems (
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ItemName VARCHAR(100) NOT NULL,
+    Price Float NOT NULL,
+    ImageURL Text,
+    Catagory VARCHAR(50),
+    Vegan Binary(1),
+    Vegatarian Binary(1),
+    Ingrediants Text,
+    Quantity INT,
+    Poundage INT,
+    Rating Float,
+    numOfRatings INT,
+    relevanceScore DOUBLE(6, 6),
+    StudentBeanDiscountID INT,
+    StudentDiscountID INT,
+    StoreDiscountID INT,
+    FOREIGN KEY (StudentBeanDiscountID) REFERENCES StudentBeanDiscount(DiscountID),
+    FOREIGN KEY (StudentDiscountID) REFERENCES StudentDiscount(DiscountID),
+    FOREIGN KEY (StoreDiscountID) REFERENCES LidlStoreDiscount(DiscountID)
+);
+
+-- insert
+INSERT INTO StudentDiscount VALUES (0001, 'Lidl', '0.85', null);
+INSERT INTO StudentDiscount VALUES (0002, 'Tesco', null, '2 for 1');
+
+INSERT INTO StudentBeanDiscount VALUES (0001, 'Lidl', '0.5', 'Shops above £30');
+INSERT INTO StudentBeanDiscount VALUES (0002, 'Tesco', '0.75', 'Shops above £25');
+
+INSERT INTO TescoStoreDiscount VALUES (0001, '0.85', NULL);
+INSERT INTO TescoStoreDiscount VALUES (0002, NULL, '2 for 1');
+
+INSERT INTO LidlStoreDiscount VALUES (0001, '0.85', NULL);
+INSERT INTO LidlStoreDiscount VALUES (0002, NULL, '2 for 1');
+
+INSERT INTO TescoItems VALUES (0001, 'carrot', '5.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.3, 1782, NULL, NULL, 0002, 0001);
+INSERT INTO LidlItems VALUES (0001, 'carrot', '3.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+
+-- fetch 
+SELECT * FROM StudentDiscount;
+SELECT * FROM StudentBeanDiscount;
+SELECT * FROM TescoStoreDiscount;
+SELECT * FROM LidlStoreDiscount;
+SELECT * FROM TescoItems;
+SELECT * FROM LidlItems;
