@@ -1,0 +1,111 @@
+
+/* item style */
+.Products{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.item {
+    width: 15%;
+    height: 40%;
+    border: black 1px;
+    background-color: aqua;
+    margin: 15px;
+    border: black 1px solid;
+}
+
+.item img {
+    height: 50%;
+    width: 90%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.item .store{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    width: 90%;
+    height:7%;
+    background-color: lightgray;
+    border: black 1px solid;
+    display: flex;
+    justify-content: center;
+}
+
+    /* what store is the item in */
+.store .tesco{
+    width: 45%;
+    height: 100%;
+    background-color: rgb(68, 0, 255);
+}
+.store .lidl{
+    width: 45%;
+    height: 100%;
+    background-color: rgb(255, 204, 0);
+}
+.store .additional{
+    width: 10%;
+    height: 100%;
+    background-color: rgb(128, 128, 128);
+}
+
+.item .store a p {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 5px;
+    color: white;
+}
+
+    /* lower section of the item display (name price buttons etc) */
+.item .lower {
+    justify-content: center;
+    display: grid;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.item .name {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;;
+}
+
+.item .lower .price {
+    text-align: center;
+    width: 125px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.item .lower .price h1 {
+    font-size: 2em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.item .lower .price p {
+    font-size: 1em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+.item .Buttons {
+    width: 125px;
+    margin-top: 15px;
+}
+
+.item .itemButton {
+    height: 30px;
+    width: 50px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+
+
+
