@@ -1,23 +1,36 @@
 <?php
 
-function outsideQuotes(string $haystack, string $needle, int $placement = 0):bool|int{
+function outsideQuotes(string $haystack, string $needle, int $placement = 0):false|int{
     
-    while(true){
-        $placement = min(
+    $rnd = rand();
+    $test = range(1, 99);
+    while(next($test)){
+
+        $testArray = [
             strpos($haystack, "\"", $placement),
             strpos($haystack, "'", $placement),
             strpos($haystack, $needle, $placement)
-        );
+        ];
+
+        $testArray = array_filter($testArray, fn($value) => !$value === false);
+
+        echo $testArray[0]." ".$testArray[1]." ".$testArray[2]."\n";
+
+        $placement = (int) min($testArray);
+
+        echo $placement."\n";
 
         $quoteType = $haystack[$placement];
 
-        if(!in_array($quoteType, ["\"", "'"])){
-            $placement = strpos($placement, $quoteType, $placement);
+        if(in_array($quoteType, ["\"", "'"])){
+            $placement = strpos($haystack, $quoteType, $placement+1);
+            echo $placement."\n";
+        } else {
             if ($placement >= strlen($haystack) || $placement === false) {
                 return false;
+            } else {
+                return $placement;
             }
-        } else {
-            return $placement;
         }
     }
 }
@@ -37,7 +50,7 @@ class Element {
     public Element $parent;
     public array $children;
 
-    public int $innerText { 
+    public int $innerText; /*{ 
         get{
             $quer = outsideQuotes(self->full, "</".self->type.">");
             return substr(self->full, self->innerText, $quer ? $quer : 0);
@@ -45,24 +58,18 @@ class Element {
         set {
             self->full = substr(self->full, 0, self->innerText)+$value+"</".self->type.">";
         }
-    }
+    }*/
     //innertext gotten every time from substr of full element text
 
-    public string $type {
-        get;
-        set {
-            self->full = "<".$value.substr(self->full, strlen(self->type)+1);
-            self->type = $value;
-        }
-    }
+    readonly string $type;
 
-    public string $full { get; }
+    readonly string $full;
 
 
     public function __construct(string $elementText){
-        self->full = $elementText;
-        self->innerText = outsideQuotes($elementText, ">");
-        self->type = substr($elementText, 1, min(
+        $this->full = $elementText;
+        $this->innerText = outsideQuotes($elementText, ">");
+        $this->type = substr($elementText, 1, min(
             strpos($elementText, " "),
             strpos($elementText, ">")
         )-1);
@@ -78,22 +85,23 @@ class Element {
                 array_push($attrArray, 
                     substr($checkString, strlen($checkString)-strpos(strrev($checkString), " "))
                 );
+            } finally {
+                array_shift($checkArray);
             }
-            array_shift($checkArray);
             //gets names of all attributes by getting all strings between a space and = character
         }
         array_pop($attrArray);
 
-        self->attributes = $attrArray;
-        self->id = self.getAttribute("id");
-        self->classes = explode(" ", self.getAttribute("class"));
+        $this->attributes = $attrArray;
+        $this->id = $this.getAttribute("id");
+        $this->classes = explode(" ", $this.getAttribute("class"));
     }
 
 
     public function getAttribute(string $attribute){
-        if(in_array($attribute, self->attributes)){
-            $offset = outsideQuotes(self->full, $attribute)+strlen($attribute)+1;
-            return substr(self->full, $offset, outsideQuotes(self->full, " ", $offset));
+        if(in_array($attribute, $this->attributes)){
+            $offset = outsideQuotes($this->full, $attribute)+strlen($attribute)+1;
+            return substr($this->full, $offset, outsideQuotes($this->full, " ", $offset));
         } else {
             return null;
         }
@@ -101,7 +109,7 @@ class Element {
 
 
     public function strval() {
-        return self->full;
+        return $this->full;
     }
 }
 
@@ -135,15 +143,15 @@ class Html {
             $elem->parent = $curElement;
         }
         $curElement->children = $children;
-        $key = self->idSet ? $curElement->id : $curElement->classes;
+        $key = $this->idSet ? $curElement->id : $curElement->classes;
         while (true){
-            if(self->elements[$key] == null){
+            if($this->elements[$key] == null){
                 break;
             } else {
                 $key = $key."#";
             }
         }
-        self->elements[self->idSet ? $curElement->id : $curElement->classes] = $curElement;
+        $this->elements[$this->idSet ? $curElement->id : $curElement->classes] = $curElement;
         return $curElement;
     }
     //creates an element object based on text and adds it to the array of all elements
@@ -151,18 +159,21 @@ class Html {
 
 
 
-    public function __construct(string $url, bool $idSet=true, $context){
+    public function __construct(string $url, bool $idSet=true, $context=null){
         $text = file_get_contents($url, false, $context);
 
-        self->idSet = $idSet;
+        $this->idSet = $idSet;
+        $this->elements = [];
 
         $parentArray = [];
         $children = [];
         $offset = 0;
-        $parentPossible = array_merge(self::skips, self::voids);
-        while($offset != false){
+        $parentPossible = array_merge($this::$skips, $this::$voids);
+        while($offset !== false || $offset < $text){
+            echo $offset;
+
             $end = false;
-            $offset = outsideQuotes($text, "<", $offset)+$offset;
+            $offset = outsideQuotes($text, "<", $offset);
             //find next instance of <
 
             $type = substr($text, $offset+1, 
@@ -191,7 +202,7 @@ class Html {
                 //then copy whole string of the element and set it as element object
                 //add contained children and parent, then remove from parents array
             } else if(in_array($type, $parentPossible)){
-                $search = in_array($type, self::voids) ? ">" : "</$type>";
+                $search = in_array($type, $this::voids) ? ">" : "</$type>";
                 $len = outsideQuotes($text, $search, $offset) + strlen($search) - $offset;
                 unset($search);
                 array_push(
@@ -207,16 +218,18 @@ class Html {
                 
                 //if can have parents add to parent array
             }
+
+            $offset++;
         }
     }
 
 
 
-    public function goTo($url): Html{
-        $new = new Html($url, self->idSet);
+    /*public function goTo($url): Html{
+        $new = new Html($url, $this->idSet);
         unset($this);
         return $new;
-    }
+    }*/
 
 }
 
@@ -489,7 +502,10 @@ foreach(getTescoItems() as $item){
 }
 */
 
-$testCode = new Html("/test.html");
-echo $testCode->elements["fort"]->innerText;
+$testCode = new Html("C:\\xampp\htdocs\\test.html");
+echo count($testCode->elements);
+foreach($testCode->elements as $key => $value){
+    echo $key;
+}
 
 ?>
