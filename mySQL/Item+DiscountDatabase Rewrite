@@ -97,3 +97,9 @@ SELECT * FROM TescoStoreDiscount;
 SELECT * FROM LidlStoreDiscount;
 SELECT * FROM TescoItems;
 SELECT * FROM LidlItems;
+
+-- joins
+SELECT tescoI.*, tescoD.*
+FROM TescoItems tescoI
+LEFT JOIN TescoStoreDiscount tescoD ON tescoI.StoreDiscountID = tescod.DiscountID
+WHERE tescoI.StoreDiscountID IS NOT NULL;
