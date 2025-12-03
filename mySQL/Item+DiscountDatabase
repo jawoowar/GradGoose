@@ -146,3 +146,5 @@ CREATE TABLE UserID (
     FOREIGN KEY (PastList3ID) REFERENCES Lists(ListID),
     FOREIGN KEY (FavoriteTableID) REFERENCES Favorites(FavoriteId)
 )
+
+--fujf
