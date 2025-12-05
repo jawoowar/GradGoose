@@ -1,5 +1,5 @@
 :root{
-    background-image: linear-gradient(to bottom,#fbf4f1e1,#cceff8eb);
+    background-image: linear-gradient(to bottom,#fbf4f1e1,#a4edffec);
     color: #2b2b2b;
 }
 
@@ -15,11 +15,21 @@
     color: #2b2b2b;
     background-color: #ff6f27;
     width: 100%;
-    height: 100px;
+    height: 70px;
+    border-radius: 5px;
 }
 
 .Header a{
     padding: 5px;
+}
+
+.Header a  img{
+    margin-top: 10px;
+}
+
+.Header a i {
+    width: 100%;
+    height: 100%;
 }
 
 .Header .button{
@@ -46,16 +56,13 @@
 form{
     border-radius: 5px;
     background-color: #ff6f27;
-    padding: 15px;
     width: 60%;
-    margin: 3px;
-    padding-top: 5px;
-    
+    align-content: center;
+    display: contents;
 }
 input[type=text], select {
   width: 100%;
-  height: 100%;
-  padding: 5px;
+  height: 75%;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
@@ -66,10 +73,47 @@ input[type=text], select {
 }
 
 /*Footer CSS*/
+#FooterLine{
+    background-color: #A2DEFF;
+    width: 100%;
+    height: 3px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 footer{
     width: 100%;
-    height: 300px;
-    background-color: mediumpurple;
-    position: relative;
+    height: 500px;
+    display: flex;
+}
+
+.FooterBox1{
+    width: 27%;
+    height: 100%;
+    background-color: #A2DEFF;
+    margin-right: 20px;
+}
+
+.FooterBoxMiddle{
+    margin-right: 20px;
+    width: 40%;
+    height: 100%;;
+}
+#GradGooseLogoFooter{
+    width: 100%;
+    height: 46%;
+    align-self: center;
+    margin-top: 50px;
+}
+
+.FooterBox2{
+    width: 100%;
+    height: 45%;
+    background-color: #A2DEFF;
+}
+
+.FooterBox3{
+    width: 31%;
+    height: 100%;
+    background-color: #A2DEFF;
 }

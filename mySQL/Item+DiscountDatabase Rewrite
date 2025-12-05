@@ -97,8 +97,15 @@ CREATE TABLE Sort (
 );
 
 
--- user tables
---      Lists
+INSERT INTO TescoItems VALUES (0001, 'carrot', '5.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.3, 1782, NULL, NULL, 0002, 0001);
+INSERT INTO TescoItems VALUES (0001, 'apple', '1.00' , 'www.google.com', 'fruit/veg', 1, 1, 'apple', 3, 150, 4.6, 1326, NULL, NULL, 0002, 0001);
+INSERT INTO TescoItems VALUES (0001, 'lettuce', '2.50' , 'www.google.com', 'fruit/veg', 1, 1, 'lettuce', 3, 150, 4.1, 1163, NULL, NULL, 0002, 0001);
+
+
+INSERT INTO LidlItems VALUES (0001, 'carrot', '3.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+INSERT INTO LidlItems VALUES (0001, 'apple', '0.50' , 'www.google.com', 'fruit/veg', 1, 1, 'apple', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+INSERT INTO LidlItems VALUES (0001, 'lettuce', '1.89' , 'www.google.com', 'fruit/veg', 1, 1, 'lettuce', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+
 
 Create Table Lists (
     ListID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
