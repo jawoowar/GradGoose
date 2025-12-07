@@ -1,0 +1,25 @@
+-- Views
+
+CREATE VIEW Discounts AS
+SELECT 
+    ti.ItemID as ItemID,
+    ti.ItemName as ItemName,
+    ti.Price as Price,
+    ti.Catagory as Catagory,
+    tsd.DiscountID as StoreDiscountID,
+    tsd.Discount as StoreDiscountPercent,
+    tsd.Criteria as StoreDiscountCriteria,
+    sd.DiscountID as StudentDiscountID,
+    sd.Discount as StudentDiscountPercent,
+    sd.Criteria as StudentDiscountCriteria,
+    sbd.DiscountID as StudentBeanDiscountID,
+    sbd.Discount as StudentBeanDiscountPercent,
+    sbd.Criteria as StudentBeanDiscountCriteria
+    
+FROM TescoItems ti
+LEFT JOIN TescoStoreDiscount tsd ON ti.StoreDiscountID = tsd.DiscountID
+LEFT JOIN StudentDiscount sd ON ti.StudentDiscountID = sd.DiscountID
+LEFT JOIN StudentBeanDiscount sbd ON ti.StudentBeanDiscountID = sbd.DiscountID
+
+WHERE ti.Price > 0
+ORDER BY ti.Catagory, ti.ItemName;
