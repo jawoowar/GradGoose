@@ -147,3 +147,7 @@ footer{
 .slider {
     width: 100%;
 }
+
+.radial {
+    display:flex;
+}
