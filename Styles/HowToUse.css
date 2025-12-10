@@ -1,0 +1,83 @@
+.Tabs{
+    width: 100%;
+    height: 650px;
+    margin: 5px;
+    margin-top: 20px;
+    background-color: aqua;
+    display: flex;
+    background-color: #FBF4F1;
+    border: 2px solid #FF6F27;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; 
+    vertical-align: middle;
+}
+
+.TabSections {
+    width: 30%;
+    height: 60px;
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: 5px;
+    background-color: #FBF4F1;
+}
+
+.LineTab{
+    width: 2px;
+    height: 90%;
+    background-color: #FF6F27;
+    margin-left: 17px;
+    margin-right: 17px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+    width: 100%;
+    background-color: #FBF4F1;
+    border: 2px #FF6F27 solid;
+    margin: 30px;
+    border-radius: 10px;
+}
+
+.tablinks {
+    width: 80%;
+    height: 60px;
+    background-color: #FBF4F1;
+    border: 2px #FF6F27 solid;
+    border-radius: 10px;
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+.tablinks:hover {
+    width: 80%;
+    height: 60px;
+    background-color: #f9cebc;
+    border: 2px #FF6F27 solid;
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+.tablinks.active {
+    width: 80%;
+    height: 60px;
+    background-color: #FF6F27;
+    border: 2px #FF6F27 solid;
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 5px;
+    color: white;
+}

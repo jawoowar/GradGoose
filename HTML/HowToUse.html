@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" href="../Styles/Root.css">
     <link rel="stylesheet" href="../Styles/Items.css">
-    <link rel="stylesheet" href="../Styles/Index.css">
+    <link rel="stylesheet" href="../Styles/HowToUse.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap');
     </style>
@@ -36,6 +36,30 @@
         <a href="Login.html"><button class="SignUpButton"> Sign Up </button></a>
 
     </div>
+
+     <div class="Tabs"> <!--The settings section-->
+        <div class="TabSections">
+            <button class="tablinks" onclick="openTabs(event, 'Filters')" id="defaultOpen">Filters</button>
+            <button class="tablinks" onclick="openTabs(event, 'Accessibility')">Accessibility</button>
+            <button class="tablinks" onclick="openTabs(event, 'Connections')">Connections</button>
+        </div>
+
+        <div class="LineTabs"></div>
+
+        <div id="Filters" class="tabcontent" > <!--Filter detail will go here-->
+            <h1>Filters</h1>
+        </div>
+
+        <div id="Accessibility" class="tabcontent" > <!--Accessibility detail will go here-->
+            <h1>Accessibility</h1>
+        </div>
+
+        <div id="Connections" class="tabcontent" > <!--Connections detail will go here-->
+            <h1>Connections</h1>
+        </div>
+
+    </div>
+    <script src="../Scripts/HowToUse.js"></script>
 
 <div id="FooterLine"></div>
 
