@@ -1,102 +1,86 @@
-.Body{
-    width: 100%;
-    height: 800px;
-    background-color: rgb(255, 255, 255);
-    margin-left: 5px;
-    margin-top: 15px;
-    justify-content: center;
-    padding-top: 15px;
-    outline-color: black;
-    border: black 1px solid;
-}
-
-.TopSectionProduct{
-    width: 95%;
-    height: 500px;
-    background-color: white;
+.productDisplay {
+    background-color: #fbf4f1;
+    border: 2px #ff6f22 solid;
+    padding: 20px;
+    border-radius: 5px;
     display: flex;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.imageContainer {
+    text-align: center;
+    border: 2px #ff6f22 solid;
+    border-radius: 5px;
+    width: 68%
+}
+
+.productImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.productInfo {
+    border: 2px #ff6f22 solid;
+    width: 30%;
     margin-left: auto;
-    margin-right: auto;
+    border-radius: 5px;
+    padding: 10px;
+    justify-content: center;
+    display: inline-block;
+    align-content: center;
 }
 
-.RightSideProductTop {
-    width: fit-content;
-    margin-left: auto;
-    align-items: center;
-    columns: 1;
-}
-
-.RightSideProductTop > *{
-    width: 100%;
-    margin-left: 80px;
-    margin-right: 20px;
-}
-
-.ProductImg{
+.productDisplay hr {
     width: 60%;
-    height: 100%;
-    justify-content: center;
-    display: flex;
-}
-
-.Comparisons{
-    width: 80%;
-    height: 70%;
-    background-color: blueviolet;
-    font-size: 20px;
-}
-
-.ProductButtons{
-    background-color: rgb(255, 255, 255);
-    width: 80%;
-    height: 15%;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    
-}
-
-.ProductButtons a {
-    width: fit-content;
-    height: 100%;
-
-}
-
-.ListButton {
-    width: 300px;
-    height: 70px;
-}
-
-.FavButton {
-    width: 150px;
-    height: 70px;
-}
-
-.BottomSectionProduct{
-    width: 95%;
-    height: 200px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-}
-.Links{
-    width: 100%;
-    height: 100px;
-    background-color: rgb(159, 159, 252);
+    border: 1px solid #ff6f22;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.RedirectProductButton{
-    width: auto;
-    height: auto;
+/* product information sections */
+
+.storeSpesifics {
+    width:calc(100%-30px);
+    height: 250px;
+    background-color: rgb(83, 192, 255);
+    border-radius: 5px;
+    padding: 15px
 }
 
-.SimilarProducts{
+.storeSpesifics p {
+    text-align: Left;
+    font-size: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.storeSpesifics tesco{
+    background-color: #fff200;
+}
+
+.storeSpesifics Lidl{
+    background-color: #00539f;
+}
+
+/* information container */
+
+.informationContainer {
     width: 100%;
-    height: 150px;
-    margin-top: 20px;
-    background-color: lightsalmon;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fbf4f1;
+    border-radius: 5px;
 }
 
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1opx;
+}
 
+.dealsContainer {
+    width: 30%;
+}
