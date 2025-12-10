@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <title>GradGoose</title>
+        <title>Profile</title>
     </head>
 
     <link rel="stylesheet" href="../Styles/Root.css">
@@ -45,16 +45,22 @@
 
         <div class="Line"></div>
 
-        <div class="InfoText"> <!--User info displayed here-->
-            <p>Name: Cow Cow</p>
-            <p>Email: CowCow@Cow.com</p>
-            <p>Password: *****</p>
-        </div>
-
-        <div class="ChangeProfileButtons"> <!--Buttons to change user info-->
-            <button>Change Name</button>
-            <button>Change Email</button> 
-            <button>Change Password</button> 
+        <div class="ChangeProfileBackground"> <!--Buttons to change user info-->
+            <div class="InfoText">   <!--User info displayed here-->
+                <p>Name: Cow Cow</p>
+                <button class="ChangeProfileButtons">Change Name</button>
+            </div>
+            <div class="InfoText">
+                <p>Email: goose@pond.com</p>
+                <button class="ChangeProfileButtons">Change Email</button> 
+            </div>
+            <div class="InfoText">
+                <p>Password: ***********</p>
+                <button class="ChangeProfileButtons">Change Password</button> 
+            </div>
+            
+            
+            
 
         </div>
     </div>
@@ -69,15 +75,20 @@
         <div class="LineSettings"></div>
 
         <div id="Filters" class="tabcontent" > <!--Filter detail will go here-->
-            <h1>Filters</h1>
+            <h1>Custom Filter</h1>
+            <p>Relevency</p>
+            <input type="range" min="0" max="100" values="100" class="slider" id="relevency" ><!-- do these -->
+            <p>Costs</p>
+            <input type="range" min="0" max="100" values="100" class="slider" id="Cost">
+            <p>Number of Ratings</p>
+            <input type="range" min="0" max="100" values="100" class="slider" id="NumRatings">
+            <p>Ratings</p>
+            <input type="range" min="0" max="100" values="100" class="slider" id="Ratings">
+
         </div>
 
         <div id="Accessibility" class="tabcontent" > <!--Accessibility detail will go here-->
             <h1>Accessibility</h1>
-        </div>
-
-        <div id="Connections" class="tabcontent" > <!--Connections detail will go here-->
-            <h1>Connections</h1>
         </div>
 
     </div>
