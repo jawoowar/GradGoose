@@ -84,11 +84,11 @@
     margin-bottom: 40px;
     border: #ff6f27 2px solid;
     border-radius: 5px;
+    padding: 20px;
 }
 
 .list {
     background-color: #fbf4f1;
-    border: black 1px solid;
     width: 45%;
 }
 
@@ -96,17 +96,19 @@
     background-color: #fbf4f1;
     overflow-y: scroll;
     overflow-x: NONE;
-    height: 450px;
+    height: 600px;
     border: #ff6f27 2px solid;
     border-radius: 5px;
+    justify-content: center;
 }
 
 .tesco {
     background-color: blue;
-    height:20px;
+    height:5px;
     color: white;
     text-align: center;
     margin-bottom: 5px;
+    border-radius: 5px;
 }
 .lidl {
     background-color: rgb(255, 230, 0);
@@ -124,6 +126,10 @@
     color: #fbf4f1;
 }
 
+.listContent {
+    background-color: #ff6f27;
+}
+
 
 
 /*Item Alt */
@@ -133,13 +139,15 @@
     height: 120px;
     border: black 1px;
     margin-top: 5px;
-    margin-left: 3px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #fbf4f1;
     border-bottom: black 1px solid;
     display: flex;
     flex-wrap: wrap;
     border: #ff6f27 2px solid;
     border-radius: 5px;
+
 }
 
 .itemAlt img {
