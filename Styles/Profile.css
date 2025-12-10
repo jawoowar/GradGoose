@@ -159,3 +159,8 @@
     margin-right: 5px;
     color: white;
 }
+
+#Accessibility > *{
+    color: #fbf4f1;
+    background-color:#ff6f27;
+}
