@@ -6,16 +6,15 @@
     border: #ff6f27 2px solid;
     border-radius: 5px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-
-.CaraselItems{
     justify-content: space-evenly;
     display: flex;
+    scroll-snap-type: x mandatory;
 }
-.CaraselItems a{
+
+.Carasel a{
     margin-top: 10px;
 }
-.CaraselItems a img{
+.Carasel img{
     width: 120px;
     height: 120px;
     border-radius: 50%;
