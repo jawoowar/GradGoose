@@ -1,15 +1,9 @@
 
 /* item style */
-.Products{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    display: flex;
-}
 
 .item {
     width: calc(25%-1);
-    height: 32%;
+    height: 35%;
     margin-top: 20px;
     margin-left: 10px;
     background-color: #fbf4f1;
@@ -31,21 +25,22 @@
     margin-right: 10px;
     margin-top: 5px;
     width: 90%;
-    height:8%;
+    height:2%;
+    border: #fbf4f1 2px solid;
+    border-radius: 5px;
     background-color: lightgray;
-    border: black 1px solid;
     display: flex;
     justify-content: center;
 }
 
     /* what store is the item in */
 .store .tesco{
-    width: 45%;
+    width: 50%;
     height: 100%;
     background-color: rgb(68, 0, 255);
 }
 .store .lidl{
-    width: 45%;
+    width: 50%;
     height: 100%;
     background-color: rgb(255, 204, 0);
 }
@@ -104,7 +99,21 @@
     margin-top: 10px;
 }
 
+.HideTesco{
+}
+.HideLidl{
+}
 
+.tesco:hover + .HideTesco{
+    background-color: #575757;
+    color: rgb(255, 0, 0);
+    display: block;
+}
 
+.lidl:hover + .HideLidl{
+    background-color: #575757;
+    color: rgb(255, 0, 0);
+    display: block;
+}
 
 
