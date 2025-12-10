@@ -1,0 +1,30 @@
+-- Views
+
+/* issues when making
+    - struggle to get the information to display proparly
+    - joining multiple tables together inside a view
+    - replacing columns in a view
+*/
+
+CREATE VIEW Discounts AS
+SELECT 
+    ti.ItemID as ItemID,
+    ti.ItemName as ItemName,
+    ti.Price as Price,
+
+    cat.Catagory as CatagoryName,
+
+    tsd.Discount as StoreDiscountPercent,
+    tsd.Criteria as StoreDiscountCriteria,
+
+    sd.Discount as StudentDiscountPercent,
+    sd.Criteria as StudentDiscountCriteria,
+
+    sbd.Discount as StudentBeanDiscountPercent,
+    sbd.Criteria as StudentBeanDiscountCriteria
+    
+FROM TescoItems ti
+inner JOIN Catagories cat ON ti.Catagory = cat.CatagoryID
+inner JOIN TescoStoreDiscount tsd ON ti.StoreDiscountID = tsd.DiscountID
+inner JOIN StudentDiscount sd ON ti.StudentDiscountID = sd.DiscountID
+left JOIN StudentBeanDiscount sbd ON ti.StudentBeanDiscountID = sbd.DiscountID

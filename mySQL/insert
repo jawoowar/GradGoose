@@ -1,0 +1,48 @@
+-- insert
+
+    -- Student Discount
+
+INSERT INTO StudentDiscount VALUES (0001, 'Lidl', '0.85', null);
+INSERT INTO StudentDiscount VALUES (0002, 'Tesco', null, '2 for 1');
+
+    -- Student Bean Discount
+
+INSERT INTO StudentBeanDiscount VALUES (0001, 'Lidl', '0.5', 'Shops above £30');
+INSERT INTO StudentBeanDiscount VALUES (0002, 'Tesco', '0.75', 'Shops above £25');
+
+    -- Tesco Store Discount
+
+INSERT INTO TescoStoreDiscount VALUES (0001, '0.85', NULL);
+INSERT INTO TescoStoreDiscount VALUES (0002, NULL, '2 for 1');
+
+    -- Lidl Store Discount
+
+INSERT INTO LidlStoreDiscount VALUES (0001, '0.85', NULL);
+INSERT INTO LidlStoreDiscount VALUES (0002, NULL, '2 for 1');
+
+    -- Catagories
+
+INSERT INTO Catagories VALUES (0001, "Fruit/Veg")
+
+    -- TescoItems
+
+INSERT INTO TescoItems VALUES (0001, 'carrot', '5.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.3, 1782, NULL, NULL, 0002, 0001);
+INSERT INTO TescoItems VALUES (0001, 'apple', '1.00' , 'www.google.com', 'fruit/veg', 1, 1, 'apple', 3, 150, 4.6, 1326, NULL, NULL, 0002, 0001);
+INSERT INTO TescoItems VALUES (0001, 'lettuce', '2.50' , 'www.google.com', 'fruit/veg', 1, 1, 'lettuce', 3, 150, 4.1, 1163, NULL, NULL, 0002, 0001);
+
+    -- Lidl Items
+
+INSERT INTO LidlItems VALUES (0001, 'carrot', '3.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+INSERT INTO LidlItems VALUES (0001, 'apple', '0.50' , 'www.google.com', 'fruit/veg', 1, 1, 'apple', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+INSERT INTO LidlItems VALUES (0001, 'lettuce', '1.89' , 'www.google.com', 'fruit/veg', 1, 1, 'lettuce', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+
+    -- Joint Items
+
+INSERT INTO JointItems (ItemName, LidlItemID, TescoItemID)
+SELECT
+    Li.ItemName,
+    Li.ItemID,
+    
+    Ti.ItemID
+
+From TescoItems Ti INNER JOIN LidlItems Li ON Ti.ItemName = Li.ItemName

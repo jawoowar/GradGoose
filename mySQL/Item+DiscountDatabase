@@ -116,7 +116,7 @@ Create Table Lists (
     CreationDate DATETIME NOT NULL,
     ChosenStore VARCHAR(50),
     ItemID int,
-)
+);
 
 --      Favorites
 
@@ -124,7 +124,7 @@ Create Table Favorites (
     FavoriteId int NOT NULL Primary key AUTO_INCREMENT,
     ChosenStore VARCHAR(50),
     ItemID int
-) 
+) ;
 
 --      User
 
@@ -145,4 +145,6 @@ CREATE TABLE UserID (
     FOREIGN KEY (PastList2ID) REFERENCES Lists(ListID),
     FOREIGN KEY (PastList3ID) REFERENCES Lists(ListID),
     FOREIGN KEY (FavoriteTableID) REFERENCES Favorites(FavoriteId)
-)
+);
+
+--fujf

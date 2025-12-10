@@ -29,13 +29,19 @@ CREATE TABLE LidlStoreDiscount (
     Criteria VARCHAR(255)
 );
 
+-- catagory table
+CREATE TABLE Catagories (
+    CatagoryID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Catagory VARCHAR(100) NOT NULL
+)
+
 -- store items
 CREATE TABLE TescoItems (
     ItemID INT NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
     ItemName VARCHAR(100) NOT NULL,
     Price Float NOT NULL,
     ImageURL Text,
-    Catagory VARCHAR(50),
+    Catagory Int,
     Vegan Binary(1),
     Vegatarian Binary(1),
     Ingrediants Text,
@@ -57,7 +63,7 @@ CREATE TABLE LidlItems (
     ItemName VARCHAR(100) NOT NULL,
     Price Float NOT NULL,
     ImageURL Text,
-    Catagory VARCHAR(50),
+    Catagory int,
     Vegan Binary(1),
     Vegatarian Binary(1),
     Ingrediants Text,
@@ -74,26 +80,64 @@ CREATE TABLE LidlItems (
     FOREIGN KEY (StoreDiscountID) REFERENCES LidlStoreDiscount(DiscountID)
 );
 
--- insert
-INSERT INTO StudentDiscount VALUES (0001, 'Lidl', '0.85', null);
-INSERT INTO StudentDiscount VALUES (0002, 'Tesco', null, '2 for 1');
+-- cross store items
+CREATE TABLE JointItems (
+    ItemID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ItemName VARCHAR(100) NOT NULL,
+    TescoItemID INT,
+    LidlItemID INT,
+    FOREIGN KEY (TescoItemID) REFERENCES TescoItems(ItemID),
+    FOREIGN KEY (LidlItemID) REFERENCES LidlItems(ItemID)
 
-INSERT INTO StudentBeanDiscount VALUES (0001, 'Lidl', '0.5', 'Shops above £30');
-INSERT INTO StudentBeanDiscount VALUES (0002, 'Tesco', '0.75', 'Shops above £25');
+);
 
-INSERT INTO TescoStoreDiscount VALUES (0001, '0.85', NULL);
-INSERT INTO TescoStoreDiscount VALUES (0002, NULL, '2 for 1');
+-- sorting information
+CREATE TABLE Sort (
+    SortID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ItemID int NOT NULL,
+    PriceScore Float,
+    NumRatingScore Float,
+    RatingScore Float,
+    RelevenceScore Float,
+    FOREIGN KEY (ItemID) REFERENCES JointItems(ItemID)
+);
 
-INSERT INTO LidlStoreDiscount VALUES (0001, '0.85', NULL);
-INSERT INTO LidlStoreDiscount VALUES (0002, NULL, '2 for 1');
+-- user tables
 
-INSERT INTO TescoItems VALUES (0001, 'carrot', '5.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.3, 1782, NULL, NULL, 0002, 0001);
-INSERT INTO LidlItems VALUES (0001, 'carrot', '3.00' , 'www.google.com', 'fruit/veg', 1, 1, 'carrot', 3, 150, 4.7, 381, NULL, NULL, 0001, 0002);
+--      Lists
 
--- fetch 
-SELECT * FROM StudentDiscount;
-SELECT * FROM StudentBeanDiscount;
-SELECT * FROM TescoStoreDiscount;
-SELECT * FROM LidlStoreDiscount;
-SELECT * FROM TescoItems;
-SELECT * FROM LidlItems;
+Create Table Lists (
+    ListID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    CreationDate DATETIME NOT NULL,
+    ChosenStore VARCHAR(50),
+    ItemID int
+);
+
+--      Favorites
+
+Create Table Favorites (
+    FavoriteId int NOT NULL Primary key AUTO_INCREMENT,
+    ChosenStore VARCHAR(50),
+    ItemID int
+);
+
+--      User
+
+CREATE TABLE UserID (
+    UserID int NOT NULL Primary key AUTO_INCREMENT,
+    UserName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    PasswordHash VARCHAR(255) NOT NULL,
+    TescoClubCardStatue Binary,
+    LidlPlusStatus Binary,
+    ListIDCurrent int,
+    PastList1ID int,
+    PastList2ID int,
+    PastList3ID int,
+    FavoriteTableID int,
+    FOREIGN KEY (ListIDCurrent) REFERENCES Lists(ListID),
+    FOREIGN KEY (PastList1ID) REFERENCES Lists(ListID),
+    FOREIGN KEY (PastList2ID) REFERENCES Lists(ListID),
+    FOREIGN KEY (PastList3ID) REFERENCES Lists(ListID),
+    FOREIGN KEY (FavoriteTableID) REFERENCES Favorites(FavoriteId)
+);

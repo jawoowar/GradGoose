@@ -1,0 +1,2 @@
+CREATE index JointItemsIndex
+On JointItems (TescoItemID, LidlItemID);
