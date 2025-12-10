@@ -1,14 +1,8 @@
 
 /* item style */
-.Products{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    display: flex;
-}
 
 .item {
-    width: calc(25%-1);
+    width: 300px;
     height: 32%;
     margin-top: 20px;
     margin-left: 10px;
@@ -19,10 +13,8 @@
 }
 
 .item img {
-    height: 50%;
-    width: 90%;
-    margin-left: 10px;
-    margin-right: 10px;
+    height: 250px;
+    margin-left: auto;
     margin-top: 5px;
 }
 
