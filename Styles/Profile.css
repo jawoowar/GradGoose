@@ -1,66 +1,102 @@
 .Info{
     width: 100%;
-    height: 300px;
+    height: 650px;
     margin: 5px;
     margin-top: 20px;
     background-color: aqua;
     display: flex;
+    background-color: #FBF4F1;
+    border: 2px solid #FF6F27;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; 
+    vertical-align: middle;
 }
 
 .ProfileIMG{
-    width: 200px;
-    height: 200px;
+    width: 550px;
+    height: 550px;
     margin-left: 120px;
-    margin-top: 35px;
+    margin-top: 50px;
     border-radius: 50%;
+    border: 2px solid #FF6F27; 
 }
 .Line{
-    width: 5px;
+    width: 2px;
     height: 80%;
-    background-color: blueviolet;
+    background-color: #FF6F27;
     margin-left: 50px;
     margin-right: 50px;
-    margin-top: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .InfoText{
-    width: 40%;
-    height: 100%;
-    background-color: aqua;
+    width: 90%;
+    height: 20%;
     font-size: 35px;
-    text-align: left;
+    justify-content:space-between;
+    display: flex;
+    background-color: #FBF4F1;
+    border-radius: 10px;
+    justify-self: center;
+    margin-top: 5%;
+    
+}
+
+.InfoText p {
+    margin-left: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.ChangeProfileBackground{
+   background-color: #ff6f27;
+   border: 3px solid #ff6f27;
+   border-radius: 10px;
+   width: 50%;
+   height: 60%;
+   display:inline-block;
+    padding: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 30px;
 }
 
 .ChangeProfileButtons{
-    width: 400px;
-}
-.ChangeProfileButtons button{
-    width: 95%;
-    height: 60px;
-    background-color: rgb(89, 238, 44);
-    display: block;
-    justify-items: center;
-    margin-top: 25px;
+    width: 20%;
+    height: 40px;
+    background-color: #A2DEFF;
+    justify-self: center;
+    border: none;
+    border-radius: 10px;
+    margin-right: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .Settings{
-    margin-left: 5px;
     width: 100%;
-    height: 500px;
+    height: 650px;
+    margin: 5px;
+    margin-top: 20px;
     background-color: aqua;
     display: flex;
+    background-color: #FBF4F1;
+    border: 2px solid #FF6F27;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; 
+    vertical-align: middle;
 }
 
 .SettingsSections{
     width: 22%;
     height: 100%;
     margin-left: 14px;
-    background-color: aqua;
+    background-color: #FBF4F1;
 }
 
-.SettingsSections button{
-    width: 95%;
+.SettingsSections {
+    width: 30%;
     height: 60px;
-    background-color: rgb(89, 238, 44);
     display: block;
     justify-items: center;
     margin-top: 20px;
@@ -69,12 +105,13 @@
 }
 
 .LineSettings{
-    width: 5px;
+    width: 2px;
     height: 90%;
-    background-color: blueviolet;
+    background-color: #FF6F27;
     margin-left: 17px;
-    margin-right: 50px;
-    margin-top: 30px;
+    margin-right: 17px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .tabcontent {
@@ -82,5 +119,46 @@
     padding: 6px 12px;
     border-top: none;
     width: 100%;
-    background-color: aqua;
+    background-color: #FBF4F1;
+    border: 2px #FF6F27 solid;
+    margin: 30px;
+    border-radius: 10px;
+}
+
+.tablinks {
+    width: 80%;
+    height: 60px;
+    background-color: #FBF4F1;
+    border: 2px #FF6F27 solid;
+    border-radius: 10px;
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+.tablinks:hover {
+    width: 80%;
+    height: 60px;
+    background-color: #f9cebc;
+    border: 2px #FF6F27 solid;
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+.tablinks.active {
+    width: 80%;
+    height: 60px;
+    background-color: #FF6F27;
+    border: 2px #FF6F27 solid;
+    display: block;
+    justify-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 5px;
+    color: white;
 }

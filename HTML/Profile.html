@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>GradGoose</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <title>Profile</title>
     </head>
 
     <link rel="stylesheet" href="../Styles/Root.css">
@@ -17,9 +26,9 @@
         </form>
         
         <!--Buttons to move to a different page-->
-        <a href="Lists.html"><img src="../Media/ListsIcon.png" alt=""></a>
-        <a href="Favs.html"><img src="../Media/Star.png" alt=""></a>
-        <a href="Profile.html"><button class="button"> Profile </button></a>
+        <a href="Lists.html"><i class="fa fa-navicon"></i></a>
+        <a href="Favs.html"><i class="material-icons" style="font-size:48px">star</i></a>
+        <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
         <a href="Login.html"><button class="button"> Login </button></a>
 
     </div>
@@ -31,16 +40,22 @@
 
         <div class="Line"></div>
 
-        <div class="InfoText"> <!--User info displayed here-->
-            <p>Name: Cow Cow</p>
-            <p>Email: CowCow@Cow.com</p>
-            <p>Password: *****</p>
-        </div>
-
-        <div class="ChangeProfileButtons"> <!--Buttons to change user info-->
-            <button>Change Name</button>
-            <button>Change Email</button> 
-            <button>Change Password</button> 
+        <div class="ChangeProfileBackground"> <!--Buttons to change user info-->
+            <div class="InfoText">   <!--User info displayed here-->
+                <p>Name: Cow Cow</p>
+                <button class="ChangeProfileButtons">Change Name</button>
+            </div>
+            <div class="InfoText">
+                <p>Email: goose@pond.com</p>
+                <button class="ChangeProfileButtons">Change Email</button> 
+            </div>
+            <div class="InfoText">
+                <p>Password: ***********</p>
+                <button class="ChangeProfileButtons">Change Password</button> 
+            </div>
+            
+            
+            
 
         </div>
     </div>
