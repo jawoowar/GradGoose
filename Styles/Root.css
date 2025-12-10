@@ -133,7 +133,7 @@ footer{
 
 .Filters{
     width: 15%;
-    height: 1000px;
+    height: 960px;
     background-color: #fbf4f1;
     border: #ff6f27 2px solid;
     border-radius: 5px;
@@ -154,4 +154,9 @@ footer{
 
 .radial {
     display:flex;
+}
+
+.filterP {
+    margin-bottom: 10px;
+    margin-left: 5px;
 }
