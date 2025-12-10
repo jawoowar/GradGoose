@@ -14,7 +14,7 @@
 
 .item img {
     height: 250px;
-    justify-self: center;
+    margin-left: auto;
     margin-top: 5px;
 }
 
