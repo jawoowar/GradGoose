@@ -10,7 +10,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <script src="https://kit.fontawesome.com/e6a1e6130b.js" crossorigin="anonymous"></script>
+
         <title>GradGoose</title>
+        
     </head>
 
     <link rel="stylesheet" href="../Styles/Root.css">
@@ -37,37 +40,95 @@
 
 <body class="Website"> <!--Moves the whole website to the centre-->
     <div class="productDisplay">
-        <div class="imageContainer" id="slideshow">
-            <img src="../Media/MilkPlaceholder.png" class="productImage" alt="Product Image">
+        <div class="basicInfo">
+
+            
+
+            <div class="imageContainer" id="slideshow">
+                <img src="../Media/MilkPlaceholder.png" class="productImage" alt="Product Image">
+            </div>
+
+            <h1>item name</h1>
+
         </div>
+
 
         <!-- product information perstore -->
 
         <div class="productInfo">
             <div class="storeSpesifics tesco">
-                
                 <div class="informationContainer">
                     <div class="dealsContainer">
-                        <h1>store</h1>
-                        <h1>student</h1>
-                        <h1>bean</h1>
+
+                        <div class="deal tesco"> <h2>store</h2> </div>
+                        <div class="deal tesco"> <h2>student</h2> </div>
+                        <div class="deal tesco"> <h2>bean</h2> </div>
 
                     </div>
+                    
+                    <div class="verticalLine tesco"></div>
 
+                    <div class="productInfoContainer">
+
+                        <div class="info tesco"> <h2>catagory</h2> </div>
+                        <div class="info tesco"> <h2>veg/vegan</h2> </div>
+                        <div class="info tesco"> <h2>quantity</h2> </div>
+
+                    </div>
+                    <div class="productInfoContainer" style="margin-left: 20px;">
+
+                        <div class="info tesco"> <h2>pondage</h2> </div>
+                        <div class="info tesco"> <h2>rating</h2> </div>
+                        <div class="ingrediantInfo tesco"> <h2>ingrediants ingrediants ingrediants ingrediants ingrediants ingrediants ingrediants ingrediants </h2> </div>
+
+                    </div>
                 </div>
                 <div class="bottom">
                         <p>£0.00</p>
                     <div class="buttonContainer">
-                        <button>list</button>
-                        <button>favs</button>
+                        <button id="addList"><i class="fa-duotone fa-solid fa-plus fa-3x tescoIcons"></i></button>
+                        <button id="addFavs"><i class="fa-solid fa-star fa-3x tescoIcons"></i></button>
                     </div>
                 </div>
 
             </div>
 
             <hr>
-            <div class="storeSpesifics Lidl">
-                <p>£0.00</p>
+            <div class="storeSpesifics lidl">
+                <div class="informationContainer ">
+                    <div class="dealsContainer">
+
+                        <div class="deal lidl"> <h2>store</h2> </div>
+                        <div class="deal lidl"> <h2>student</h2> </div>
+                        <div class="deal lidl"> <h2>bean</h2> </div>
+
+                    </div>
+                    
+                    <div class="verticalLine lidl"></div>
+
+                    <div class="productInfoContainer">
+
+                        <div class="info lidl"> <h2>catagory</h2> </div>
+                        <div class="info lidl"> <h2>veg/vegan</h2> </div>
+                        <div class="info lidl"> <h2>quantity</h2> </div>
+
+                    </div>
+                    <div class="productInfoContainer" style="margin-left: 20px;">
+
+                        <div class="info lidl"> <h2>pondage</h2> </div>
+                        <div class="info lidl"> <h2>rating</h2> </div>
+                        <div class="ingrediantInfo lidl"> <h2>ingrediants ingrediants ingrediants ingrediants ingrediants ingrediants ingrediants ingrediants </h2> </div>
+
+                    </div>
+                </div>
+                <div class="bottom">
+                        <p>£0.00</p>
+                    <div class="buttonContainer">
+                        <button id="addList"><i class="fa-duotone fa-solid fa-plus fa-3x lidlIcons"></i></button>
+                        <button id="addFavs"><i class="fa-solid fa-star fa-3x lidlIcons"></i></button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -99,4 +160,5 @@
 </Footer>   
 
 </body>
+
 </html>
