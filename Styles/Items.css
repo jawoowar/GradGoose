@@ -2,7 +2,7 @@
 /* item style */
 
 .item {
-    width: 300x;
+    width: 250px;
     height: 32%;
     margin-top: 20px;
     margin-left: 10px;
@@ -13,9 +13,9 @@
 }
 
 .item img {
-    width: 100%;
+    width: 90%;
     height: 200px;
-    margin-left: auto;
+    margin-left: 11px;
     margin-top: 5px;
 }
 
@@ -24,7 +24,7 @@
     margin-right: 10px;
     margin-top: 5px;
     width: 90%;
-    height:2%;
+    height:7px;
     border: #fbf4f1 2px solid;
     border-radius: 5px;
     background-color: lightgray;
@@ -91,16 +91,20 @@
     margin-bottom: 0px;
 }
 
-
+.item .Buttons{
+    margin-left: 15px;
+}
 .item .Buttons a img{
+    justify-content: space-evenly;
     width: 40px;
     height: 40px;
+    margin-left: 20px;
     margin-top: 10px;
 }
 
 .TescoWrap{
     position: relative;
-    display: inline-block;
+    display: flex;
     cursor: default;
 }
 
@@ -124,10 +128,14 @@
     visibility: visible;
 }
 
+.TescoWrap a{
+    width: 82px;
+    height: 5px;
+}
 
 .LidlWrap{
     position: relative;
-    display: inline-block;
+    display: flex;
     cursor: default;
 }
 
@@ -151,3 +159,7 @@
     visibility: visible;
 }
 
+.LidlWrap a{
+    width: 82px;
+    height: 5px;
+}
