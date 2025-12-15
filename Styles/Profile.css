@@ -39,7 +39,9 @@
     border-radius: 10px;
     justify-self: center;
     margin-top: 30px;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: auto;
     
 }
 

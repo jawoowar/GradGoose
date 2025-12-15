@@ -2,7 +2,7 @@
 /* item style */
 
 .item {
-    width: 300px;
+    width: 250px;
     height: 32%;
     margin-top: 20px;
     margin-left: 10px;
@@ -13,8 +13,9 @@
 }
 
 .item img {
-    height: 250px;
-    margin-left: auto;
+    width: 90%;
+    height: 200px;
+    margin-left: 11px;
     margin-top: 5px;
 }
 
@@ -23,21 +24,22 @@
     margin-right: 10px;
     margin-top: 5px;
     width: 90%;
-    height:8%;
+    height:7px;
+    border: #fbf4f1 2px solid;
+    border-radius: 5px;
     background-color: lightgray;
-    border: black 1px solid;
     display: flex;
     justify-content: center;
 }
 
     /* what store is the item in */
 .store .tesco{
-    width: 45%;
+    width: 50%;
     height: 100%;
     background-color: rgb(68, 0, 255);
 }
 .store .lidl{
-    width: 45%;
+    width: 50%;
     height: 100%;
     background-color: rgb(255, 204, 0);
 }
@@ -89,14 +91,75 @@
     margin-bottom: 0px;
 }
 
-
+.item .Buttons{
+    margin-left: 15px;
+}
 .item .Buttons a img{
+    justify-content: space-evenly;
     width: 40px;
     height: 40px;
+    margin-left: 20px;
     margin-top: 10px;
 }
 
+.TescoWrap{
+    position: relative;
+    display: flex;
+    cursor: default;
+}
 
+.TescoWrap .TescoText{
+    visibility: hidden;
+    padding: 0.25em 0.5em;
+    background-color: rgb(68, 0, 255);
+    color: #fbf4f1;
+    text-align: center;
+    border-radius: 0.25em;
+    white-space: nowrap;
 
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
+.TescoWrap:hover .TescoText{
+    visibility: visible;
+}
 
+.TescoWrap a{
+    width: 82px;
+    height: 5px;
+}
+
+.LidlWrap{
+    position: relative;
+    display: flex;
+    cursor: default;
+}
+
+.LidlWrap .LidlText{
+    visibility: hidden;
+    padding: 0.25em 0.5em;
+    background-color: rgb(255, 204, 0);
+    color: #fbf4f1;
+    text-align: center;
+    border-radius: 0.25em;
+    white-space: nowrap;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.LidlWrap:hover .LidlText{
+    visibility: visible;
+}
+
+.LidlWrap a{
+    width: 82px;
+    height: 5px;
+}

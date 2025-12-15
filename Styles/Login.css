@@ -6,8 +6,12 @@ main {
 .LoginMain {
     margin-top: 50px;
     width: 600px;
-    height: 350px;
-    background-color: rgb(184, 130, 235);
+    height: fit-content;
+    background-color: #fbf4f1;
+    border: 2px #ff6f27 solid;
+    border-radius: 5px;;
+    margin-top: 250px;
+    margin-bottom: 300px;
 }
 
 .TextFields {
@@ -15,6 +19,7 @@ main {
     margin-right: auto;
     margin-top: 10px;
     width: 85%;
+
 }
 
 .TextField {
@@ -22,14 +27,17 @@ main {
     padding-left: auto;
     padding-right: auto;
     width: 100%;
+    
 }
 
 .TextField input[type="text"] {
     width: 100%;
-    height: 30px;
+    height: 50px;
     border-radius: 5px;
     border: none;
     padding-left: 10px;
+    border: 2px #ffb895 solid;
+    font-size: 16px;;
 }
 
 label {
@@ -43,6 +51,8 @@ label {
     text-align: center;
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 30px;
+
 }
 
 a {
@@ -55,6 +65,10 @@ a {
 button {
     width: 100%;
     height: 100%;
+    background-color: #a2deff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 hr {
