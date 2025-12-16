@@ -94,13 +94,24 @@
 .item .Buttons{
     margin-left: 15px;
 }
-.item .Buttons a img{
+.item .Buttons a i{
     justify-content: space-evenly;
     width: 40px;
     height: 40px;
     margin-left: 20px;
-    margin-top: 10px;
+    margin-top: 5px;
+    color:#A2DEFF;
+    margin-bottom: 20px;
 }
+
+.fa.fa-plus.fa-3x:hover {
+    color:#daf2ff;
+}
+
+.fa.fa-star.fa-3x:hover {
+    color:#daf2ff;
+}
+
 
 .TescoWrap{
     position: relative;
