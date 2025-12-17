@@ -1,6 +1,7 @@
 <?php
-    $conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
-
+    $dbName = "jenniferwoodward_GradGoose";
+    $conn = new mysqli("ysjcs.net", "jennifer.w", "EHEXYUE8",$dbName);
+    
     if (!$conn) {
         die("Connection failed: ".mysqli_connect_error());
     }
