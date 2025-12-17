@@ -87,9 +87,8 @@ CREATE TABLE JointItems (
     ItemName VARCHAR(100) NOT NULL,
     TescoItemID INT,
     LidlItemID INT,
-    FOREIGN KEY (TescoItemID) REFERENCES TescoItems(ItemID),
-    FOREIGN KEY (LidlItemID) REFERENCES LidlItems(ItemID)
-
+    FOREIGN KEY (TescoItemID) REFERENCES TescoItems(TescoItemID),
+    FOREIGN KEY (LidlItemID) REFERENCES LidlItems(TescoItemID)
 );
 
 -- sorting information
