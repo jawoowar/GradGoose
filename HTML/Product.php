@@ -9,10 +9,9 @@
     $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$UID}");
     $User = mysqli_fetch_assoc($result);
 
-    $ID = $_GET["id"];
+    $ID = 1;//$_GET["id"];
     $result = $conn->query("SELECT * FROM JointItems WHERE ItemID = {$ID}");
     $JointItems = mysqli_fetch_assoc($result);
-
 
     $TescoID = $JointItems['TescoItemID'];
     $LidlID = $JointItems['LidlItemID'];
@@ -151,6 +150,12 @@
         }
 
     }
+
+    /*
+    $discount = $TescoItems['StudentDiscountID']
+    $result = $conn->query("SELECT * FROM StudentDiscount WHERE DiscountID = {$discount}");
+    $StudentDiscount = mysqli_fetch_assoc($result);
+    */
         
 ?>
 
@@ -215,7 +220,7 @@
                 <div class="informationContainer">
                     <div class="dealsContainer">
 
-                        <div class="deal tesco"> <h2>store</h2> </div>
+                        <div class="deal tesco"> <h2><?php /* echo "Discount: $StudentDiscount['Discount']; </br> Criteria: $StudentDiscount['Criteria'];" */?></h2> </div>
                         <div class="deal tesco"> <h2>student</h2> </div>
                         <div class="deal tesco"> <h2>bean</h2> </div>
 

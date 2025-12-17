@@ -226,3 +226,13 @@
     margin-left: 10px;
     cursor: pointer;
 }
+
+.checked {
+    background-color: aquamarine;
+}
+
+.Bin {
+    background-color: none;
+    border: none;
+    cursor: pointer;
+}
