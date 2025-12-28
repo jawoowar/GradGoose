@@ -1,8 +1,8 @@
 function getCookie(value){
-    cookies = document.cookies;
-    return cookies.substring(cookies.indexof(value)+1);
+    let cookies = document.cookies;
+    return !!cookies && cookies.substring(cookies.indexOf(value)+1) == "false" ? "Comic Relief" : "Chivo Mono";
 }
 
 document.querySelector(":root").style.setProperty(
-    "font", getCookie("font")
+    "--font", getCookie("font")
 );

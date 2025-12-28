@@ -16,9 +16,12 @@ function openSettings(evt, SettingsName) {
 
 //sets accessable font 
 function accessFont(evt){
-  fontCheck = evt.currentTarget.checked ? "Comic Sans" : "Chivo Mono";
-  document.cookies = fontCheck;
-  document.querySelector(":root").style.setProperty(fontCheck);
+  checked = !checked;
+  document.cookies = "font=".concat(checked, ";");
+  console.log("font=".concat(checked, ";"));
+  let fontCheck = checked ? "Comic Relief" : "Chivo Mono";
+  document.querySelector(":root").style.setProperty("--font", fontCheck);
+  evt.currentTarget.checked = checked;
 }
   
 // Get the element with id="defaultOpen" and click on it
@@ -26,6 +29,5 @@ function accessFont(evt){
 document.getElementById("defaultOpen").click();
 
 //selects if accessable font is enabled
-if(getCookie("font") == "Comic Sans"){
-  document.getElementById("font").checked = true;
-}
+var checked = getCookie("font") == "true"
+document.getElementById("font").checked = checked;

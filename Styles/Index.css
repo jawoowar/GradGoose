@@ -9,6 +9,8 @@
     justify-content: space-evenly;
     display: flex;
     scroll-snap-type: x mandatory;
+    overflow-x: hidden;
+    position: relative;
 }
 
 .Carasel a{
@@ -20,6 +22,13 @@
     border-radius: 50%;
     border: #ff6f27 2px solid;
 }
+.Carasel a{
+    margin-right: 10px;
+}
+.Carasel a:first-of-type{
+    margin-left: 10px;
+}
+
 .Items{
     display: flex;
     width: 100%;

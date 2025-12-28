@@ -332,27 +332,29 @@
         die("Connection failed: ".mysqli_connect_error());
     }
 
-    $columns = mysqli_fetch_assoc(
-        $conn->query("SHOW COLUMNS FROM jenniferwoodward_GradGoose.Sort")
-    );
+    $columns = mysqli_fetch_assoc($conn->query(
+            "SELECT COLUMN_NAME
+            FROM information_schema.columns
+            WHERE TABLE_NAME = 'Sort'"
+    ));
     unset($columns[array_find($columns, "ItemID")]);
 
-    $_GET["l"] = !is_null($_GET["l"]) ? $_GET["l"] : 0;
-    $_GET["h"] = !is_null($_GET["h"]) ? $_GET["h"] : INF;
+    $_GET["l"] = $_GET["l"] ?? 0;
+    $_GET["h"] = $_GET["h"] ?? 99999;
 
-    $rows = mysqli_fetch_assoc($conn->query("
-        SELECT COUNT(*) AS rows
+    $rows = mysqli_fetch_assoc($conn->query(
+        "SELECT COUNT(*) AS rows
         FROM Sort INNER JOIN JointItems J
         ON S.ItemID = J.ItemID
-        INNER JOIN TescoItems T
-        ON S.ItemID = T.ItemID
-        INNER JOIN LidlItems L
-        ON S.ItemID = L.ItemID 
+        LEFT JOIN TescoItems T
+        ON S.ItemID = T.TescoItemID
+        LEFT JOIN LidlItems L
+        ON S.ItemID = L.LidlItemID 
         WHERE J.ItemName LIKE %{$_GET["s"]}%
         AND (
-            (T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
+            (T.TescoPrice >= {$_GET["l"]} AND T.TescoPrice <= {$_GET["h"]}) 
             OR
-            (L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]}) 
+            (L.LidlPrice >= {$_GET["l"]} AND L.LidlPrice <= {$_GET["h"]}) 
         );
     "))["rows"];
 
@@ -367,15 +369,15 @@
                 SELECT S.ItemID, S.{$order}
                 FROM Sort S INNER JOIN JointItems J
                 ON S.ItemID = J.ItemID
-                INNER JOIN TescoItems T
+                LEFT JOIN TescoItems T
                 ON S.ItemID = T.ItemID
-                INNER JOIN LidlItems L
+                LEFT JOIN LidlItems L
                 ON S.ItemID = L.ItemID 
                 WHERE J.ItemName LIKE %{$_GET["s"]}%
                 AND (
-                    (T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
+                    (T.Price NOT NULL AND T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
                     OR
-                    (L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]}) 
+                    (L.Price NOT NULL AND L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]})
                 )
                 ORDER BY {$order} DESC
                 OFFSET {$offset} ROWS
@@ -464,6 +466,7 @@
         //applies sort power to each sort type and then adds them together
 
         uasort($scores, fn($f, $s) => $s <=> $f);
+        //descending
 
         foreach($scores as $i => $ii){
             echo $i." => ".$ii."   ";
@@ -478,6 +481,8 @@
         $array = array_slice($array, 0, 1);
         return (array)array_shift($array);
     }
+    //implimentation of array_first as it wasnt in this php version apparently
+    //differs from original in that it converts to array as that is the only needed implimentation in this program
 
 
 
@@ -488,9 +493,34 @@
 
     $testData = ["ItemID" => [1, 2, 3, 3, 2, 1, 2, 3, 1], "Sort1" => ["A", "B", "C"], "Sort2" => ["A", "B", "C"], "Sort3" => ["A", "B", "C"]];
     structure($testData);
-    foreach($testData as $i){
-        foreach($i as $ii => $iii){
-            echo $ii." => ".$iii." ";
-        }
+    $data = customSort(["Sort1" => 0, "Sort2" => 1, "Sort3" => 0.5], $testData);
+    
+
+
+
+    $finalData = ["previous" => [], "real" => []];
+    foreach($data as $id){
+        $query = "SELECT J.ItemName, T.TescoPrice, T.TescoImage, L.LidlPrice, L.LidlImage
+        FROM JointItems J LEFT JOIN TescoItems T
+        ON J.ItemID = T.ItemID
+        LEFT JOIN LidlItems L
+        ON J.ItemID = L.ItemID 
+        WHERE J.ItemID = {$id}";
+
+        $query = $conn->query($query);
+        $query = mysqli_fetch_assoc($query)[0];
+
+        $newData = [];
+        $newData["Tesco"] = [];
+        $newData["Lidl"] = [];
+        $newData["Tesco"]["price"] = $query["TescoPrice"][$i];
+        $newData["Tesco"]["image"] = $query["TescoImage"][$i];
+        $newData["Lidl"]["price"] = $query["LidlPrice"][$i];
+        $newData["Lidl"]["price"] = $query["LidlPrice"][$i];
+        $newData["Tesco"]["name"] = $newData["Lidl"]["name"] = $query["ItemName"][$i];
+
+        array_push($finalData, $newData);
     }
+
+    echo json_encode($finalData);
 ?>
