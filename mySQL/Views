@@ -6,11 +6,12 @@
     - replacing columns in a view
 */
 
-CREATE VIEW Discounts AS
+CREATE VIEW Discounts1 AS
 SELECT 
     ti.ItemID as ItemID,
     ti.ItemName as ItemName,
     ti.Price as Price,
+    ti.ImageURL as img,
 
     cat.Catagory as CatagoryName,
 
