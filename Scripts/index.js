@@ -1,6 +1,8 @@
 var params = new URLSearchParams(window.location.search);
 var offset = 0;
 
+var previous;
+
 var wait = true;
 
 function loadNew(){
@@ -14,15 +16,16 @@ function loadNew(){
             l: params.get("lo"),
             h: params.get("hi"),
             s: params.get("Search"),
-            o: offset += 30
+            o: offset += 30,
+            p: JSON.stringify(previous)
         };
 
         $.getJSON("../Scripts/filter.php", indata).done(
             (data) => {
                 let newItems = [];
 
-                for(item in Object.keys(data)){
-                    item = data[item];
+                for(item in Object.keys(data.real)){
+                    item = data["real"][item];
 
                     stores = Object.keys(item);
                     prices = stores.map((store) => {return item[store].price});
@@ -59,8 +62,8 @@ function loadNew(){
                             </div>
 
                             <div class="Buttons">
-                                <a href=""><img src="../Media/Plus.png" alt=""></a>
-                                <a href=""><img src="../Media/Star.png" alt=""></a>
+                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
+                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
                             </div>
                         </div> 
                     </div>`);
@@ -68,6 +71,8 @@ function loadNew(){
 
                 products = document.getElementById("items");
                 products.innerHTML = products.innerHTML+"\n\n"+newItems.join("\n\n");
+
+                previous = data["previous"];
             }
         );
 
@@ -121,7 +126,8 @@ function submit(search) {
         cost: sliders[0].value,
         numRatings: sliders[1].value,
         ratings: sliders[2].value,
-        search: search ? document.getElementById("Search").value : params.get("Search")
+        search: search ? document.getElementById("Search").value : params.get("Search"),
+        previous: ""
     }).toString());
 }
 
