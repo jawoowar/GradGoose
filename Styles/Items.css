@@ -3,7 +3,7 @@
 
 .item {
     width: 250px;
-    height: 32%;
+    height: 10%;
     margin-top: 20px;
     margin-left: 10px;
     background-color: #fbf4f1;
@@ -92,7 +92,8 @@
 }
 
 .item .Buttons{
-    margin-left: 15px;
+    margin-left: 5px;
+    display: flex;
 }
 .item .Buttons a i{
     justify-content: space-evenly;
