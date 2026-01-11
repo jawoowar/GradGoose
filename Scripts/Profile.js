@@ -18,7 +18,6 @@ function openSettings(evt, SettingsName) {
 function accessFont(evt){
   checked = !checked;
   document.cookies = "font=".concat(checked, ";");
-  console.log("font=".concat(checked, ";"));
   let fontCheck = checked ? "Comic Relief" : "Chivo Mono";
   document.querySelector(":root").style.setProperty("--font", fontCheck);
   evt.currentTarget.checked = checked;

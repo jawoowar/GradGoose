@@ -17,3 +17,5 @@ function openTabs(evt, TabsName) {
 // Get the element with id="defaultOpen" and click on it
 
 document.getElementById("defaultOpen").click();
+
+//same as in prodile.js

@@ -19,6 +19,7 @@ function loadNew(){
             o: offset += 30,
             p: JSON.stringify(previous)
         };
+        //parameters
 
         $.getJSON("../Scripts/filter.php", indata).done(
             (data) => {
@@ -31,6 +32,7 @@ function loadNew(){
                     prices = stores.map((store) => {return item[store].price});
                     lo = Math.min(...prices).toFixed(2);
                     hi = Math.max(...prices).toFixed(2);
+                    //gets low and high prices
 
                     console.log(stores);
 
@@ -44,8 +46,10 @@ function loadNew(){
                         </div>`
                     });
                     storestring = storestring.join("\n");
+                    //header for each item indicating which stores its in
 
                     productLink = "./product.html?id="+item[stores[0]].id;
+                    //url to the product page
 
                     newItems.push(`<div class="item" href="${productLink}"> <!--item placeholder/ base design-->
                         <div class="store">
@@ -67,10 +71,12 @@ function loadNew(){
                             </div>
                         </div> 
                     </div>`);
+                    //item icon with all needed data inputted
                 }
 
                 products = document.getElementById("items");
                 products.innerHTML = products.innerHTML+"\n\n"+newItems.join("\n\n");
+                //add all new product icons to page
 
                 previous = data["previous"];
             }
@@ -89,6 +95,7 @@ function setSort(cost, numRatings, ratings){
         counter++
     })
 }
+//set each custom slider's value based on an array
 
 
 
@@ -98,6 +105,7 @@ var hi = document.getElementById("hi");
 var sliders = [document.getElementById("Cost"), document.getElementById("NumRatings"), document.getElementById("Ratings")];
 lo.addEventListener("changed", () => {hi.min = lo.value});
 hi.addEventListener("changed", () => {lo.max = hi.value});
+//declares event listens and varibles for elements
 
 var sorts = Array.from(document.getElementsByClassName("radial")).map((elem) => {
     return elem.children[0];
@@ -105,6 +113,7 @@ var sorts = Array.from(document.getElementsByClassName("radial")).map((elem) => 
 [[30, 40, 30], [100, 0, 0], [0, 100, 0], [0, 0, 100]].forEach((sort, index) => {
     sorts[index].addEventListener("click", (evt) => {evt.target.checked = true; setSort(...sort)});
 });
+//for each sort method, when clicked, set custom sliders to values specified
 
 function deselect(){
     sorts.forEach((sort) => {
@@ -116,6 +125,7 @@ sliders.forEach((slider) => {
     console.log(sorts);
     slider.addEventListener("click", () => {deselect()})
 });
+//deselect radio when 1 custom is changed
 
 
 
@@ -130,6 +140,7 @@ function submit(search) {
         previous: ""
     }).toString());
 }
+//goes goes to new page based on search and filter terms
 
 document.getElementById("submit").addEventListener("click", () => {submit(false)});
 
@@ -157,4 +168,4 @@ setInterval(() => {
     scrollInc < scrollCount ? scrollInc++ : scrollInc = 0;
     elem.scrollTo(children[scrollInc]-10, 0);
 }, 5000);
-//every 5 seconds, scrolls to 
+//every 5 seconds, scrolls to the left of the next image in the element

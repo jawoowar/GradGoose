@@ -19,14 +19,14 @@
     //unsure how to write infinite in SQL so 99999 used
 
     $rows = mysqli_fetch_assoc($conn->query(
-        "SELECT COUNT(*) AS rows
-        FROM Sort INNER JOIN JointItems J
+        "SELECT COUNT(*) AS [rows]
+        FROM Sort S INNER JOIN JointItems J
         ON S.ItemID = J.ItemID
         LEFT JOIN TescoItems T
-        ON S.ItemID = T.TescoItemID
+        ON J.ItemName = T.TescoItemName
         LEFT JOIN LidlItems L
-        ON S.ItemID = L.LidlItemID 
-        WHERE J.ItemName LIKE %{$_GET["s"]}%
+        ON J.ItemName = L.LidlItemName
+        WHERE J.ItemName LIKE '%{$_GET["s"]}%'
         AND (
             (T.TescoPrice >= {$_GET["l"]} AND T.TescoPrice <= {$_GET["h"]}) 
             OR
@@ -42,23 +42,22 @@
         $data = [];
         foreach($sorts as $order){
             $query = 
-                "SELECT S.ItemID, S.{$order}
-                FROM Sort S INNER JOIN JointItems J
-                ON S.ItemID = J.ItemID
-                LEFT JOIN TescoItems T
-                ON S.ItemID = T.ItemID
-                LEFT JOIN LidlItems L
-                ON S.ItemID = L.ItemID 
-                WHERE J.ItemName LIKE %{$_GET["s"]}%
-                AND (
-                    (T.Price NOT NULL AND T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
-                    OR
-                    (L.Price NOT NULL AND L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]})
-                )
-                ORDER BY S.{$order} DESC
-                OFFSET {$offset} ROWS
-                LIMIT 30;
-            ";
+            "SELECT S.ItemID, S.{$order}
+            FROM Sort S INNER JOIN JointItems J
+            ON S.ItemID = J.ItemID
+            LEFT JOIN TescoItems T
+            ON J.ItemName = T.TescoItemName
+            LEFT JOIN LidlItems L
+            ON J.ItemName = L.LidlItemName
+            WHERE J.ItemName LIKE '%{$_GET["s"]}%'
+            AND (
+                (T.Price NOT NULL AND T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
+                OR
+                (L.Price NOT NULL AND L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]})
+            )
+            ORDER BY S.{$order} DESC
+            OFFSET {$offset} ROWS
+            LIMIT 30;";
             //gets the next 30 items in descending order when sorted using $order and filtered using search and price thresholds
             //will get array of 30 for each order type
 
@@ -157,19 +156,20 @@
     //implimentation of array_first as it wasnt in this php version apparently
     //differs from original in that it converts to array as that would be faster in this program specifically
 
-    $previous = json_decode($_GET["previous"], true);
+    $previous = json_decode($_GET["p"], true);
     $data = customSort(["Cost" => $_GET["c"], "Ratings" => $_GET["r"], "NumRatings" => $_GET["nr"]], $previous);
     //gets sort values, and previous loaded data to save on processing
     
 
     $finalData = [];
     foreach($data as $id){
-        $query = "SELECT J.ItemName, T.TescoPrice, T.TescoImage, L.LidlPrice, L.LidlImage
+        $query = 
+        "SELECT J.ItemName, T.TescoPrice, T.TescoImage, L.LidlPrice, L.LidlImage
         FROM JointItems J LEFT JOIN TescoItems T
-        ON J.ItemID = T.ItemID
+        ON J.ItemName = T.TescoItemName
         LEFT JOIN LidlItems L
-        ON J.ItemID = L.ItemID 
-        WHERE J.ItemID = {$id}";
+        ON J.ItemName = L.LidlItemName
+        WHERE J.ItemID = '{$id}'";
 
         $query = $conn->query($query);
         $query = mysqli_fetch_assoc($query)[0];
