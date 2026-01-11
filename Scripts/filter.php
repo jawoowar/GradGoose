@@ -1,39 +1,49 @@
 <?php
-    $conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
+    $conn = new mysqli('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
 
     if (!$conn) {
         die("Connection failed: ".mysqli_connect_error());
     }
-    //connect to database
 
+    if ($conn->connect_errno) {
+    echo "error";
+    }
+    
+    //connect to database
+    echo "test";
+    /*
     $columns = mysqli_fetch_assoc($conn->query(
             "SELECT COLUMN_NAME
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_NAME = 'Sort'"
-    ));
+    )) ["COLUMN_NAME"];
     unset($columns[array_find($columns, "ItemID")]);
     //gets all possible sorting variables
+    */
 
     $_GET["l"] = $_GET["l"] ?? 0;
     $_GET["h"] = $_GET["h"] ?? 99999;
     //unsure how to write infinite in SQL so 99999 used
 
-    $rows = mysqli_fetch_assoc($conn->query(
-        "SELECT COUNT(*) AS [rows]
+    echo "test";
+    $rows = $conn->query(
+        "SELECT J.ItemID
         FROM Sort S INNER JOIN JointItems J
         ON S.ItemID = J.ItemID
         LEFT JOIN TescoItems T
         ON J.ItemName = T.TescoItemName
         LEFT JOIN LidlItems L
         ON J.ItemName = L.LidlItemName
-        WHERE J.ItemName LIKE '%{$_GET["s"]}%'
+        WHERE J.ItemName LIKE %{$_GET["s"]}%
         AND (
             (T.TescoPrice >= {$_GET["l"]} AND T.TescoPrice <= {$_GET["h"]}) 
             OR
             (L.LidlPrice >= {$_GET["l"]} AND L.LidlPrice <= {$_GET["h"]}) 
         );
-    "))["rows"];
+    ");
+    echo $rows;
     //gets maximum number of rows possible for settings
+    echo "test";
 
 
     function getData($offset, $sorts){
@@ -65,7 +75,7 @@
         }
 
         structure($data);
-
+        echo "data test";
         return $data;
     }
 
@@ -124,6 +134,7 @@
             }
             //gets first 30 items that appear on all selected sorts
         }
+        echo "sort test";
 
         $scores = array_fill_keys(array_keys(array_first($sortArr)), 0);
         foreach (array_keys($values) as $sort){
@@ -160,7 +171,7 @@
     $data = customSort(["Cost" => $_GET["c"], "Ratings" => $_GET["r"], "NumRatings" => $_GET["nr"]], $previous);
     //gets sort values, and previous loaded data to save on processing
     
-
+    echo "test";
     $finalData = [];
     foreach($data as $id){
         $query = 
@@ -185,6 +196,7 @@
 
         array_push($finalData, $newData);
     }
+    echo "test";
 
     echo json_encode(["real" => $finalData, "previous" => $previous]);
     //get the price, name and picture for each item, plus the "prev" array
@@ -230,5 +242,5 @@
         }
     */
 
-    close($conn);
+    mysql_close($conn);
 ?>
