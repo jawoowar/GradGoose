@@ -12,21 +12,26 @@
                 $email = $_POST['email'];
                 $pwd = $_POST['password'];
 
-                
-                
 
-                $sql = "SELECT * FROM UserID WHERE UserName='$uid' AND passwordHash='$pwd'";
+                $sql = "SELECT * FROM UserID WHERE Email='$email'";
                 $result = $conn->query($sql);
-                if (mysqli_num_rows($result) == 1) {
-                    if ($row =$result->fetch_assoc()) {
-                        $_SESSION['id'] = $row['id'];
+                //echo $result->num_rows;
+                if ($result->num_rows == 0) {
 
-                        echo "<script> alert('log in successful') </script>";
+                    if ($uid == '' or $email == '' or $pwd == '') {
+                        echo "Please fill in all fields";
+                    }
+                    else {
+                        $sql = "INSERT INTO UserID VALUES (0,'$uid', '$email', '$pwd', null, null, null, null, null, null, null, null, null, null, null, null)";
+                        $result = $conn->query($sql);
+
+                        echo "signed up successfully";
+                    }
                         //header("Location: Index.html");
                         //exit();
-                    }
+                    
                 } else {
-                    echo "<script> alert('log in failed') </script>";
+                    echo "not sorted";
 
                 }
             }
@@ -71,7 +76,7 @@
     </div>
     <body>
         <main>
-            <form method="$_POST">
+            <form method="POST">
                 <div class="LoginMain" >
                     <div class="TextFields">
                         <div class="TextField">
@@ -89,7 +94,7 @@
                     </div>
                     <div class="Buttons">
                         <a href="Login.html"><button type="button">back</button></a>
-                        <a><button type="submit" id="SignUp">Sign-up</button></a>
+                        <a><button type="submit" name="SignUp">Sign-up</button></a>
                     </div>
                 </div>
             </form>

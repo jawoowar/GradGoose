@@ -36,13 +36,49 @@
             break;
         }
     }
-    $pastListCount = 1;
+
+    $pastListCount = 0;
     for ($counter = 1; $counter < 4; $counter++) {
-        if (!empty($User["pastList{$counter}LidlID"]) OR !empty($User["pastList{$counter}TescoID"])) {
+        //echo $User["pastList{$counter}LidlID"];
+        //echo "<br>";
+        //echo "pastList{$counter}LidlID";
+        //echo "<br>";
+        if (!empty($User["PastList{$counter}LidlID"]) OR !empty($User["PastList{$counter}TescoID"])) {
             $pastListCount++;
         } 
     }
 
+    if ($pastListCount >= 1) {
+        $result = $conn->query("SELECT * FROM Lists WHERE ListID = {$User['PastList1LidlID']}");
+        $PastList1Lidl = mysqli_fetch_assoc($result);
+        
+        $LidlPastList1ItemIDs = [];
+        for ($counter = 1; $counter < 11; $counter++) { // puts contence of list into array
+            $PastList1Tesco = $TescoCurrentLists["ItemID{$counter}"];
+            if ($PastList1Tesco != NULL) {
+                $LidlPastList1ItemIDs[] = $PastList1Tesco;
+            } else {
+                break;
+            }
+        }
+        
+
+        $result = $conn->query("SELECT * FROM Lists WHERE ListID = {$User['PastList1TescoID']}");
+        $PastList1Tesco = mysqli_fetch_assoc($result);
+        
+        $TescoPastList1ItemIDs = [];
+        for ($counter = 1; $counter < 11; $counter++) { // puts contence of list into array
+            $PastList1Tesco = $TescoCurrentLists["ItemID{$counter}"];
+            if ($PastList1Tesco != NULL) {
+                $TescoPastList1ItemIDs[] = $PastList1Tesco;
+            } else {
+                break;
+            }
+        }
+    }
+
+    //echo $User["PastList1LidlID"];
+    //echo "<br>";
     //echo $pastListCount;
     //echo "</br>";
 
@@ -281,13 +317,146 @@
             <a></a>
             <h1>Past Lists</h1>
             <a></a>
-            <div class="listCount">0/3</div>
+            <div class="listCount"><?php echo $pastListCount ?>/3</div>
         </div>
         
 
 
         <div class="mainLists">
-            <h1>No list found</h1>
+            <?php
+                if ($pastListCount == 0) {
+                    echo '<h1>No list found</h1>';
+                }
+                else {
+                   // echo "pastListCount {$pastListCount}";
+                    for ($counter = 0; $counter <= ($pastListCount / 2); $counter++) {
+                       // echo "counter {$counter}";
+                        echo 
+                            '<div class="listPast">
+                                <div class="listContentPast">
+                                    <div class="itemsPast">
+                                         <div class="tesco"></div>
+
+                                            <div class="listContent">
+
+                                                <div class="items">';
+                                        for ($counterItem = 0; $counterItem < count($TescoPastList1ItemIDs); $counterItem++) {
+                                        //    echo "counter {$counterItem}";
+                                        $TescoID = $TescoPastList1ItemIDs[$counterItem];
+                                        //echo "TescoID {$TescoID}";
+                                        $result = $conn->query("SELECT * FROM TescoItems WHERE TescoItemID = {$TescoID}");
+                                        $TescoItemsPast1 = mysqli_fetch_assoc($result);
+                                        //echo "TescoItemPast1 {$TescoItemsPast1}";
+                                        $ItemID = $TescoItemsPast1['TescoItemID'];
+                                        //echo "ItemID {$ItemID}";
+
+
+                                        echo 
+                                            '<div class="itemAlt"> <!--item placeholder/ base design-->
+
+                                                <img src="' . $TescoItemsPast1['TescoImageURL'] . '" alt="placeholder">
+
+                                                <aside>
+                                                    <p class="name">
+                                                        ' . $TescoItemsPast1['TescoItemName'] . '
+                                                    </p>
+
+                                                    <div class="LowerListItem">
+
+                                                        <div class="price">
+
+                                                            <h1>£' . $TescoItemsPast1['TescoPrice'] . '</h1>
+                                                            
+                                                        </div>
+
+                                                        <div class="Buttons">
+
+                                                            <i class="fa fa-close" style="font-size:36px"></i>
+                                                            <i class="fa fa-check" style="font-size:36px"></i>
+                                                            <a href="Product.php?id=' . $ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
+                                                            <form method="POST">
+                                                                <button  type="submit" name="binItemLidl" class="Bin" value="' . ($counterItem + 1) . '">
+                                                                    <i class="fa fa-trash-o" style="font-size:36px"></i>
+                                                                </button>
+                                                            </form>
+
+                                                        </div>
+
+                                                    </div>
+                                                        
+                                                </aside>
+                                            </div>';
+
+                                        }
+                                        echo'
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="listPast">
+                                <div class="listContentPast">
+                                    <div class="itemsPast">
+                                         <div class="Lidl"></div>
+
+                                            <div class="listContent">
+
+                                                <div class="items">';
+                                        for ($counterItem = 0; $counterItem < count($TescoPastList1ItemIDs); $counterItem++) {
+                                        //    echo "counter {$counterItem}";
+                                        $TescoIDPast1 = $TescoPastList1ItemIDs[$counterItem];
+                                        //echo "TescoID {$TescoID}";
+                                        $result = $conn->query("SELECT * FROM TescoItems WHERE TescoItemID = {$TescoIDPast1}");
+                                        $TescoItemsPast1 = mysqli_fetch_assoc($result);
+                                        //echo "TescoItemPast1 {$TescoItemsPast1}";
+                                        $ItemID = $TescoItemsPast1['TescoItemID'];
+                                        //echo "ItemID {$ItemID}";
+
+
+                                        echo 
+                                            '<div class="itemAlt"> <!--item placeholder/ base design-->
+
+                                                <img src="' . $TescoItemsPast1['LidlImageURL'] . '" alt="placeholder">
+
+                                                <aside>
+                                                    <p class="name">
+                                                        ' . $TescoItemsPast1['LidlItemName'] . '
+                                                    </p>
+
+                                                    <div class="LowerListItem">
+
+                                                        <div class="price">
+
+                                                            <h1>£' . $TescoItemsPast1['LidlPrice'] . '</h1>
+                                                            
+                                                        </div>
+
+                                                        <div class="Buttons">
+
+                                                            <i class="fa fa-close" style="font-size:36px"></i>
+                                                            <i class="fa fa-check" style="font-size:36px"></i>
+                                                            <a href="Product.php?id=' . $ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
+                                                            <form method="POST">
+                                                                <button  type="submit" name="binItemLidl" class="Bin" value="' . ($counterItem + 1) . '">
+                                                                    <i class="fa fa-trash-o" style="font-size:36px"></i>
+                                                                </button>
+                                                            </form>
+
+                                                        </div>
+
+                                                    </div>
+                                                        
+                                                </aside>
+                                            </div>';
+
+                                        }
+                                        echo'
+                                    </div>
+                                </div>
+                            </div>';
+                    }
+                }
+            ?>
         </div>
 
     </main>
