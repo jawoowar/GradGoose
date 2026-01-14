@@ -1,7 +1,8 @@
 var params = new URLSearchParams(window.location.search);
-var offset = 0;
+var offset = -5;
 
 var previous;
+var exists;
 
 var wait = true;
 
@@ -16,23 +17,29 @@ function loadNew(){
             l: params.get("lo"),
             h: params.get("hi"),
             s: params.get("Search"),
-            o: offset += 30,
-            p: JSON.stringify(previous)
+            o: offset += 5,
+            p: JSON.stringify(previous),
+            e: JSON.stringify(exists)
         };
-        //parameters
 
-        $.getJSON("../Scripts/filter.php", indata).done(
+        $.get("../Scripts/filter.php", indata,
             (data) => {
                 let newItems = [];
+
+                console.log(data);
+
+                data = JSON.parse(data);
+
+                console.log("test");
 
                 for(item in Object.keys(data.real)){
                     item = data["real"][item];
 
                     stores = Object.keys(item);
-                    prices = stores.map((store) => {return item[store].price});
+                    prices = stores.map((store) => {return parseFloat(item[store].price)});
                     lo = Math.min(...prices).toFixed(2);
                     hi = Math.max(...prices).toFixed(2);
-                    //gets low and high prices
+                    price = prices.reduce((out, cur) => {out??=0; return out+cur})/prices.length;
 
                     console.log(stores);
 
@@ -46,10 +53,8 @@ function loadNew(){
                         </div>`
                     });
                     storestring = storestring.join("\n");
-                    //header for each item indicating which stores its in
 
                     productLink = "./product.html?id="+item[stores[0]].id;
-                    //url to the product page
 
                     newItems.push(`<div class="item" href="${productLink}"> <!--item placeholder/ base design-->
                         <div class="store">
@@ -61,7 +66,7 @@ function loadNew(){
 
                         <div class="lower">
                             <div class="price">
-                                <h1>£${item[stores[0]].price.toFixed(2)}</h1>
+                                <h1>£${price.toFixed(2)}</h1>
                                 <p>£${lo} - £${hi}</p>
                             </div>
 
@@ -71,16 +76,14 @@ function loadNew(){
                             </div>
                         </div> 
                     </div>`);
-                    //item icon with all needed data inputted
                 }
 
                 products = document.getElementById("items");
                 products.innerHTML = products.innerHTML+"\n\n"+newItems.join("\n\n");
-                //add all new product icons to page
 
-                previous = data["previous"];
-            }
-        );
+                previous = data.previous;
+                exists = data.exists;
+            });
 
         wait = true;
     }
@@ -95,17 +98,15 @@ function setSort(cost, numRatings, ratings){
         counter++
     })
 }
-//set each custom slider's value based on an array
 
 
 
 document.getElementById("loadMore").addEventListener("click", () => {loadNew()});
-var lo = document.getElementById("lo");
-var hi = document.getElementById("hi");
+var lo = document.querySelector("#lo");
+var hi = document.querySelector("#hi");
 var sliders = [document.getElementById("Cost"), document.getElementById("NumRatings"), document.getElementById("Ratings")];
-lo.addEventListener("changed", () => {hi.min = lo.value});
-hi.addEventListener("changed", () => {lo.max = hi.value});
-//declares event listens and varibles for elements
+lo.addEventListener("change", (e) => {document.querySelector("#hi").setAttribute("min", parseFloat(e.target.value));});
+hi.addEventListener("change", (e) => {document.querySelector("#lo").setAttribute("max", parseFloat(e.target.value))});
 
 var sorts = Array.from(document.getElementsByClassName("radial")).map((elem) => {
     return elem.children[0];
@@ -113,7 +114,6 @@ var sorts = Array.from(document.getElementsByClassName("radial")).map((elem) => 
 [[30, 40, 30], [100, 0, 0], [0, 100, 0], [0, 0, 100]].forEach((sort, index) => {
     sorts[index].addEventListener("click", (evt) => {evt.target.checked = true; setSort(...sort)});
 });
-//for each sort method, when clicked, set custom sliders to values specified
 
 function deselect(){
     sorts.forEach((sort) => {
@@ -125,22 +125,19 @@ sliders.forEach((slider) => {
     console.log(sorts);
     slider.addEventListener("click", () => {deselect()})
 });
-//deselect radio when 1 custom is changed
 
 
 
 function submit(search) {
     location.replace(location.origin+location.pathname+"?"+new URLSearchParams({
-        lo: lo.value,
-        hi: hi.value,
+        lo: document.querySelector("#lo").value,
+        hi: document.querySelector("#hi").value,
         cost: sliders[0].value,
         numRatings: sliders[1].value,
         ratings: sliders[2].value,
-        search: search ? document.getElementById("Search").value : params.get("Search"),
-        previous: ""
+        search: search ? document.getElementById("Search").value : params.get("Search")
     }).toString());
 }
-//goes goes to new page based on search and filter terms
 
 document.getElementById("submit").addEventListener("click", () => {submit(false)});
 
@@ -168,4 +165,4 @@ setInterval(() => {
     scrollInc < scrollCount ? scrollInc++ : scrollInc = 0;
     elem.scrollTo(children[scrollInc]-10, 0);
 }, 5000);
-//every 5 seconds, scrolls to the left of the next image in the element
+//every 5 seconds, scrolls to 

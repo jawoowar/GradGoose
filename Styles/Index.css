@@ -38,7 +38,7 @@
 #items{
     flex-wrap: wrap;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: left;
 }
 
 .Products {
@@ -71,3 +71,4 @@
     font-size: 12px;
     cursor: pointer;
 }
+
