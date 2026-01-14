@@ -2,7 +2,9 @@
 
 function outsideQuotes(string $haystack, string $needle, int $placement = 0):false|int{
     
-    while(true){
+    $rnd = rand();
+    $test = range(1, 99);
+    while(next($test)){
 
         $testArray = [
             strpos($haystack, "\"", $placement),
@@ -48,7 +50,7 @@ class Element {
     public Element $parent;
     public array $children;
 
-    public int $innerText { 
+    public int $innerText; /*{ 
         get{
             $quer = outsideQuotes(self->full, "</".self->type.">");
             return substr(self->full, self->innerText, $quer ? $quer : 0);
@@ -56,7 +58,7 @@ class Element {
         set {
             self->full = substr(self->full, 0, self->innerText)+$value+"</".self->type.">";
         }
-    }
+    }*/
     //innertext gotten every time from substr of full element text
 
     readonly string $type;
@@ -483,7 +485,6 @@ function getValues($data){
     $data = array_map(fn($val) => $val/$high, $data);
     return $data;
 }
-//gets sort power between 0-1 based on either cost, # of ratings or average score
 
 
 
@@ -499,14 +500,7 @@ echo "\n\nTesco:\n";
 foreach(getTescoItems() as $item){
     echo $item;
 }
-
-//test^^^
-
 */
-
-
-
-/*
 
 $testCode = new Html("C:\\xampp\htdocs\\test.html");
 echo count($testCode->elements);
@@ -514,13 +508,4 @@ foreach($testCode->elements as $key => $value){
     echo $key;
 }
 
-//test^^^
-
-*/
-
-
-
-
-
-//UNFINISHED
 ?>

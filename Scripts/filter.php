@@ -4,46 +4,51 @@
     if (!$conn) {
         die("Connection failed: ".mysqli_connect_error());
     }
-
-    if ($conn->connect_errno) {
-    echo "error";
-    }
-    
     //connect to database
-    echo "test";
-    /*
-    $columns = mysqli_fetch_assoc($conn->query(
+
+    $result = $conn->query(
             "SELECT COLUMN_NAME
             FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_NAME = 'Sort'"
-    )) ["COLUMN_NAME"];
-    unset($columns[array_find($columns, "ItemID")]);
+            WHERE TABLE_NAME = 'Sort';"
+    );
+
+    $columns = mysqli_fetch_all($result);
+    for($i=0, $size = count($columns); $i < $size; $i++){$columns[$i] = $columns[$i][0];}
+    unset($columns[array_search( "ItemID", $columns)], $columns[array_search("SortID", $columns)]);
     //gets all possible sorting variables
-    */
+
+    foreach($_GET as $key => $val){
+        if(strlen($val) < 1 || $val == "undefined"){$_GET[$key] = null;}
+        if(is_numeric($val)){$_GET[$key] = floatval($val);}
+    }
 
     $_GET["l"] = $_GET["l"] ?? 0;
     $_GET["h"] = $_GET["h"] ?? 99999;
+    $_GET["s"] = $_GET["s"] ?? "";
+    $_GET["p"] = $_GET["p"] ?? "";
+    $_GET["e"] = $_GET["e"] ?? "";
+    $_GET["c"] = $_GET["c"] ?? 0.3;
+    $_GET["r"] = $_GET["r"] ?? 0.3;
+    $_GET["nr"] = $_GET["nr"] ?? 0.4;
+    //default paramater values
     //unsure how to write infinite in SQL so 99999 used
 
-    echo "test";
-    $rows = $conn->query(
-        "SELECT J.ItemID
+    $rows = mysqli_fetch_assoc($conn->query(
+        "SELECT COUNT(*) AS Nrows
         FROM Sort S INNER JOIN JointItems J
         ON S.ItemID = J.ItemID
         LEFT JOIN TescoItems T
         ON J.ItemName = T.TescoItemName
         LEFT JOIN LidlItems L
         ON J.ItemName = L.LidlItemName
-        WHERE J.ItemName LIKE %{$_GET["s"]}%
+        WHERE J.ItemName LIKE '%{$_GET["s"]}%'
         AND (
-            (T.TescoPrice >= {$_GET["l"]} AND T.TescoPrice <= {$_GET["h"]}) 
+            (T.TescoPrice IS NOT NULL AND (T.TescoPrice >= {$_GET["l"]} AND T.TescoPrice <= {$_GET["h"]})) 
             OR
-            (L.LidlPrice >= {$_GET["l"]} AND L.LidlPrice <= {$_GET["h"]}) 
+            (L.LidlPrice IS NOT NULL AND (L.LidlPrice >= {$_GET["l"]} AND L.LidlPrice <= {$_GET["h"]}))
         );
-    ");
-    echo $rows;
+    "))["Nrows"];
     //gets maximum number of rows possible for settings
-    echo "test";
 
 
     function getData($offset, $sorts){
@@ -51,6 +56,7 @@
 
         $data = [];
         foreach($sorts as $order){
+
             $query = 
             "SELECT S.ItemID, S.{$order}
             FROM Sort S INNER JOIN JointItems J
@@ -61,21 +67,34 @@
             ON J.ItemName = L.LidlItemName
             WHERE J.ItemName LIKE '%{$_GET["s"]}%'
             AND (
-                (T.Price NOT NULL AND T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
+                (T.TescoPrice IS NOT NULL AND (T.TescoPrice >= {$_GET["l"]} AND T.TescoPrice <= {$_GET["h"]})) 
                 OR
-                (L.Price NOT NULL AND L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]})
+                (L.LidlPrice IS NOT NULL AND (L.LidlPrice >= {$_GET["l"]} AND L.LidlPrice <= {$_GET["h"]}))
             )
-            ORDER BY S.{$order} DESC
-            OFFSET {$offset} ROWS
-            LIMIT 30;";
+            ORDER BY S.{$order} DESC, J.ItemID
+            LIMIT {$offset}, 5;";
             //gets the next 30 items in descending order when sorted using $order and filtered using search and price thresholds
             //will get array of 30 for each order type
 
-            $data = array_merge(mysqli_fetch_assoc($conn->query($query)), $data);
+            $result = mysqli_fetch_all($conn->query($query));
+            $data[$order] = [];
+            foreach($result as $row){
+                $data[$order] += [$row[0] => floatval($row[1])];
+            }
+
+            //$data = array_merge(mysqli_fetch_all($conn->query($query)), $data);
         }
 
-        structure($data);
-        echo "data test";
+        /*
+        echo count($data["PriceScore"])." ";
+
+        foreach($data["PriceScore"] as $key => $val){
+            echo $val." ";
+        }
+        */
+
+        //structure($data);
+
         return $data;
     }
 
@@ -96,7 +115,7 @@
     //previously will be [itemID -> [ID1, ID2, ID3, ID4], Sort1 -> [0.5, 0], Sort2 -> [1, 0.75]] from getData()
 
 
-    function customSort($values, &$previous, $goal=30){
+    function customSort($values, &$previous, &$exists){
         global $columns;
         global $rows;
 
@@ -113,19 +132,30 @@
         //removes all sorts that wont influence much at all to save on processing 
 
         $check = false;
+        $test = array_fill(0, 99, 1);
         
-        while(!$check){
-            $newData = getData(count($previous), array_keys($values));
-            $previous = array_merge_recursive($previous, $newData);
+        while(!$check && next($test)){
+            $newData = getData(count(array_first($previous)), array_keys($values));
+            //$previous = array_merge_recursive($previous, $newData);
             //updates previous by adding 
 
-            $intersections = array_keys(array_intersect_key(...array_values($previous)));
+            foreach($newData as $key => $val){
+                $previous[$key] += $newData[$key];
+            }
 
-            if(count($intersections) >= $goal || count(array_first($previous)) >= $rows){
+            $intersections = array_keys(call_user_func_array("array_intersect_key", array_values($previous)));
+            $intersections = array_values(array_diff($intersections, $exists));
+
+            //echo in_array(1, array_keys(array_first($previous)));
+
+            if(count($intersections) >= 5 || count(array_first($previous)) >= $rows){
                 $sortArr = [];
+                foreach(array_slice($intersections, 0, 5) as $intersection){
+                     array_push($exists, $intersection);
+                }
                 foreach(array_keys($values) as $sort){
                     $sortArr[$sort] = [];
-                    for($i=0; $i<$goal; $i++){
+                    for($i=0, $size=min(5, count($intersections)); $i<$size; $i++){
                         $cur = $intersections[$i];
                         if(!is_null($cur)) {$sortArr[$sort][$cur] = $previous[$sort][$cur];}
                     }
@@ -134,7 +164,11 @@
             }
             //gets first 30 items that appear on all selected sorts
         }
-        echo "sort test";
+
+        /*foreach($sortArr["PriceScore"] as $key => $val){
+            echo $key." ";
+        }
+        echo "^";*/
 
         $scores = array_fill_keys(array_keys(array_first($sortArr)), 0);
         foreach (array_keys($values) as $sort){
@@ -149,6 +183,11 @@
         uasort($scores, fn($f, $s) => $s <=> $f);
         //descending
 
+        /*foreach($scores as $key => $val){
+            echo $key." ";
+        }
+        echo "^";*/
+
         return array_keys($scores);
     }
     //keeps getting individual arrays of the top 30 items when sorted using the keys in $values
@@ -160,7 +199,7 @@
 
 
 
-    function array_first($array){
+    function array_first($array): array{
         $array = array_slice($array, 0, 1);
         return (array)array_shift($array);
     }
@@ -168,14 +207,21 @@
     //differs from original in that it converts to array as that would be faster in this program specifically
 
     $previous = json_decode($_GET["p"], true);
-    $data = customSort(["Cost" => $_GET["c"], "Ratings" => $_GET["r"], "NumRatings" => $_GET["nr"]], $previous);
+    $previous = $previous ?? ["PriceScore" => [], "RatingScore" => [], "NumRatingScore" => []];
+    $exists = json_decode($_GET["e"], true);
+    $exists =  $exists ?? [];
+    $data = customSort(
+        ["PriceScore" => intval($_GET["c"]), "RatingScore" => intval($_GET["r"]), "NumRatingScore" => intval($_GET["nr"])],
+        $previous,
+        $exists
+    );
     //gets sort values, and previous loaded data to save on processing
     
-    echo "test";
+
     $finalData = [];
     foreach($data as $id){
         $query = 
-        "SELECT J.ItemName, T.TescoPrice, T.TescoImage, L.LidlPrice, L.LidlImage
+        "SELECT J.ItemName, T.TescoPrice, T.TescoImageURL, L.LidlPrice, L.LidlImageURL, J.ItemID
         FROM JointItems J LEFT JOIN TescoItems T
         ON J.ItemName = T.TescoItemName
         LEFT JOIN LidlItems L
@@ -183,22 +229,22 @@
         WHERE J.ItemID = '{$id}'";
 
         $query = $conn->query($query);
-        $query = mysqli_fetch_assoc($query)[0];
+        $query = mysqli_fetch_all($query)[0];
 
         $newData = [];
-        $newData["Tesco"] = [];
-        $newData["Lidl"] = [];
-        $newData["Tesco"]["price"] = $query["TescoPrice"][$i];
-        $newData["Tesco"]["image"] = $query["TescoImage"][$i];
-        $newData["Lidl"]["price"] = $query["LidlPrice"][$i];
-        $newData["Lidl"]["price"] = $query["LidlPrice"][$i];
-        $newData["Tesco"]["name"] = $newData["Lidl"]["name"] = $query["ItemName"][$i];
+        $newData["tesco"] = [];
+        $newData["lidl"] = [];
+        $newData["tesco"]["price"] = $query[1];
+        $newData["tesco"]["image"] = $query[2];
+        $newData["lidl"]["price"] = $query[3];
+        $newData["lidl"]["image"] = $query[4];
+        $newData["tesco"]["name"] = $newData["lidl"]["name"] = $query[0];
+        $newData["tesco"]["id"] = $newData["lidl"]["id"] = $query[5];
 
         array_push($finalData, $newData);
     }
-    echo "test";
 
-    echo json_encode(["real" => $finalData, "previous" => $previous]);
+    echo json_encode(["real" => $finalData, "previous" => $previous, "exists" => $exists]);
     //get the price, name and picture for each item, plus the "prev" array
     //outputs json encoded data puts in the format:
     /*
@@ -234,7 +280,7 @@
                     { "itemID1": sortscoreNum1 },
                     { "itemID2": sortscoreNum2 }
                 ],
-                "sort1": [
+                "sort2": [
                     { "itemID3": sortscoreNum3 },
                     { "itemID4": sortscoreNum4 }
                 ] 
@@ -242,5 +288,5 @@
         }
     */
 
-    mysql_close($conn);
+    mysqli_close($conn);
 ?>
