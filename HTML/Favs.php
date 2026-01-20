@@ -1,6 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<?php
+    $dbName = "jenniferwoodward_GradGoose";
+    $conn = new mysqli("ysjcs.net", "jennifer.w", "EHEXYUE8",$dbName);
+
+    if (!$conn) {
+        die("Connection failed: ".mysqli_connect_error());
+    }
+
+    $UID = 1;
+    //echo $UID;
+    $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$UID}");
+    $User = mysqli_fetch_assoc($result);
+    //echo "user";
+
+    $FavoritesID = intval($User['FavoriteTableID']);
+    $FavQuery = $conn->query('SELECT * FROM Favorites WHERE FavoriteID = '.$FavoritesID);
+    $FavList = mysqli_fetch_assoc($FavQuery);
+
+    $FavIDs = [];
+    for ($counter = 1; $counter < 11; $counter++) { // puts contence of list into array
+        echo $counter;
+        $FavID = $FavList["ItemID{$counter}"];
+        if ($FavID != NULL) {
+            echo $FavID;
+            $FavIDs[] = $FavID;
+        } else {
+            break;
+        }
+    }
+    //echo "favs IDS";
+
+    $result = $conn->query("SELECT * FROM Lists WHERE ListID = {$User['ListIDCurrentTesco']}");
+    $Lists = mysqli_fetch_assoc($result);
+
+    for ($counter = 1; $counter < 11; $counter++) { // check next free position in list
+        $ListsTableID = $Lists["ItemID{$counter}"];
+        if ($ListsTableID == NULL) {
+            $NextFreeTesco = $counter;
+            break;
+        }
+    }
+
+    
+    if (isset($_POST['AddToList'])) {
+
+        $ID = intval($_POST['ID']);
+        
+        //echo "<script>alert('ID = {$ID}');</script>";
+
+        $result = $conn->query("SELECT * FROM JointItems WHERE ItemID = {$ID}");
+        $JointItems = mysqli_fetch_assoc($result);
+
+        if (isset($NextFreeTesco)  AND ($NextFreeTesco <= 11)) {
+                $Absent = true;
+                for ($counter = 1; $counter < 11; $counter++) { // check if its already in List
+                    $ListsTableID = $Lists["ItemID{$counter}"];
+                    //echo "<script>alert('Checking ItemID{$counter} : {$ListsTableID}');</script>";
+                    //echo "<script>alert('Checking Joint ItemID{$counter} : {$JointItems['ItemID']}');</script>";
+                    if ($ListsTableID == $JointItems['ItemID']) {
+                        echo "<script>alert('Item Already in your Current List');</script>";
+                        $Absent = false;
+                        break;
+                    }
+                }
+                if ($Absent) { // if not in list adds to list
+                $ItemToAdd = $JointItems['ItemID'];
+                    $Update = $conn->query("UPDATE Lists SET ItemID{$NextFreeTesco} = {$ItemToAdd} WHERE ListID = {$User['ListIDCurrentTesco']}");
+                    if ($Update) {
+                        echo "<script>alert('Added to your Current List');</script>";
+                    } else {
+                        echo "<script>alert('Error: " . $conn->error . "');</script>";
+                    }
+                }
+        } else {
+            echo "<script>alert('Current List Full Or Error');</script>";
+        }
+
+    }
+
+    if (isset($_POST['RemoveFromFav'])) { //deletes  current tesco items
+        $posToDelete = intval($_POST['ID']);
+
+        for ($i = $posToDelete; $i < 10; $i++) {
+            $nextItem = $FavList["ItemID" . ($i + 1)];
+
+            $update = $conn->query("UPDATE Favorites Set ItemID{$i} = " . ($nextItem ? $nextItem : 'NULL') . " WHERE FavoriteID = {$User['FavoriteTableID']}");
+        }
+
+        $conn->query("UPDATE Favorites SET ItemID10 = NULL WHERE FavoriteID = {$User['FavoriteTableID']}");
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+    }
+
+
+
+?>
+<head>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -40,36 +136,101 @@
 
     <div class="Items" >
         <div class="Products">
-            <div id="items">
-                <?
-                echo '
-                         <div class="${store}">
-                            <div class="${cap+"Wrap"}">
-                                <a></a>
-                                <span class="${cap+"Text"}">${cap}</span>
-                            </div>
-                        </div>
-                    <div class="item" href="${productLink}"> <!--item placeholder/ base design-->
+            <!--<div id="items">-->
+                <?php
+                //echo "main";
+                for ($i = 0; $i < count($FavIDs); $i++) {
+                    $FavID = $FavIDs[$i];
+                    //echo "enter loop";
+
+                    $result = $conn->query("SELECT * FROM JointItems WHERE ItemID = {$FavID}");
+                    $FavItem = mysqli_fetch_assoc($result);
+                    //echo "pass Lidl";
+
+                    $result = $conn->query("SELECT * FROM TescoItems WHERE TescoItemID = {$FavItem['TescoItemID']}");
+                    $TescoItems = mysqli_fetch_assoc($result);
+
+                    $result = $conn->query("SELECT * FROM LidlItems WHERE LidlItemID = {$FavItem['LidlItemID']}");
+                    $LidlItems = mysqli_fetch_assoc($result);
+
+                    //echo "pass tesco";
+
+                    $ItemID = $FavItem['TescoItemID'];
+
+                    //echo "full pass";
+                    echo '
+
+                        <div class="item"> <!--item placeholder/ base design-->
+
                         <div class="store">
-                            ${storestring}
+                            <div class="tesco">
+                                <div class="TescoWrap">
+                                    <a></a>
+                                    <span class="TescoText">Tesxo</span>
+                                </div>
+                            </div>
+                            <div class="lidl">
+                                <div class="LidlWrap">
+                                    <a></a>
+                                    <span class="LidlText">Lidl</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <a href="${productLink}"><img src="${item[stores[0]].image}" alt="placeholder"></a>
-                        <p class="name">${item[stores[0]].name}</p>
+                            <a href="${productLink}"><img src="' . $TescoItems["TescoImageURL"] . '" alt="placeholder"></a>
+                            <p class="name">' . $FavItem["ItemName"] . '</p>';
 
-                        <div class="lower">
-                            <div class="price">
-                                <h1>£${price.toFixed(2)}</h1>
-                                <p>£${lo} - £${hi}</p>
-                            </div>
+                            if ($LidlItems["LidlPrice"] <= $TescoItems["TescoPrice"]) {
+                                echo '
+                                        <div class="lower">
+                                        <div class="price">
+                                            <h1>£' . $LidlItems["LidlPrice"] . '</h1>
+                                            <p>£' . $LidlItems["LidlPrice"] . ' - £' . $TescoItems["TescoPrice"] . '</p>
+                                        </div>
 
-                            <div class="Buttons">
-                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
-                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
-                            </div>
-                        </div> 
-                    </div>`
-                    '
+                                        <div class="Buttons">
+                                            <form method="POST">
+                                                <input type="hidden" name="ID" value="' . $FavID . '">
+                                                <button type="submit" name="AddToList" class="" value="">
+                                                    <i class="fa fa-plus fa-3x" alt=""></i>
+                                                </button>
+                                                <button type="submit" name="RemoveFromFav" class="" value="">
+                                                    <i class="fa fa-plus fa-3x" alt=""></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div> 
+                                </div>';
+                            }
+                            else {
+                                echo '
+                                        <div class="lower">
+                                        <div class="price">
+                                            <h1>£' . $TescoItems["TescoPrice"] . '</h1>
+                                            <p>£' . $TescoItems["TescoPrice"] . ' - £' . $LidlItems["LidlPrice"] . '</p>
+                                        </div>
+
+                                        <div class="Buttons">
+                                            <form method="POST">
+                                            <input type="hidden" name="ID" value="' . $FavID . '">
+                                                <button type="submit" name="AddToList" id="" value="">
+                                                    <i class="fa fa-plus fa-3x" alt=""></i>
+                                                </button>
+                                                <button type="submit" name="RemoveFromFav" class="" value="">
+                                                    <i class="fa fa-plus fa-3x" alt=""></i>
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                    </div> 
+                                </div>';
+                            }
+
+                //    echo 'fav ID '.$FavIDs[$i];
+                }
+                
+                
+
                     ?>
                 
                 

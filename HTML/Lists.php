@@ -294,6 +294,7 @@ echo "pastListCount {$pastListCount}";
                                     $result = $conn->query("SELECT * FROM TescoItems WHERE TescoItemID = {$TescoID}");
                                     $TescoItems = mysqli_fetch_assoc($result);
                                     $ItemID = $TescoItems['TescoItemID'];
+                                    
 
 
                                     echo 
