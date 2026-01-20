@@ -39,52 +39,41 @@
     </div>
 
     <div class="Items" >
-        <div class="Filters"><!--The filters for searching an item-->
-            <h1>Filters</h1>
-            <div class="radial">
-                <input type="radio" id="html" name="Filter" value="relevency" checked="checked">
-                <label for="relevency"><p class="filterP">Revelevency</p></label>
-            </div>
-            
-            <div class="radial">
-                <input type="radio" id="html" name="Filter" value="Cost">
-                <label for="Cost"><p class="filterP">Cost</p></label>
-            </div>
-
-            <div class="radial">
-                <input type="radio" id="html" name="Filter" value="NumRatings">
-                <label for="NumRatings"><p class="filterP"></p>Number of ratings</p></label>
-            </div>
-            
-            <div class="radial">
-                <input type="radio" id="html" name="Filter" value="Ratings">
-                <label for="Ratings"><p class="filterP">Ratings</p></label>
-            </div>
-            
-
-            <h1>Custom</h1>
-            <p>Costs</p>
-            <input type="range" min="0" max="100" values="100" class="slider" id="Cost" value="30">
-            <p>Number of Ratings</p>
-            <input type="range" min="0" max="100" values="100" class="slider" id="NumRatings" value="40">
-            <p>Ratings</p>
-            <input type="range" min="0" max="100" values="100" class="slider" id="Ratings" value="30">
-            <p>Low Price</p>
-            <input type="number" min="0" max="99999" id="lo">
-            <p>High Price</p>
-            <input type="number" min="0" max="99999"  id="hi">
-            <button id="submit">submit</button>
-
-        </div>
-
         <div class="Products">
             <div id="items">
+                <?
+                echo '
+                         <div class="${store}">
+                            <div class="${cap+"Wrap"}">
+                                <a></a>
+                                <span class="${cap+"Text"}">${cap}</span>
+                            </div>
+                        </div>
+                    <div class="item" href="${productLink}"> <!--item placeholder/ base design-->
+                        <div class="store">
+                            ${storestring}
+                        </div>
+
+                        <a href="${productLink}"><img src="${item[stores[0]].image}" alt="placeholder"></a>
+                        <p class="name">${item[stores[0]].name}</p>
+
+                        <div class="lower">
+                            <div class="price">
+                                <h1>£${price.toFixed(2)}</h1>
+                                <p>£${lo} - £${hi}</p>
+                            </div>
+
+                            <div class="Buttons">
+                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
+                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
+                            </div>
+                        </div> 
+                    </div>`
+                    '
+                    ?>
+                
                 
             </div>
-            <div class="buttonContainer">
-                <button id="loadMore">Load More</button>
-            </div>
-
         </div>
     </div>
 
