@@ -275,6 +275,78 @@
 
     }
 
+     if (isset($_POST['MakeCurrent'])) { //deletes  current tesco items
+
+        $ChangeID = intval($_POST['ChangeID']);
+
+        $ListToSwapTesco = $User['ListIDCurrentTesco'];
+        $ListToSwapLidl = $User['ListIDCurrentLidl'];
+        $ListToSwapTesco2 = $User['PastList1TescoID'];
+        $ListToSwapLidl2 = $User['PastList1LidlID'];
+        $ListToSwapTesco2 = $User['PastList2TescoID'];
+        $ListToSwapLidl2 = $User['PastList2LidlID'];
+        $ListToSwapTesco3 = $User['PastList3TescoID'];
+        $ListToSwapLidl3 = $User['PastList3LidlID'];
+
+        if ($ChangeID == 1) {
+            $conn->query("UPDATE UserID Set
+
+                PastList1TescoID = " . intval($User['ListIDCurrentTesco']) . ",
+                PastList1LidlID = " . intval($User['ListIDCurrentLidl']). ",
+                ListIDCurrentTesco = " . (!empty($User['PastList1TescoID']) ? intval($User['PastList1TescoID']) : 'NULL') . ",
+                ListIDCurrentLidl = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . "
+                WHERE UserID = " . intval($UID));
+
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+
+            if (!$result) {
+                die("UPDATE failed: " . $conn->error . "<br><br>Query: " . $updateSQL);
+            }
+        }
+        
+        if ($ChangeID == 2) {
+            $conn->query("UPDATE UserID Set
+
+                PastList3TescoID = " . (!empty($User['PastList2TescoID']) ? intval($User['PastList2TescoID']) : 'NULL') . ",
+                PastList3LidlID = " . (!empty($User['PastList2LidlID']) ? intval($User['PastList2LidlID']) : 'NULL') . ",
+                PastList2TescoID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . ",
+                PastList2LidlID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . " ,
+                PastList1TescoID = " . intval($User['ListIDCurrentTesco']) . ",
+                PastList1LidlID = " . intval($User['ListIDCurrentLidl']). ",
+                ListIDCurrentTesco = " . (!empty($User['PastList3TescoID']) ? intval($User['PastList3TescoID']) : 'NULL') . ",
+                ListIDCurrentLidl = " . (!empty($User['PastList3LidlID']) ? intval($User['PastList3LidlID']) : 'NULL') . "
+                WHERE UserID = " . intval($UID));
+
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+
+            if (!$result) {
+                die("UPDATE failed: " . $conn->error . "<br><br>Query: " . $updateSQL);
+            }
+        }
+
+        if ($ChangeID == 2) {
+            $conn->query("UPDATE UserID Set
+
+                PastList2TescoID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . ",
+                PastList2LidlID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . " ,
+                PastList1TescoID = " . intval($User['ListIDCurrentTesco']) . ",
+                PastList1LidlID = " . intval($User['ListIDCurrentLidl']). ",
+                ListIDCurrentTesco = " . (!empty($User['PastList2TescoID']) ? intval($User['PastList2TescoID']) : 'NULL') . ",
+                ListIDCurrentLidl = " . (!empty($User['PastList2LidlID']) ? intval($User['PastList2LidlID']) : 'NULL') . "
+                WHERE UserID = " . intval($UID));
+
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+
+            if (!$result) {
+                die("UPDATE failed: " . $conn->error . "<br><br>Query: " . $updateSQL);
+            }
+        }
+
+    }
+
     
 ?>
 
@@ -629,6 +701,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                <form method="POST">
+                                <input type="hidden" name="ChangeID" value="3">
+                                    <button type="submit" name="MakeCurrent" id="" value=""  class="ChangeID">Make Current List</button>
+                                    <button type="submit" name="DeleteList" id="" value=""  class="ChangeID">Delete List</button>
+                                </form>
                             </div>
                         </div>';
                                     }
@@ -636,6 +714,7 @@
                        // echo "counter {$counter}";
                         echo '
                         <div class="mainLists">
+                        
                             <div class="list">
 
                                 <div class="tesco"></div>
@@ -765,6 +844,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div>
+                                <form method="POST">
+                                <input type="hidden" name="ChangeID" value="3">
+                                    <button type="submit" name="MakeCurrent" id="" value=""  class="ChangeID">Make Current List</button>
+                                    <button type="submit" name="DeleteList" id="" value=""  class="ChangeID">Delete List</button>
+                                </form>
+                            </div>
                             </div>
                         </div>';
                                     }
@@ -773,7 +860,7 @@
                        // echo "counter {$counter}";
                         echo '
                         <div class="mainLists">
-                            <div class="listHolder">
+                            
                             <div class="list">
 
                                 <div class="tesco"></div>
@@ -855,7 +942,7 @@
                                                             $LidlPastList3ItemID = $LidlPastList3Items['LidlItemID'];
 
 
-                                                        echo 
+                                                        echo
                                                             '<div class="itemAlt"> <!--item placeholder/ base design-->
 
                                                                 <img src="' . $LidlPastList3Items['LidlImageURL'] . '" alt="placeholder">
@@ -903,11 +990,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                </div>
-                            <div
+                                
+                            <div>
                                 <form method="POST">
                                 <input type="hidden" name="ChangeID" value="3">
-                                    <button type="submit" name="AddToList" id="" value=""  class="ChangeID">Make Current List</button>
+                                    <button type="submit" name="MakeCurrent" id="" value=""  class="ChangeID">Make Current List</button>
+                                    <button type="submit" name="DeleteList" id="" value=""  class="ChangeID">Delete List</button>
                                 </form>
                             </div>
                             
