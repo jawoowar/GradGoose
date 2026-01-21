@@ -54,7 +54,7 @@ function loadNew(){
                     });
                     storestring = storestring.join("\n");
 
-                    productLink = "./product.html?id="+item[stores[0]].id;
+                    productLink = "./Product.php?id="+item[stores[0]].id;
 
                     newItems.push(`<div class="item" href="${productLink}"> <!--item placeholder/ base design-->
                         <div class="store">
