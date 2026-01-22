@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <?php
+    session_start();
+
     $dbName = "jenniferwoodward_GradGoose";
     $conn = new mysqli("ysjcs.net", "jennifer.w", "EHEXYUE8",$dbName);
 
@@ -8,8 +10,26 @@
         die("Connection failed: ".mysqli_connect_error());
     }
 
-    $UID = 1;
+    //$UID = 1;
+    if (isset($_SESSION['UserID'])) {
+        $UID = $_SESSION['UserID'];
+    } else {
+        echo "<script>alert('please log in to use this feature')</script>";
+        header("Location: Login.php");
+        exit();
+    }
     //echo $UID;
+    /*
+    if (!empty($_SESSION['uid'])) {
+        $uid = $_SESSION['uid'];
+    }
+    else {
+        echo "<script>
+        alert('please log in to use this feature');
+        window.location.href = 'Login.php';
+        </script>";
+        exit();
+    }*/
     $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$UID}");
     $User = mysqli_fetch_assoc($result);
     //echo "user";
@@ -20,10 +40,10 @@
 
     $FavIDs = [];
     for ($counter = 1; $counter < 11; $counter++) { // puts contence of list into array
-        echo $counter;
+        //echo $counter;
         $FavID = $FavList["ItemID{$counter}"];
         if ($FavID != NULL) {
-            echo $FavID;
+            //echo $FavID;
             $FavIDs[] = $FavID;
         } else {
             break;
@@ -113,6 +133,7 @@
     <link rel="stylesheet" href="../Styles/Root.css">
     <link rel="stylesheet" href="../Styles/Items.css">
     <link rel="stylesheet" href="../Styles/Index.css">
+    <link rel="stylesheet" href="../Styles/Favs.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap');
     </style>
@@ -195,7 +216,7 @@
                                                     <i class="fa fa-plus fa-3x" alt=""></i>
                                                 </button>
                                                 <button type="submit" name="RemoveFromFav" class="" value="">
-                                                    <i class="fa fa-plus fa-3x" alt=""></i>
+                                                    <i class="fa fa-times fa-3x" alt=""></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -217,7 +238,7 @@
                                                     <i class="fa fa-plus fa-3x" alt=""></i>
                                                 </button>
                                                 <button type="submit" name="RemoveFromFav" class="" value="">
-                                                    <i class="fa fa-plus fa-3x" alt=""></i>
+                                                    <i class="fa fa-times fa-3x" alt=""></i>
                                                 </button>
                                             </form>
                                         </div>

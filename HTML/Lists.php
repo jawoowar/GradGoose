@@ -2,6 +2,8 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     
+    session_start();
+
     $dbName = "jenniferwoodward_GradGoose";
     $conn = new mysqli("ysjcs.net", "jennifer.w", "EHEXYUE8",$dbName);
     
@@ -10,8 +12,28 @@
         
     }
 
-    $UID = 1;
-    //echo $UID;
+    //$UID = 1;
+
+    if (isset($_SESSION['UserID'])) {
+        $UID = $_SESSION['UserID'];
+    } else {
+        echo "<script>alert('please log in to use this feature')</script>";
+        header("Location: Login.php");
+        exit();
+    }
+/*
+    if (isset($_COOKIE['UserID'])) {
+        $uid = $_COOKIE['UserID'];
+    }
+    else {
+        echo "<script>
+        alert('please log in to use this feature');
+        alert('". $_COOKIE['UserID'] ."');
+        window.location.href = 'Login.php';
+        </script>";
+        exit();
+    }
+        */
     $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$UID}");
     $User = mysqli_fetch_assoc($result);
 
@@ -169,8 +191,12 @@
                     break;
                 }
             }
-            $result = $conn->query("SELECT * FROM Lists WHERE ListID = {$User['PastList2TescoID']}");
-            $PastList2TescoItems = mysqli_fetch_assoc($result);
+
+            if (!empty($User['PastList2TescoID'])) {
+                $result = $conn->query("SELECT * FROM Lists WHERE ListID = {$User['PastList2TescoID']}");
+                $PastList2TescoItems = mysqli_fetch_assoc($result);
+            }
+
 
             $TescoPastList2ItemIDs = [];
             for ($counter = 1; $counter < 11; $counter++) {
@@ -275,7 +301,7 @@
 
     }
 
-     if (isset($_POST['MakeCurrent'])) { //deletes  current tesco items
+    if (isset($_POST['MakeCurrent'])) { //swaps current list
 
         $ChangeID = intval($_POST['ChangeID']);
 
@@ -304,13 +330,32 @@
                 die("UPDATE failed: " . $conn->error . "<br><br>Query: " . $updateSQL);
             }
         }
-        
+
         if ($ChangeID == 2) {
+            $conn->query("UPDATE UserID Set
+
+                PastList2TescoID = " . (!empty($User['PastList1TescoID']) ? intval($User['PastList1TescoID']) : 'NULL') . ",
+                PastList2LidlID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . " ,
+                PastList1TescoID = " . intval($User['ListIDCurrentTesco']) . ",
+                PastList1LidlID = " . intval($User['ListIDCurrentLidl']). ",
+                ListIDCurrentTesco = " . (!empty($User['PastList2TescoID']) ? intval($User['PastList2TescoID']) : 'NULL') . ",
+                ListIDCurrentLidl = " . (!empty($User['PastList2LidlID']) ? intval($User['PastList2LidlID']) : 'NULL') . "
+                WHERE UserID = " . intval($UID));
+
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+
+            if (!$result) {
+                die("UPDATE failed: " . $conn->error . "<br><br>Query: " . $updateSQL);
+            }
+        }
+        
+        if ($ChangeID == 3) {
             $conn->query("UPDATE UserID Set
 
                 PastList3TescoID = " . (!empty($User['PastList2TescoID']) ? intval($User['PastList2TescoID']) : 'NULL') . ",
                 PastList3LidlID = " . (!empty($User['PastList2LidlID']) ? intval($User['PastList2LidlID']) : 'NULL') . ",
-                PastList2TescoID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . ",
+                PastList2TescoID = " . (!empty($User['PastList1TescoID']) ? intval($User['PastList1TescoID']) : 'NULL') . ",
                 PastList2LidlID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . " ,
                 PastList1TescoID = " . intval($User['ListIDCurrentTesco']) . ",
                 PastList1LidlID = " . intval($User['ListIDCurrentLidl']). ",
@@ -326,16 +371,87 @@
             }
         }
 
-        if ($ChangeID == 2) {
-            $conn->query("UPDATE UserID Set
+    }
 
-                PastList2TescoID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . ",
-                PastList2LidlID = " . (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL') . " ,
-                PastList1TescoID = " . intval($User['ListIDCurrentTesco']) . ",
-                PastList1LidlID = " . intval($User['ListIDCurrentLidl']). ",
-                ListIDCurrentTesco = " . (!empty($User['PastList2TescoID']) ? intval($User['PastList2TescoID']) : 'NULL') . ",
-                ListIDCurrentLidl = " . (!empty($User['PastList2LidlID']) ? intval($User['PastList2LidlID']) : 'NULL') . "
+    if (isset($_POST['DeleteList'])) { //swaps current list
+
+        $ChangeID = intval($_POST['ChangeID']);
+
+        $ListToSwapTesco = $User['ListIDCurrentTesco'];
+        $ListToSwapLidl = $User['ListIDCurrentLidl'];
+        $ListToSwapTesco1 = (!empty($User['PastList1TescoID']) ? intval($User['PastList1TescoID']) : 'NULL');
+        $ListToSwapLidl1 = (!empty($User['PastList1LidlID']) ? intval($User['PastList1LidlID']) : 'NULL');
+        $ListToSwapTesco2 = (!empty($User['PastList2TescoID']) ? intval($User['PastList2TescoID']) : 'NULL');
+        $ListToSwapLidl2 = (!empty($User['PastList2LidlID']) ? intval($User['PastList2LidlID']) : 'NULL');
+        $ListToSwapTesco3 = (!empty($User['PastList3TescoID']) ? intval($User['PastList3TescoID']) : 'NULL');
+        $ListToSwapLidl3 = (!empty($User['PastList3LidlID']) ? intval($User['PastList3LidlID']) : 'NULL');
+
+        if ($ChangeID == 1) {
+
+
+            $conn->query("UPDATE UserID Set
+                PastList3TescoID = NULL,
+                PastList3LidlID = NULL,
+                PastList2TescoID = " . (!empty($User['PastList3TescoID']) ? intval($User['PastList3TescoID']) : 'NULL') . ",
+                PastList2LidlID = " . (!empty($User['PastList3LidlID']) ? intval($User['PastList3LidlID']) : 'NULL'). ",
+                PastList1TescoID = " . (!empty($User['PastList2TescoID']) ? intval($User['PastList2TescoID']) : 'NULL') . ",
+                PastList1LidlID = " . (!empty($User['PastList2LidlID']) ? intval($User['PastList2LidlID']) : 'NULL'). "
+
                 WHERE UserID = " . intval($UID));
+            if ($ListToSwapLidl1 !== 'NULL') {
+                $conn->query("DELETE FROM Lists WHERE ListID = $ListToSwapLidl1");
+            }
+            if ($ListToSwapTesco2 !== "") {
+                $conn->query("DELETE FROM Lists WHERE ListID = $ListToSwapTesco1");
+            }
+
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+
+            if (!$result) {
+                die("UPDATE failed: " . $conn->error . "<br><br>Query: " . $updateSQL);
+            }
+        }
+
+        if ($ChangeID == 2) {
+
+            $conn->query("UPDATE UserID Set
+                PastList3TescoID = NULL,
+                PastList3LidlID = NULL,
+                PastList2TescoID = " . (!empty($User['PastList3TescoID']) ? intval($User['PastList3TescoID']) : 'NULL') . ",
+                PastList2LidlID = " . (!empty($User['PastList3LidlID']) ? intval($User['PastList3LidlID']) : 'NULL'). "
+
+                WHERE UserID = " . intval($UID));
+
+            if ($ListToSwapLidl1 !== 'NULL') {
+                $conn->query("DELETE FROM Lists WHERE ListID = $ListToSwapLidl2");
+            }
+            if ($ListToSwapTesco2 !== "") {
+                $conn->query("DELETE FROM Lists WHERE ListID = $ListToSwapTesco2");
+            }
+
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+
+            if (!$result) {
+                die("UPDATE failed: " . $conn->error . "<br><br>Query: " . $updateSQL);
+            }
+        }
+
+        if ($ChangeID == 3) {
+
+            $conn->query("UPDATE UserID Set
+                PastList3TescoID = NULL,
+                PastList3LidlID = NULL
+
+                WHERE UserID = " . intval($UID));
+
+            if ($ListToSwapLidl1 !== 'NULL') {
+                $conn->query("DELETE FROM Lists WHERE ListID = $ListToSwapLidl3");
+            }
+            if ($ListToSwapTesco2 !== "") {
+                $conn->query("DELETE FROM Lists WHERE ListID = $ListToSwapTesco3");
+            }
 
             header("Location: " . $_SERVER['PHP_SELF']);
             exit();
@@ -452,8 +568,6 @@
 
                                                     <div class="Buttons">
 
-                                                        <i class="fa fa-close" style="font-size:36px"></i>
-                                                        <i class="fa fa-check" style="font-size:36px"></i>
                                                         <a href="Product.php?id=' . $ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
                                                         <form method="POST">
                                                             <button  type="submit" name="binItemTesco" class="Bin" value="' . ($counter + 1) . '">
@@ -519,8 +633,6 @@
 
                                                         <div class="Buttons">
 
-                                                            <i class="fa fa-close" style="font-size:36px"></i>
-                                                            <i class="fa fa-check" style="font-size:36px"></i>
                                                             <a href="Product.php?id=' . $ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
                                                             <form method="POST">
                                                                 <button  type="submit" name="binItemLidl" class="Bin" value="' . ($counter + 1) . '">
@@ -577,9 +689,11 @@
                                 <div class="tesco"></div>
 
                                     <div class="listContent">
-
-                                        <div class="items">';
-                                        echo 'test';
+                                    <div class="items">';
+                        if (count($TescoPastList1ItemIDs) == 0) {
+                            echo '<h1>No items in list</h1>';
+                        }
+                        else {
 
                                                 for ($counterPastTesco1 = 0; $counterPastTesco1 < count($TescoPastList1ItemIDs); $counterPastTesco1++) {
                                                     $TescoPastList1ID = $TescoPastList1ItemIDs[$counterPastTesco1];
@@ -608,8 +722,6 @@
 
                                                                     <div class="Buttons">
 
-                                                                        <i class="fa fa-close" style="font-size:36px"></i>
-                                                                        <i class="fa fa-check" style="font-size:36px"></i>
                                                                         <a href="Product.php?id=' . $TescoPastList1ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
                                                                         <form method="POST">
                                                                             <button  type="submit" name="binItemTesco" class="Bin" value="' . ($counterPastTesco1 + 1) . '">
@@ -625,6 +737,7 @@
                                                         </div>
                                                     ';
                                                 }
+                                            }
                                         echo '
 
                                                     
@@ -644,8 +757,10 @@
                                     <div class="lidl"></div>
                                     <div class="listContent">
                                         <div class="items">';
-
-
+                                            if (count($LidlPastList1ItemIDs) == 0) {
+                                                echo '<h1>No items in list</h1>';
+                                            }
+                                            else {
                                                         for ($counterPastLidl1 = 0; $counterPastLidl1 < count($LidlPastList1ItemIDs); $counterPastLidl1++) {
                                                             $LidlPastList1ID = $LidlPastList1ItemIDs[$counterPastLidl1];
                                                             $result = $conn->query("SELECT * FROM LidlItems WHERE LidlItemID = {$LidlPastList1ID}");
@@ -673,8 +788,6 @@
 
                                                                         <div class="Buttons">
 
-                                                                            <i class="fa fa-close" style="font-size:36px"></i>
-                                                                            <i class="fa fa-check" style="font-size:36px"></i>
                                                                             <a href="Product.php?id=' . $LidlPastList1ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
                                                                             <form method="POST">
                                                                                 <button  type="submit" name="binItemLidl" class="Bin" value="' . ($counterPastLidl1 + 1) . '">
@@ -690,7 +803,7 @@
                                                             </div>';
 
                                                         }
-
+                                            }
                                                 echo '
                                         </div>
                                         <div class="prices">
@@ -703,7 +816,7 @@
                                 </div>
                                 <div>
                                 <form method="POST">
-                                <input type="hidden" name="ChangeID" value="3">
+                                <input type="hidden" name="ChangeID" value="1">
                                     <button type="submit" name="MakeCurrent" id="" value=""  class="ChangeID">Make Current List</button>
                                     <button type="submit" name="DeleteList" id="" value=""  class="ChangeID">Delete List</button>
                                 </form>
@@ -722,7 +835,10 @@
                                     <div class="listContent">
 
                                         <div class="items">';
-                                        echo 'test';
+                                            if (count($TescoPastList2ItemIDs) == 0) {
+                                                echo '<h1>No items in list</h1>';
+                                            }
+                                            else {
 
                                                 for ($counterPastTesco2 = 0; $counterPastTesco2 < count($TescoPastList2ItemIDs); $counterPastTesco2++) {
                                                     $TescoPastList2ID = $TescoPastList2ItemIDs[$counterPastTesco2];
@@ -751,8 +867,6 @@
 
                                                                     <div class="Buttons">
 
-                                                                        <i class="fa fa-close" style="font-size:36px"></i>
-                                                                        <i class="fa fa-check" style="font-size:36px"></i>
                                                                         <a href="Product.php?id=' . $TescoPastList2ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
                                                                         <form method="POST">
                                                                             <button  type="submit" name="binItemTesco" class="Bin" value="' . ($counterPastTesco2 + 1) . '">
@@ -768,6 +882,7 @@
                                                         </div>
                                                     ';
                                                 }
+                                            }
                                         echo '
 
                                                     
@@ -787,7 +902,10 @@
                                     <div class="lidl"></div>
                                     <div class="listContent">
                                         <div class="items">';
-
+                                            if (count($LidlPastList2ItemIDs) == 0) {
+                                                echo '<h1>No items in list</h1>';
+                                            }
+                                            else {
 
                                                         for ($counterPastLidl2 = 0; $counterPastLidl2 < count($LidlPastList2ItemIDs); $counterPastLidl2++) {
                                                             $LidlPastList2ID = $LidlPastList2ItemIDs[$counterPastLidl2];
@@ -816,8 +934,6 @@
 
                                                                         <div class="Buttons">
 
-                                                                            <i class="fa fa-close" style="font-size:36px"></i>
-                                                                            <i class="fa fa-check" style="font-size:36px"></i>
                                                                             <a href="Product.php?id=' . $LidlPastList2ItemID . '"><i class="fa fa-info-circle" style="font-size:36px"></i></a>
                                                                             <form method="POST">
                                                                                 <button  type="submit" name="binItemLidl" class="Bin" value="' . ($counterPastLidl2 + 1) . '">
@@ -833,6 +949,7 @@
                                                             </div>';
 
                                                         }
+                                            }
 
                                                 echo '
                                         </div>
@@ -847,7 +964,7 @@
                                 
                                 <div>
                                 <form method="POST">
-                                <input type="hidden" name="ChangeID" value="3">
+                                <input type="hidden" name="ChangeID" value="2">
                                     <button type="submit" name="MakeCurrent" id="" value=""  class="ChangeID">Make Current List</button>
                                     <button type="submit" name="DeleteList" id="" value=""  class="ChangeID">Delete List</button>
                                 </form>
@@ -868,7 +985,11 @@
                                     <div class="listContent">
 
                                         <div class="items">';
-                                        echo 'test';
+                                            if (count($TescoPastList3ItemIDs) == 0) {
+                                                echo '<h1>No items in list</h1>';
+                                            }
+                                            else {
+
 
                                                 for ($counterPastTesco3 = 0; $counterPastTesco3 < count($TescoPastList3ItemIDs); $counterPastTesco3++) {
                                                     $TescoPastList3ID = $TescoPastList3ItemIDs[$counterPastTesco3];
@@ -914,6 +1035,7 @@
                                                         </div>
                                                     ';
                                                 }
+                                            }
                                         echo '
 
                                                     
@@ -933,7 +1055,10 @@
                                     <div class="lidl"></div>
                                     <div class="listContent">
                                         <div class="items">';
-
+                                            if (count($LidlPastList3ItemIDs) == 0) {
+                                                echo '<h1>No items in list</h1>';
+                                            }
+                                            else {
 
                                                         for ($counterPastLidl3 = 0; $counterPastLidl3 < count($LidlPastList3ItemIDs); $counterPastLidl3++) {
                                                             $LidlPastList3ID = $LidlPastList3ItemIDs[$counterPastLidl3];
@@ -979,6 +1104,7 @@
                                                             </div>';
 
                                                         }
+                                                }
 
                                                 echo '
                                         </div>

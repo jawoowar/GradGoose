@@ -1,6 +1,8 @@
 <?php
-    session_start();
-    $conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+    $conn = mysqli_connect('ysjcs.net', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
 
     if (!$conn) {
         die("Connection failed: ".mysqli_connect_error());
@@ -22,7 +24,15 @@
                         echo "Please fill in all fields";
                     }
                     else {
-                        $sql = "INSERT INTO UserID VALUES (0,'$uid', '$email', '$pwd', null, null, null, null, null, null, null, null, null, null, null, null)";
+
+                        $NewListTesco = $conn->query("INSERT INTO Lists Values (0, CURRENT_TIMESTAMP, 'Tesco', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+                        $NewTescoID = $conn->insert_id;
+                        $NewListLidl = $conn->query("INSERT INTO Lists Values (0, CURRENT_TIMESTAMP, 'Lidl', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+                        $NewLidlID = $conn->insert_id;
+                        $NewFavorite = $conn->query("INSERT INTO Favorites Values (0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+                        $NewFavoriteID = $conn->insert_id;
+
+                        $sql = "INSERT INTO UserID VALUES (0,'$uid', '$email', '$pwd', null, 0, 0, '$NewTescoID', '$NewLidlID', null, null, null, null, null, null, '$NewFavoriteID')";
                         $result = $conn->query($sql);
 
                         echo "signed up successfully";

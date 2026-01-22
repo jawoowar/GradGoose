@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
+    $conn = mysqli_connect('ysjcs.net', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
 
     if (!$conn) {
         die("Connection failed: ".mysqli_connect_error());
@@ -8,18 +8,28 @@
 
             if (isset($_POST['login'])) {
 
-                $uid = $_POST['username'];
+                $usr = $_POST['username'];
                 $pwd = $_POST['password'];
 
-                $sql = "SELECT * FROM UserID WHERE UserName='$uid' AND passwordHash='$pwd'";
+                $sql = "SELECT * FROM UserID WHERE UserName='$usr' AND passwordHash='$pwd'";
                 $result = $conn->query($sql);
-                if (mysqli_num_rows($result) == 1) {
+                if (mysqli_num_rows($result) > 0) {
                     if ($row =$result->fetch_assoc()) {
-                        $_SESSION['id'] = $row['id'];
+                        $CookieUid = $row['UserID'];
+                        $CookieUsr = $row['UserName'];
 
-                        echo "<script> alert('log in successful') </script>";
-                        //header("Location: Index.html");
-                        //exit();
+                        //setcookie('UserID',$CookieUid, time() + 60*5,'/');
+                        //setcookie('Username', $CookieUsr, time() + 60*5,'/');
+
+                        $_SESSION['UserID'] = $CookieUid;
+                        $_SESSION['Username'] = $CookieUsr;
+
+                        echo "<script> 
+                        alert('log in successful');
+                        window.location.href = 'Index.php'; 
+                        </script>";
+
+                        exit();
                     }
                 } else {
                     echo "<script> alert('log in failed') </script>";

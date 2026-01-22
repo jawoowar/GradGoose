@@ -1,5 +1,24 @@
 <!DOCTYPE html>
 <html>
+    <?php
+    
+    session_start();
+
+    //if (isset($_COOKIE["UserID"])) {
+    //    $uid = $_COOKIE['UserID']; 
+    //    $usr = $_COOKIE['Username'];
+    if (isset($_SESSION['UserID'])) {
+        $uid = $_SESSION['UserID'];
+        $usr = $_SESSION['Username'];
+    } else {
+        header("Location: Login.php");
+        exit();
+    }
+
+    echo "Sessino UID = ". $uid . "<br>";
+    echo "Session Username = ". $usr ."<br>";
+    
+    ?>
     <head>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
