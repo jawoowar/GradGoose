@@ -1,6 +1,12 @@
 <?php
-    $rows = 99;
-    $columns = ["Sort1", "Sort2", "Sort3"];
+    $conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
+
+    if (!$conn) {
+        die("Connection failed: ".mysqli_connect_error());
+    }
+
+    $rowsT = 99;
+    $columnsT = ["Sort1", "Sort2", "Sort3"];
     $testData = [
         "Sort1" => [
             'ID1' => 0.99,
@@ -307,7 +313,7 @@
         ]
     ];
 
-    function getData($previous, $validKeys) {
+    function getDataT($previous, $validKeys) {
         global $testData;
 
         $offset = count(array_first($previous));
@@ -326,69 +332,72 @@
         return $output;
     }
 
-    /*$conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
 
-    if (!$conn) {
-        die("Connection failed: ".mysqli_connect_error());
-    }
 
-    $columns = mysqli_fetch_assoc(
-        $conn->query("SHOW COLUMNS FROM jenniferwoodward_GradGoose.Sort")
-    );
+    $columns = mysqli_fetch_assoc($conn->query(
+            "SELECT COLUMN_NAME
+            FROM information_schema.columns
+            WHERE TABLE_NAME = 'Sort'"
+    ));
     unset($columns[array_find($columns, "ItemID")]);
+    //gets all possible sorting variables
 
-    $_GET["l"] = !is_null($_GET["l"]) ? $_GET["l"] : 0;
-    $_GET["h"] = !is_null($_GET["h"]) ? $_GET["h"] : INF;
+    $_GET["l"] = $_GET["l"] ?? 0;
+    $_GET["h"] = $_GET["h"] ?? 99999;
+    //unsure how to write infinite in SQL so 99999 used
 
-    $rows = mysqli_fetch_assoc($conn->query("
-        SELECT COUNT(*) AS rows
+    $rows = mysqli_fetch_assoc($conn->query(
+        "SELECT COUNT(*) AS rows
         FROM Sort INNER JOIN JointItems J
         ON S.ItemID = J.ItemID
-        INNER JOIN TescoItems T
-        ON S.ItemID = T.ItemID
-        INNER JOIN LidlItems L
-        ON S.ItemID = L.ItemID 
+        LEFT JOIN TescoItems T
+        ON S.ItemID = T.TescoItemID
+        LEFT JOIN LidlItems L
+        ON S.ItemID = L.LidlItemID 
         WHERE J.ItemName LIKE %{$_GET["s"]}%
         AND (
-            (T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
+            (T.TescoPrice >= {$_GET["l"]} AND T.TescoPrice <= {$_GET["h"]}) 
             OR
-            (L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]}) 
-        );
-    "))["rows"];
+            (L.LidlPrice >= {$_GET["l"]} AND L.LidlPrice <= {$_GET["h"]}) 
+        );"
+    ))["rows"];
+    //gets maximum number of rows possible for settings
 
 
-    function getData($offset){
-        global $columns;
+    function getData($offset, $sorts){
         global $conn;
 
         $data = [];
-        foreach($columns as $order){
-            $query = "
-                SELECT S.ItemID, S.{$order}
+        foreach($sorts as $order){
+            $query = 
+                "SELECT S.ItemID, S.{$order}
                 FROM Sort S INNER JOIN JointItems J
                 ON S.ItemID = J.ItemID
-                INNER JOIN TescoItems T
+                LEFT JOIN TescoItems T
                 ON S.ItemID = T.ItemID
-                INNER JOIN LidlItems L
+                LEFT JOIN LidlItems L
                 ON S.ItemID = L.ItemID 
                 WHERE J.ItemName LIKE %{$_GET["s"]}%
                 AND (
-                    (T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
+                    (T.Price NOT NULL AND T.Price >= {$_GET["l"]} AND T.Price <= {$_GET["h"]}) 
                     OR
-                    (L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]}) 
+                    (L.Price NOT NULL AND L.Price >= {$_GET["l"]} AND L.Price <= {$_GET["h"]})
                 )
-                ORDER BY {$order} DESC
+                ORDER BY S.{$order} DESC
                 OFFSET {$offset} ROWS
                 LIMIT 30;
             ";
+            //gets the next 30 items in descending order when sorted using $order and filtered using search and price thresholds
+            //will get array of 30 for each order type
 
-            $newData = $conn->query($query);
-            $data = array_merge(mysqli_fetch_assoc($newData), $data);
+            $data = array_merge(mysqli_fetch_assoc($conn->query($query)), $data);
         }
 
-        return structure($data);
+        structure($data);
+
+        return $data;
     }
-    */
+    
 
 
 
@@ -408,12 +417,12 @@
 
 
     function customSort($values, &$previous, $goal=30){
-        global $columns;
-        global $rows;
+        global $columnsT;
+        global $rowsT;
 
         $sortsum = array_sum($values);
         foreach ($values as $key => $val){
-            if($val < 0.02*$sortsum || !in_array($key, $columns)){
+            if($val < 0.02*$sortsum || !in_array($key, $columnsT)){
                 unset(
                     $values[$key], 
                     $previous[$key]
@@ -427,7 +436,8 @@
         $test = array_fill(0, 99, 1);
         
         while(!$check && next($test)){
-            $previous = array_merge_recursive($previous, getData($previous, array_keys($values)));
+            $newData = getDataT(count($previous), array_keys($values));
+            $previous = array_merge_recursive($previous, $newData);
 
             foreach($previous["Sort3"] as $i => $ii){
                 echo $i." => ".$ii."   ";
@@ -439,7 +449,7 @@
             foreach($intersections as $i){
                 echo $i." ";
             }
-            if(count($intersections) >= $goal || count(array_first($previous)) >= $rows){
+            if(count($intersections) >= $goal || count(array_first($previous)) >= $rowsT){
                 $sortArr = [];
                 foreach(array_keys($values) as $sort){
                     $sortArr[$sort] = [];
@@ -464,6 +474,7 @@
         //applies sort power to each sort type and then adds them together
 
         uasort($scores, fn($f, $s) => $s <=> $f);
+        //descending
 
         foreach($scores as $i => $ii){
             echo $i." => ".$ii."   ";
@@ -478,6 +489,8 @@
         $array = array_slice($array, 0, 1);
         return (array)array_shift($array);
     }
+    //implimentation of array_first as it wasnt in this php version apparently
+    //differs from original in that it converts to array as that is the only needed implimentation in this program
 
 
 
@@ -486,11 +499,14 @@
         echo $item;
     }
 
-    $testData = ["ItemID" => [1, 2, 3, 3, 2, 1, 2, 3, 1], "Sort1" => ["A", "B", "C"], "Sort2" => ["A", "B", "C"], "Sort3" => ["A", "B", "C"]];
+    $testData = ["ItemID" => [1, 2, 3, 3, 2, 1, 2, 3, 1], "Sort1" => [1, 0.5, 0], "Sort2" => [1, 0.3, 0.1], "Sort3" => [0.75, 0.5, 0]];
     structure($testData);
-    foreach($testData as $i){
-        foreach($i as $ii => $iii){
-            echo $ii." => ".$iii." ";
-        }
+    customSort(["Sort1" => 0, "Sort2" => 1, "Sort3" => 0.5], $testData);
+
+    foreach($columns as $column){
+        echo "+".$column."+";
     }
+    echo "+".$rows."+";
+
+    close($conn);
 ?>

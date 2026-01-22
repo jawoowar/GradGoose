@@ -71,8 +71,8 @@ function loadNew(){
                             </div>
 
                             <div class="Buttons">
-                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
-                                <a href=""><i class="fa fa-plus fa-3x" alt=""></i></a>
+                                <i class="fa fa-plus fa-3x" onclick="() => {updList(${item[stores[0]].name})}" alt=""></i>
+                                <i class="fa fa-star fa-3x" onclick="() => {updFavs(${item[stores[0]].name})}" alt=""></i>
                             </div>
                         </div> 
                     </div>`);
@@ -129,17 +129,22 @@ sliders.forEach((slider) => {
 
 
 function submit(search) {
-    location.replace(location.origin+location.pathname+"?"+new URLSearchParams({
-        lo: document.querySelector("#lo").value,
-        hi: document.querySelector("#hi").value,
-        cost: sliders[0].value,
-        numRatings: sliders[1].value,
-        ratings: sliders[2].value,
-        search: search ? document.getElementById("Search").value : params.get("Search")
-    }).toString());
+    lo = document.getElementById("lo");
+    hi = document.getElementById("hi");
+    if(hi.value >= lo.value){
+        location.replace(location.origin+location.pathname+"?"+new URLSearchParams({
+            lo: lo.value,
+            hi: hi.value,
+            cost: sliders[0].value,
+            numRatings: sliders[1].value,
+            ratings: sliders[2].value,
+            Search: search ? document.getElementById("Search").value : params.get("Search")
+        }).toString());
+}
 }
 
 document.getElementById("submit").addEventListener("click", () => {submit(false)});
+document.getElementById("Search").addEventListener("keyup", (e) => {if(e.key === "Enter"){submit(true)}});
 
 loadNew();
 

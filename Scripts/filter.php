@@ -183,11 +183,6 @@
         uasort($scores, fn($f, $s) => $s <=> $f);
         //descending
 
-        /*foreach($scores as $key => $val){
-            echo $key." ";
-        }
-        echo "^";*/
-
         return array_keys($scores);
     }
     //keeps getting individual arrays of the top 30 items when sorted using the keys in $values
@@ -211,7 +206,7 @@
     $exists = json_decode($_GET["e"], true);
     $exists =  $exists ?? [];
     $data = customSort(
-        ["PriceScore" => intval($_GET["c"]), "RatingScore" => intval($_GET["r"]), "NumRatingScore" => intval($_GET["nr"])],
+        ["PriceScore" => floatval($_GET["c"]), "RatingScore" => floatval($_GET["r"]), "NumRatingScore" => floatval($_GET["nr"])],
         $previous,
         $exists
     );
