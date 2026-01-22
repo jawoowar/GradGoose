@@ -127,10 +127,10 @@
         </form>
         
         <!--Buttons to move to a different page-->
-        <a href="Lists.html"><i class="fa fa-navicon"></i></a>
-        <a href="Favs.html"><i class="material-icons" style="font-size:55px">star</i></a>
+        <a href="Lists.php"><i class="fa fa-navicon"></i></a>
+        <a href="Favs.php"><i class="material-icons" style="font-size:55px">star</i></a>
         <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
-        <a href="Login.html"><button class="SignUpButton"> Sign Up </button></a>
+        <a href="Login.php"><button class="SignUpButton"> Sign Up </button></a>
 
     </div>
 
