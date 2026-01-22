@@ -1,22 +1,29 @@
 <?php
-    $conn = mysqli_connect('localhost', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
+
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+    $conn = mysqli_connect('ysjcs.net', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
 
     if (!$conn) {
         die("Connection failed: ".mysqli_connect_error());
     }
 
-    $UID = 1; //$_GET["uid"];
-    $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$UID}");
+    $uid = 1; 
+    //$_GET["uid"];
+    $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$uid}");
     $User = mysqli_fetch_assoc($result);
 
-    $ID = 1;//$_GET["id"];
-    $result = $conn->query("SELECT * FROM JointItems WHERE ItemID = {$ID}");
+    //$id = 1;
+    //$id = $_GET["id"];
+    $id = isset($_GET["id"]) ? intval($_GET["id"]) : 1;
+    $result = $conn->query("SELECT * FROM JointItems WHERE ItemID = {$id}");
     $JointItems = mysqli_fetch_assoc($result);
 
     $TescoID = $JointItems['TescoItemID'];
     $LidlID = $JointItems['LidlItemID'];
 
-    $result = $conn->query("SELECT * FROM TescoItems WHERE TescoItemID = {$ID}");
+    $result = $conn->query("SELECT * FROM TescoItems WHERE TescoItemID = {$TescoID}");
     $TescoItems = mysqli_fetch_assoc($result);
 
     if ($TescoItems['Vegan'] == 1 AND $TescoItems['Vegatarian'] == 1) {
@@ -28,7 +35,7 @@
     }
 
 
-    $result = $conn->query("SELECT * FROM LidlItems WHERE LidlItemID = {$ID}");
+    $result = $conn->query("SELECT * FROM LidlItems WHERE LidlItemID = {$LidlID}");
     $LidlItems = mysqli_fetch_assoc($result);
 
     $WantedCatagoryID = $TescoItems['Catagory'];
@@ -138,7 +145,7 @@
                     }
                 }
                 if ($Absent) { // if allowed adds to list
-                    $Update = $conn->query("UPDATE Lists SET ItemID{$NextFreeLidl} = {$TescoID} WHERE ListID = {$User['ListIDCurrentLidl']}");
+                    $Update = $conn->query("UPDATE Lists SET ItemID{$NextFreeLidl} = {$LidlID} WHERE ListID = {$User['ListIDCurrentLidl']}");
                     if ($Update) {
                         echo "<script>alert('Added to your Current List');</script>";
                     } else {
@@ -191,10 +198,10 @@
         </form>
         
         <!--Buttons to move to a different page-->
-        <a href="Lists.html"><i class="fa fa-navicon"></i></a>
-        <a href="Favs.html"><i class="material-icons" style="font-size:48px">star</i></a>
+        <a href="Lists.php"><i class="fa fa-navicon"></i></a>
+        <a href="Favs.php"><i class="material-icons" style="font-size:48px">star</i></a>
         <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
-        <a href="Login.html"><button class="SignUpButton"> Sign Up </button></a>
+        <a href="Login.php"><button class="SignUpButton"> Sign Up </button></a>
 
     </div>
 
@@ -237,9 +244,9 @@
                     </div>
                     <div class="productInfoContainer" style="margin-left: 20px;">
 
-                        <div class="info tesco"> <h2><?php echo$TescoItems['Poundage']?>g</h2> </div>
-                        <div class="info tesco"> <h2><?php echo$TescoItems['TescoRating']?>/5</h2> </div>
-                        <div class="ingrediantInfo tesco"> <h2><?php echo$TescoItems['Ingredients']?></h2> </div>
+                        <div class="info tesco"> <h2><?php echo $TescoItems['Poundage']?>g</h2> </div>
+                        <div class="info tesco"> <h2><?php echo $TescoItems['TescoRating']?>/5</h2> </div>
+                        <div class="ingrediantInfo tesco"> <h2><?php echo $TescoItems['Ingrediants'] ?></h2> </div>
 
                     </div>
                 </div>
@@ -275,9 +282,9 @@
                     </div>
                     <div class="productInfoContainer" style="margin-left: 20px;">
 
-                        <div class="info lidl"> <h2><?php echo$LidlItems['Poundage']?>g</h2> </div>
-                        <div class="info lidl"> <h2><?php echo$LIdlItems['LidlRating']?>/5</h2> </div>
-                        <div class="ingrediantInfo lidl"> <h2><?php echo$LidlItems['Ingredients']?></h2> </div>
+                        <div class="info lidl"> <h2><?php echo $LidlItems['Poundage']?>g</h2> </div>
+                        <div class="info lidl"> <h2><?php echo $LidlItems['LidlRating']?>/5</h2> </div>
+                        <div class="ingrediantInfo lidl"> <h2><?php echo $LidlItems['Ingrediants']?></h2> </div>
 
                     </div>
                 </div>
