@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
@@ -9,8 +11,15 @@
         die("Connection failed: ".mysqli_connect_error());
     }
 
-    $uid = 1; 
-    //$_GET["uid"];
+    //$uid = 1; 
+    if (isset($_SESSION['UserID'])) {
+        $uid = $_SESSION['UserID'];
+        $usr = $_SESSION['Username'];
+    } else {
+        header("Location: Login.php");
+        exit();
+    }
+
     $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$uid}");
     $User = mysqli_fetch_assoc($result);
 
@@ -39,17 +48,17 @@
     $LidlItems = mysqli_fetch_assoc($result);
 
     $WantedCatagoryID = $TescoItems['Catagory'];
-    echo "Searching for CatagoryID: " . $WantedCatagoryID . "<br>";
+    //echo "Searching for CatagoryID: " . $WantedCatagoryID . "<br>";
     $result = $conn->query("SELECT * FROM Catagories WHERE CatagoryID = {$WantedCatagoryID}");
     $Catagory = mysqli_fetch_assoc($result);
 
-    echo $Catagory['Catagory'];
+    //echo $Catagory['Catagory'];
 
 
     $result = $conn->query("SELECT * FROM Favorites WHERE FavoriteId = {$User['FavoriteTableID']}");
     $Favorites = mysqli_fetch_assoc($result);
 
-    //Adding to list Tesco
+    //Adding to FavoriteTable
    for ($counter = 1; $counter < 11; $counter++) {
         $FavoriteTableID = $Favorites["ItemID{$counter}"];
         if ($FavoriteTableID == NULL) {
@@ -191,7 +200,7 @@
     </style>
 
     <div class="Header" style="margin: 5px;"> <!--Everything at the top of the page-->
-        <a href="Index.html" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
+        <a href="Index.php" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
         
         <form action=""><!--add the database in to the action-->
         <input type="text" id="Search" name="Search" placeholder="Search">
@@ -200,8 +209,8 @@
         <!--Buttons to move to a different page-->
         <a href="Lists.php"><i class="fa fa-navicon"></i></a>
         <a href="Favs.php"><i class="material-icons" style="font-size:48px">star</i></a>
-        <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
-        <a href="Login.php"><button class="SignUpButton"> Sign Up </button></a>
+        <a href="Profile.php"><i class="fa fa-user-circle-o"></i></a>
+        <a href="Login.php"><button class="SignUpButton"> Sign In </button></a>
 
     </div>
 

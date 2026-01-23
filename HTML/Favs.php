@@ -65,52 +65,10 @@
     
     if (isset($_POST['AddToList'])) {
 
-        $ID = intval($_POST['ID']);
-        
-        //echo "<script>alert('ID = {$ID}');</script>";
+        $JointID = $_POST['JointID'];
 
-        $result = $conn->query("SELECT * FROM JointItems WHERE ItemID = {$ID}");
-        $JointItems = mysqli_fetch_assoc($result);
-
-        if (isset($NextFreeTesco)  AND ($NextFreeTesco <= 11)) {
-                $Absent = true;
-                for ($counter = 1; $counter < 11; $counter++) { // check if its already in List
-                    $ListsTableID = $Lists["ItemID{$counter}"];
-                    //echo "<script>alert('Checking ItemID{$counter} : {$ListsTableID}');</script>";
-                    //echo "<script>alert('Checking Joint ItemID{$counter} : {$JointItems['ItemID']}');</script>";
-                    if ($ListsTableID == $JointItems['ItemID']) {
-                        echo "<script>alert('Item Already in your Current List');</script>";
-                        $Absent = false;
-                        break;
-                    }
-                }
-                if ($Absent) { // if not in list adds to list
-                $ItemToAdd = $JointItems['ItemID'];
-                    $Update = $conn->query("UPDATE Lists SET ItemID{$NextFreeTesco} = {$ItemToAdd} WHERE ListID = {$User['ListIDCurrentTesco']}");
-                    if ($Update) {
-                        echo "<script>alert('Added to your Current List');</script>";
-                    } else {
-                        echo "<script>alert('Error: " . $conn->error . "');</script>";
-                    }
-                }
-        } else {
-            echo "<script>alert('Current List Full Or Error');</script>";
-        }
-
-    }
-
-    if (isset($_POST['RemoveFromFav'])) { //deletes  current tesco items
-        $posToDelete = intval($_POST['ID']);
-
-        for ($i = $posToDelete; $i < 10; $i++) {
-            $nextItem = $FavList["ItemID" . ($i + 1)];
-
-            $update = $conn->query("UPDATE Favorites Set ItemID{$i} = " . ($nextItem ? $nextItem : 'NULL') . " WHERE FavoriteID = {$User['FavoriteTableID']}");
-        }
-
-        $conn->query("UPDATE Favorites SET ItemID10 = NULL WHERE FavoriteID = {$User['FavoriteTableID']}");
-
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: Product.php?id=" . $JointID);
+        exit();
     }
 
 
@@ -141,7 +99,7 @@
 <body class="Website"> <!--Moves the whole website to the centre-->
 
     <div class="Header" style="margin: 5px;"> <!--Everything at the top of the page-->
-        <a href="Index.html" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
+        <a href="Index.php" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
         
         <form action=""><!--add the database in to the action-->
         <input type="text" id="Search" name="Search" placeholder="Search">
@@ -150,8 +108,8 @@
         <!--Buttons to move to a different page-->
         <a href="Lists.php"><i class="fa fa-navicon"></i></a>
         <a href="Favs.php"><i class="material-icons" style="font-size:55px">star</i></a>
-        <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
-        <a href="Login.php"><button class="SignUpButton"> Sign Up </button></a>
+        <a href="Profile.php"><i class="fa fa-user-circle-o"></i></a>
+        <a href="Login.php"><button class="SignUpButton"> Sign in </button></a>
 
     </div>
 
@@ -178,6 +136,11 @@
 
                     $ItemID = $FavItem['TescoItemID'];
 
+                    $result = $conn->query("SELECT * FROM JointItems WHERE TescoItemID = {$ItemID}");
+                    $JointItemIDs = mysqli_fetch_assoc($result);
+
+                    $JointID = $JointItemIDs["ItemID"];
+
                     //echo "full pass";
                     echo '
 
@@ -198,7 +161,7 @@
                             </div>
                         </div>
 
-                            <a href="${productLink}"><img src="' . $TescoItems["TescoImageURL"] . '" alt="placeholder"></a>
+                            <a href="Product.php?id=' . $JointID . '"><img src="' . $TescoItems["TescoImageURL"] . '" alt="placeholder"></a>
                             <p class="name">' . $FavItem["ItemName"] . '</p>';
 
                             if ($LidlItems["LidlPrice"] <= $TescoItems["TescoPrice"]) {
@@ -212,6 +175,7 @@
                                         <div class="Buttons">
                                             <form method="POST">
                                                 <input type="hidden" name="ID" value="' . $FavID . '">
+                                                <input type="hidden" name="JointID" value="' . $JointID . '">
                                                 <button type="submit" name="AddToList" class="" value="">
                                                     <i class="fa fa-plus fa-3x" alt=""></i>
                                                 </button>

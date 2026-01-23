@@ -55,8 +55,9 @@ function loadNew(){
                     storestring = storestring.join("\n");
 
                     productLink = "./Product.php?id="+item[stores[0]].id;
+                    ProductID = item[stores[0]].id;
 
-                    newItems.push(`<div class="item" href="${productLink}"> <!--item placeholder/ base design-->
+                    newItems.push(`<div class="item"> <!--item placeholder/ base design-->
                         <div class="store">
                             ${storestring}
                         </div>
@@ -71,8 +72,15 @@ function loadNew(){
                             </div>
 
                             <div class="Buttons">
-                                <i class="fa fa-plus fa-3x" onclick="() => {updList(${item[stores[0]].name})}" alt=""></i>
-                                <i class="fa fa-star fa-3x" onclick="() => {updFavs(${item[stores[0]].name})}" alt=""></i>
+                             <form method="POST">
+                                    <input type="hidden" name="ID" value="${ProductID}">
+                                        <button type="submit" name="AddToList" id="" value="">
+                                            <a href=${productLink}><i class="fa fa-plus fa-3x" onclick="() => {updList(${ProductID})}" alt=""></i></a>
+                                        </button>
+                                        <button type="submit" name="AddToFavs" class="" value="">
+                                            <i class="fa fa-star fa-3x" onclick="() => {updFavs(${ProductID})}" alt=""></i>
+                                        </button>
+                                </form>
                             </div>
                         </div> 
                     </div>`);

@@ -2,7 +2,21 @@
 <html>
     <?php
     
+    //error_reporting(E_ALL);
+    //ini_set('display_errors', 1);
+
     session_start();
+
+    $conn = mysqli_connect('ysjcs.net', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
+
+    if (!$conn) {
+        die("Connection failed: ".mysqli_connect_error());
+    }
+
+    //echo "Session ID: " . session_id() . "<br>";
+    //echo "All Session Data: ";
+    //print_r($_SESSION);
+    //echo "<br><br>";
 
     //if (isset($_COOKIE["UserID"])) {
     //    $uid = $_COOKIE['UserID']; 
@@ -15,8 +29,64 @@
         exit();
     }
 
-    echo "Sessino UID = ". $uid . "<br>";
-    echo "Session Username = ". $usr ."<br>";
+    $result = $conn->query("SELECT * FROM UserID WHERE UserID = {$uid}");
+    $User = mysqli_fetch_assoc($result);
+
+    $result = $conn->query("SELECT * FROM Favorites WHERE FavoriteId = {$User['FavoriteTableID']}");
+    $Favorites = mysqli_fetch_assoc($result);
+
+    if (isset($_POST['AddToFavs'])) {
+
+        $result = $conn->query("SELECT * FROM Favorites WHERE FavoriteId = {$User['FavoriteTableID']}");
+        $Favorites = mysqli_fetch_assoc($result);
+
+        for ($counter = 1; $counter < 11; $counter++) {
+            $FavoriteTableID = $Favorites["ItemID{$counter}"];
+            if ($FavoriteTableID == NULL) {
+                $NextFree = $counter;
+                break;
+            }
+        }
+
+        $ID = intval($_POST['ID']);
+
+        $result = $conn->query("SELECT * FROM JointItems WHERE ItemID = {$ID}");
+        $JointItems = mysqli_fetch_assoc($result);
+
+        if (isset($NextFree)  AND ($NextFree <= 11)) {
+                $Absent = true;
+                for ($counter = 1; $counter < 11; $counter++) {
+                    $FavoriteTableID = $Favorites["ItemID{$counter}"];
+                    if ($FavoriteTableID == $JointItems['ItemID']) {
+                        $_SESSION['alert'] = "Item already in favorites";
+                        $Absent = false;
+                        break;
+                    }
+                }
+                if ($Absent) {
+                    $Update = $conn->query("UPDATE Favorites SET ItemID{$NextFree} = {$ID} WHERE FavoriteId = {$User['FavoriteTableID']}");
+                    if ($Update) {
+                        $_SESSION['alert'] = "Item added to fovorites";
+                    } else {
+                        $_SESSION['alert'] = "Error: " . $conn->error;
+                    }
+                }
+        } else {
+            $_SESSION['alert'] = "Favorites full or error";
+        }
+
+        header("Location: " . $_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING']);
+        exit();
+
+    }
+
+    //echo "Sessino UID = ". $uid . "<br>";
+    //echo "Session Username = ". $usr ."<br>";
+
+    if (isset($_SESSION['alert'])) {
+        echo "<script>alert('" . addslashes($_SESSION["alert"]) . "');</script>";
+        unset($_SESSION["alert"]);
+    }
     
     ?>
     <head>
@@ -43,7 +113,7 @@
 <body class="Website"> <!--Moves the whole website to the centre-->
 
     <div class="Header" style="margin: 5px;"> <!--Everything at the top of the page-->
-        <a href="Index.html" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
+        <a href="Index.php" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
         
         <!--add the database in to the action-->
         <input type="text" id="Search" name="Search" placeholder="Search">
@@ -51,8 +121,8 @@
         <!--Buttons to move to a different page-->
         <a href="Lists.php"><i class="fa fa-navicon"></i></a>
         <a href="Favs.php"><i class="material-icons" style="font-size:55px">star</i></a>
-        <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
-        <a href="Login.php"><button class="SignUpButton"> Sign Up </button></a>
+        <a href="Profile.php"><i class="fa fa-user-circle-o"></i></a>
+        <a href="Login.php"><button class="SignUpButton"> Sign in </button></a>
 
     </div>
 

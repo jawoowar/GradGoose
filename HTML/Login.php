@@ -63,7 +63,7 @@
 <body class="Website"> <!--Moves the whole website to the centre-->
 
     <div class="Header" style="margin: 5px;"> <!--Everything at the top of the page-->
-        <a href="Index.html" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
+        <a href="Index.php" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
         
         <form action=""><!--add the database in to the action-->
         <input type="text" id="Search" name="Search" placeholder="Search">
@@ -72,8 +72,8 @@
         <!--Buttons to move to a different page-->
         <a href="Lists.php"><i class="fa fa-navicon"></i></a>
         <a href="Favs.php"><i class="material-icons" style="font-size:55px">star</i></a>
-        <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
-        <a href="Login.php"><button class="SignUpButton"> Sign Up </button></a>
+        <a href="Profile.php"><i class="fa fa-user-circle-o"></i></a>
+        <a href="Login.php"><button class="SignUpButton"> Sign In </button></a>
 
     </div>
     <body>
