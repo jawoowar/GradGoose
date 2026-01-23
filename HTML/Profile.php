@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <?php
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
+        $conn = mysqli_connect('ysjcs.net', 'jennifer.w', 'EHEXYUE8', 'jenniferwoodward_GradGoose');
+
+        if (!$conn) {
+            die("Connection failed: ".mysqli_connect_error());
+        }
+
+        if (isset($_POST['profile'])) {
+
+                $uid = $_POST['username'];
+                $email = $_POST['email'];
+                $pwd = $_POST['password'];
+
+                $sql = "SELECT * FROM UserID WHERE UserName='$usr' AND passwordHash='$pwd' AND email='$email' ";
+                $result = $conn->query($sql);
+                if (mysqli_num_rows($result) > 0) {
+                    if ($row =$result->fetch_assoc()) {
+                        $CookieUid = $row['UserID'];
+                        $CookieUsr = $row['UserName'];
+                        $CookiePwd = $row['passwordHash'];
+                        $CookieEmail = $row['email'];
+
+
+                        $_SESSION['UserID'] = $CookieUid;
+                        $_SESSION['Username'] = $CookieUsr;
+                        $_SESSION['passwordHash'] = $CookiePwd;
+                        $_SESSION['email'] = $CookieEmail;
+                    
+                       exit();
+                    }
+                }
+        }   
+    ?>
+
+
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+            <title>Profile</title>
+        </head>
+
+        <link rel="stylesheet" href="../Styles/Root.css">
+        <link rel="stylesheet" href="../Styles/Items.css">
+        <link rel="stylesheet" href="../Styles/Profile.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
+        </style>
+        <script src="../Scripts/root.js"></script>
+
+    <body class="Website"> <!--Moves the whole website to the centre-->
+
+            <div class="Header" style="margin: 5px;"> <!--Everything at the top of the page-->
+                <a href="Index.html" style="width: 10%;"><img src="../Media/GradGooseLogo.svg" alt="" width="100%" height="100%" style="margin: 0;"></a>
+                
+                <form action=""><!--add the database in to the action-->
+                <input type="text" id="Search" name="Search" placeholder="Search">
+                </form>
+                
+                <!--Buttons to move to a different page-->
+                <a href="Lists.php"><i class="fa fa-navicon"></i></a>
+                <a href="Favs.php"><i class="material-icons" style="font-size:48px">star</i></a>
+                <a href="Profile.html"><i class="fa fa-user-circle-o"></i></a>
+                <a href="Login.php"><button class="SignUpButton"> Sign Up </button></a>
+
+            </div>
+
+            <div class="Info"><!-- The top section with image and changing profile buttons-->
+                <div>
+                    <a href=""><img src="../Media/Goose.png" alt="" class="ProfileIMG"></a>
+                </div>
+
+                <div class="Line"></div>
+
+                <div class="ChangeProfileBackground"> <!--Buttons to change user info-->
+                    <div class="InfoText">   <!--User info displayed here-->
+                        <?php 
+                        echo $uid
+                        ?>
+                        <button class="ChangeProfileButtons">Change Name</button>
+                    </div>
+                    <div class="InfoText">
+                        <?php 
+                        echo $email
+                        ?>
+                        <button class="ChangeProfileButtons">Change Email</button> 
+                    </div>
+                    <div class="InfoText">
+                        <?php 
+                        echo $pwd
+                        ?>
+                        <button class="ChangeProfileButtons">Change Password</button> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="Settings"> <!--The settings section-->
+                <div class="SettingsSections">
+                    <button class="tablinks" onclick="openSettings(event, 'Filters')" id="defaultOpen">Filters</button>
+                    <button class="tablinks" onclick="openSettings(event, 'Accessibility')">Accessibility</button>
+                </div>
+
+                <div class="LineSettings"></div>
+
+                <div id="Filters" class="tabcontent" > <!--Filter detail will go here-->
+                    <h1>Custom Filter</h1>
+                    <p>Relevency</p>
+                    <input type="range" min="0" max="100" values="100" class="slider" id="relevency" ><!-- do these -->
+                    <p>Costs</p>
+                    <input type="range" min="0" max="100" values="100" class="slider" id="Cost">
+                    <p>Number of Ratings</p>
+                    <input type="range" min="0" max="100" values="100" class="slider" id="NumRatings">
+                    <p>Ratings</p>
+                    <input type="range" min="0" max="100" values="100" class="slider" id="Ratings">
+
+                </div>
+
+                <div id="Accessibility" class="tabcontent" > <!--Accessibility detail will go here-->
+                    <input type="radio" id="font" onclick="accessFont(event)">
+                    <label for="font">Accessable Font</label>
+                </div>
+
+            </div>
+            <script src="../Scripts/Profile.js"></script>
+
+        <div id="FooterLine"></div>
+
+        <Footer>
+            <div class="FooterBox1">
+                <a href="AboutUs.html">About Us</a>
+            </div>
+
+            <div class="FooterBoxMiddle">
+                <div id="GradGooseLogoFooter">
+                    <img src="../Media/GradGooseLogo.svg" alt="">
+                </div>
+
+                <div class="FooterBox2">
+                    <a href="HowToUse.html">How To Use</a>
+                </div>
+            </div>
+            
+            <div class="FooterBox3">
+                <a href="Profile.html">Settings</a>
+            </div>
+            
+        </Footer> 
+    </body>
+</html>
