@@ -11,13 +11,13 @@ variables:
   azureSubscription: 'd0bc4a1c-ad98-49e0-9929-1af571d863b2'
 
   # Web app name
-  webAppName: ''
+  webAppName: 'GradGoose'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
   # Environment name
-  environmentName: ''
+  environmentName: 'GradGooseVM'
 
   # Root folder under which your composer.json file is available.
   rootFolder: $(System.DefaultWorkingDirectory)
