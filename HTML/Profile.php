@@ -10,31 +10,27 @@
             die("Connection failed: ".mysqli_connect_error());
         }
 
-        if (isset($_POST['profile'])) {
+        
+        session_start();
 
-                $uid = $_POST['username'];
-                $email = $_POST['email'];
-                $pwd = $_POST['password'];
+        $user_id = $_SESSION['UserID'];
 
-                $sql = "SELECT * FROM UserID WHERE UserName='$usr' AND passwordHash='$pwd' AND email='$email' ";
-                $result = $conn->query($sql);
-                if (mysqli_num_rows($result) > 0) {
-                    if ($row =$result->fetch_assoc()) {
-                        $CookieUid = $row['UserID'];
-                        $CookieUsr = $row['UserName'];
-                        $CookiePwd = $row['passwordHash'];
-                        $CookieEmail = $row['email'];
+        $query = "SELECT username FROM UserID WHERE UserID = $user_id";
+        $result = mysqli_query($conn,$query);
+        $rowU = $result->fetch_assoc();
 
+        $query = "SELECT email FROM UserID WHERE UserID = $user_id";
+        $result = mysqli_query($conn,$query);
+        $rowE = $result->fetch_assoc();
 
-                        $_SESSION['UserID'] = $CookieUid;
-                        $_SESSION['Username'] = $CookieUsr;
-                        $_SESSION['passwordHash'] = $CookiePwd;
-                        $_SESSION['email'] = $CookieEmail;
-                    
-                       exit();
-                    }
-                }
-        }   
+        $query = "SELECT passwordhash FROM UserID WHERE UserID = $user_id";
+        $result = mysqli_query($conn,$query);
+        $rowP = $result->fetch_assoc();
+
+        $query = "SELECT userimg FROM UserID WHERE UserID = $user_id";
+        $result = mysqli_query($conn,$query);
+        $rowI = $result->fetch_assoc();
+         
     ?>
 
 
@@ -79,27 +75,27 @@
 
             <div class="Info"><!-- The top section with image and changing profile buttons-->
                 <div>
-                    <a href=""><img src="../Media/Goose.png" alt="" class="ProfileIMG"></a>
+                    <a href=""><img src="<?php echo $rowI['userimg'] ?>" alt="" class="ProfileIMG"></a>
                 </div>
 
                 <div class="Line"></div>
 
                 <div class="ChangeProfileBackground"> <!--Buttons to change user info-->
                     <div class="InfoText">   <!--User info displayed here-->
-                        <?php 
-                        echo $uid
-                        ?>
+                        <?php
+                         echo $rowU['username'];
+                         ?>
                         <button class="ChangeProfileButtons">Change Name</button>
                     </div>
                     <div class="InfoText">
                         <?php 
-                        echo $email
+                        echo $rowE['email'];
                         ?>
                         <button class="ChangeProfileButtons">Change Email</button> 
                     </div>
                     <div class="InfoText">
                         <?php 
-                        echo $pwd
+                        echo $rowP['passwordhash'];
                         ?>
                         <button class="ChangeProfileButtons">Change Password</button> 
                     </div>
