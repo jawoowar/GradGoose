@@ -167,11 +167,32 @@
 
     }
 
-    /*
-    $discount = $TescoItems['StudentDiscountID']
+
+    $discount = $TescoItems['TescoStudentDiscountID'];
+    echo "discount : "  . $discount;
     $result = $conn->query("SELECT * FROM StudentDiscount WHERE DiscountID = {$discount}");
-    $StudentDiscount = mysqli_fetch_assoc($result);
-    */
+    $TescoStudentDiscount = mysqli_fetch_assoc($result);
+
+    $discount = $TescoItems['TescoStudentBeanDiscountID'];
+    $result = $conn->query("SELECT * FROM StudentBeanDiscount WHERE DiscountID = {$discount}");
+    $TescoStudentBeanDiscount = mysqli_fetch_assoc($result);
+
+    $discount = $TescoItems['TescoStoreDiscountID'];
+    $result = $conn->query("SELECT * FROM TescoStoreDiscount WHERE DiscountID = {$discount}");
+    $TescoStoreDiscount = mysqli_fetch_assoc($result);
+    
+
+    $discount = $LidlItems['LidlStudentDiscountID'];
+    $result = $conn->query("SELECT * FROM StudentDiscount WHERE DiscountID = {$discount}");
+    $LidlStudentDiscount = mysqli_fetch_assoc($result);
+
+    $discount = $LidlItems['LidlStudentBeanDiscountID'];
+    $result = $conn->query("SELECT * FROM StudentBeanDiscount WHERE DiscountID = {$discount}");
+    $LidlStudentBeanDiscount = mysqli_fetch_assoc($result);
+
+    $discount = $LidlItems['LidlStoreDiscountID'];
+    $result = $conn->query("SELECT * FROM LidlStoreDiscount WHERE DiscountID = {$discount}");
+    $LidlStoreDiscount = mysqli_fetch_assoc($result);
         
 ?>
 
@@ -235,10 +256,39 @@
             <div class="storeSpesifics tesco">
                 <div class="informationContainer">
                     <div class="dealsContainer">
-
-                        <div class="deal tesco"> <h2><?php /* echo "Discount: $StudentDiscount['Discount']; </br> Criteria: $StudentDiscount['Criteria'];" */?></h2> </div>
-                        <div class="deal tesco"> <h2>student</h2> </div>
-                        <div class="deal tesco"> <h2>bean</h2> </div>
+                        <div class="deal tesco"> <h2>                        
+                            <?php
+                            if ($TescoStudentDiscount['Discount'] !== Null) {
+                                echo $TescoStudentDiscount['Discount'];
+                            }
+                            elseif ($TescoStudentDiscount['Criteria'] !== Null) {
+                                echo $TescoStudentDiscount['Criteria'];
+                            }
+                            ?>
+                        </h2> </div>
+                        <div class="deal tesco"> <h2>
+                            <?php
+                                if ($TescoStoreDiscount['Discount'] !== Null) {
+                                    echo $TescoStoreDiscount['Discount'];
+                                }
+                                elseif ($TescoStoreDiscount['Criteria'] !== Null) {
+                                    echo $TescoStoreDiscount['Criteria'];
+                                }
+                            ?>
+                        </h2> </div>
+                        <div class="deal tesco"> <h2>
+                            <?php
+                                if ($TescoStudentBeanDiscount['Discount'] !== Null) {
+                                    echo $TescoStudentBeanDiscount['Discount'];
+                                }
+                                if ($TescoStudentBeanDiscount['Discount'] !== Null && $TescoStudentBeanDiscount['Criteria'] !== Null) {
+                                    echo "<br>";
+                                }
+                                if ($TescoStudentBeanDiscount['Criteria'] !== Null) {
+                                    echo $TescoStudentBeanDiscount['Criteria'];
+                                }
+                            ?>
+                        </h2> </div>
 
                     </div>
                     
@@ -274,9 +324,39 @@
                 <div class="informationContainer ">
                     <div class="dealsContainer">
 
-                        <div class="deal lidl"> <h2>store</h2> </div>
-                        <div class="deal lidl"> <h2>student</h2> </div>
-                        <div class="deal lidl"> <h2>bean</h2> </div>
+                        <div class="deal lidl"> <h2>                        
+                            <?php
+                            if ($LidlStudentDiscount['Discount'] !== Null) {
+                                echo $LidlStudentDiscount['Discount'];
+                            }
+                            elseif ($LidlStudentDiscount['Criteria'] !== Null) {
+                                echo $LidlStudentDiscount['Criteria'];
+                            }
+                            ?>
+                        </h2> </div>
+                        <div class="deal lidl"> <h2>
+                            <?php
+                                if ($LidlStoreDiscount['Discount'] !== Null) {
+                                    echo $LidlStoreDiscount['Discount'];
+                                }
+                                elseif ($LidlStoreDiscount['Criteria'] !== Null) {
+                                    echo $LidlStoreDiscount['Criteria'];
+                                }
+                            ?>
+                        </h2> </div>
+                        <div class="deal lidl"> <h2>
+                            <?php
+                                if ($LidlStudentBeanDiscount['Discount'] !== Null) {
+                                    echo $LidlStudentBeanDiscount['Discount'];
+                                }
+                                if ($LidlStudentBeanDiscount['Discount'] !== Null && $LidlStudentBeanDiscount['Criteria'] !== Null) {
+                                    echo "<br>";
+                                }
+                                if ($LidlStudentBeanDiscount['Criteria'] !== Null) {
+                                    echo $LidlStudentBeanDiscount['Criteria'];
+                                }
+                            ?>
+                        </h2> </div>
 
                     </div>
                     
